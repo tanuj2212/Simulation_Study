@@ -582,7 +582,7 @@ for i in range(n):
     df[column_name] = scores[weight_key]    
 
 # Save to CSV
-df.to_csv('simulation_study/cost_effectiveness_contraceptive_rankings.csv', index=False)
+df.to_csv('simulation_study/willingness_contraceptive_rankings.csv', index=False)
 print("Rankings have been saved to 'contraceptive_rankings.csv'")
 print("\nFirst few rows of the DataFrame:")
 print(df.head())

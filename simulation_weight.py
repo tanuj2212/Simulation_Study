@@ -754,6 +754,37 @@ original_weight_hormonal_IUD = [
 27-HRT
 '''
 
+input_to_append = [
+    "Cost Effectiveness: neutral",
+    "Pregnancy Prevention: neutral",
+    "Lessens Periods: neutral",
+    "Maintenance: weekly",
+    "willingness: neutral",
+    "Prevents STI: neutral",
+    "Hormones Used: neutral",
+    "Vaginal Insertion: none",
+    "Seeking consultation: neutral",
+    "Medical Procedure Required: neutral",
+    "Acne: moderate",
+    "Anxiety: moderate",
+    "Depression: moderate",
+    "Hypertension: yes",
+    "Blood Clots: yes",
+    "History CHF or CAD: no",
+    "History of Breast Cancer: no",
+    "Smoker over 35 years: no",
+    "Migraine with aura: no",
+    "PCOS: no",
+    "Endometriosis: no",
+    "Top gender dysphoria: no",
+    "Top surgery: moderate",
+    "Bottom gender dysphoria period: moderate",
+    "Bottom gender dysphoria vaginal insertion: no",
+    "Bottom gender dysphoria pregnancy: yes",
+    "HRT: yes"
+]
+
+
 import copy
 
 
@@ -982,9 +1013,33 @@ for i, (input_key, df) in enumerate(dfs.items()):
 
 # Concatenate all DataFrames vertically
 combined_df = pd.concat(combined_df_list, axis=0, ignore_index=True)
-
+import csv
 # Save to CSV
-combined_df.to_csv('simulation_study/combined_weight_contraceptive_rankings.csv', index=False)
+combined_df.to_csv('combined_weight_contraceptive_rankings.csv', index=False)
+with open('combined_weight_contraceptive_rankings.csv', 'r') as file:
+    reader = csv.reader(file)
+    rows = list(reader)
+
+# Insert the new row at the 2nd index
+rows.insert(1, input_to_append)
+empty_row = [''] * len(rows[0])  # Create an empty row with the same number of columns
+rows.insert(2, empty_row)
+# Write the updated content back to the CSV file
+with open('combined_weight_contraceptive_rankings.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerows(rows)
+
+print("Row inserted successfully.")
+print("Combined rankings have been saved to 'combined_weight_contraceptive_rankings.csv'")
+print("\nFirst few rows of the combined DataFrame:")
+print(combined_df.head())
+print("Combined rankings have been saved to 'combined_cost_effectiveness_contraceptive_rankings.csv'")
+print("\nFirst few rows of the combined DataFrame:")
+print(combined_df.head())
+print("\nFirst few rows of the combined DataFrame:")
+print(combined_df.head())
+print("\nFirst few rows of the combined DataFrame:")
+print(combined_df.head())
 print("Combined rankings have been saved to 'combined_weight_contraceptive_rankings.csv'")
 print("\nFirst few rows of the combined DataFrame:")
 print(combined_df.head())

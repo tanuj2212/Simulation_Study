@@ -576,7 +576,7 @@ for input_arr, input_label in zip(inputs, input_labels):
     # Customize the plot
     plt.xlabel('Weight Range')
     plt.ylabel('Contraceptive Score')
-    plt.title(f'Contraceptive Scores vs Weight Range (Input: {input_label})')
+    plt.title(f'Contraceptive Scores vs Weight Range for weight management(Input: {input_label})')
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.grid(True)
 

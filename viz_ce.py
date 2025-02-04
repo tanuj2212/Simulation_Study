@@ -518,8 +518,8 @@ plt.show()
 '''
 
 import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
-# Define a list of very distinct colors
 # Define a list of very distinct colors
 distinct_colors = [
     '#FF0000',  # Red
@@ -548,6 +548,7 @@ for input_arr, input_label in zip(inputs, input_labels):
     
     # Calculate scores for each weight multiplier
     scores_over_weights = {method: [] for method in calculate_scores(input_arr, 1).keys()}
+    
     for multiplier in weight_multipliers:
         scores = calculate_scores(input_arr, multiplier)
         for method, score in scores.items():
@@ -559,12 +560,14 @@ for input_arr, input_label in zip(inputs, input_labels):
     # Plot each method's scores with manually chosen distinct colors
     for (method, scores), color in zip(scores_over_weights.items(), distinct_colors):
         plt.plot(range(len(weight_multipliers)), scores, label=method, marker='o', color=color, linewidth=2)
-
+    min_score = min(scores_over_weights.values())
+    print(min(min_score))
+    max_score = max(scores_over_weights.values())
     # Customize the plot
     plt.xlabel('Weight Range')
     plt.ylabel('Contraceptive Score')
-    plt.title(f'Contraceptive Scores vs Weight Range (Input: {input_label})')
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.title(f'Contraceptive Scores vs Weight Range for cost effectiveness (Input: {input_label})')
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', ncol=2)
     plt.grid(True)
 
     # Set x-axis ticks and labels

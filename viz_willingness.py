@@ -580,6 +580,8 @@ for input_arr, input_label in zip(inputs, input_labels):
 
     # Adjust layout to prevent label cutoff
     plt.tight_layout()
+    filename = f'willingness_{input_label}_viz.png'  # or .pdf, .jpg, etc.
+    plt.savefig(filename, dpi=300, bbox_inches='tight')
     
     # Show each plot
-    plt.show()
+    #plt.show()

@@ -577,4 +577,6 @@ for input_arr, input_label in zip(inputs, input_labels):
     plt.tight_layout()
     
     # Show each plot
+    filename = f'ce_{input_label}_viz.png'  # or .pdf, .jpg, etc.
+    #plt.savefig(filename, dpi=300, bbox_inches='tight')
     plt.show()

@@ -905,7 +905,7 @@ all_results = {}
 # Number of weight iterations
 n = 20
 
-
+'''
 
 # For each input in the inputs array
 for input_idx, input_arr in enumerate(inputs):
@@ -1026,6 +1026,99 @@ import csv
 # Save to CSV
 combined_df.to_csv('combined_weight_maintainance_rankings.csv', index=False)
 print("Combined rankings have been saved to 'combined_weight_contraceptive_rankings.csv'")
+'''
+# For each input in the inputs array
+for input_idx, input_arr in enumerate(inputs):
+    input_identifier = input_arr[4]  # Using the frequency (daily, weekly, etc.) as identifier
+    input_results = {}
+
+    # For each weight iteration
+    for i in range(n):
+        multiplier = i + 1
+        current_weights = 3 * i
+        
+        # Create a copy of the weights dictionary for this iteration
+        weights_dict = {
+            'arm_implant': copy.deepcopy(original_weight_arm_implant),
+            'hormonal_iud': copy.deepcopy(original_weight_hormonal_IUD),
+            'patch': copy.deepcopy(original_weight_patch),
+            'combo_pill': copy.deepcopy(original_weight_combo_pill),
+            'mini_pill': copy.deepcopy(original_weight_mini_pill),
+            'ring': copy.deepcopy(original_weight_ring),
+            'shot': copy.deepcopy(original_weight_shot),
+            'copper_iud': copy.deepcopy(original_weight_copper_IUD),
+            'internal_condoms': copy.deepcopy(original_weight_internal_condoms),
+            'condoms': copy.deepcopy(original_weight_condoms),
+            "cervical_cap": copy.deepcopy(original_weight_cervical_cap),
+            "FAM": copy.deepcopy(original_weight_FAM),
+            "spermicide": copy.deepcopy(original_weight_spermicide),
+            "withdrawal": copy.deepcopy(original_weight_withdrawl)
+        }
+
+        original_weights = {
+            'sterilization': copy.deepcopy(original_weight_sterilization),
+        }
+
+        # Update the weights
+        for method in weights_dict:
+            if method in ['condoms', 'internal_condoms']:
+                weights_dict[method][2] = current_weights
+            elif method in ['cervical_cap', 'FAM', 'copper_iud', 'spermicide', 'withdrawal']:
+                weights_dict[method][1] = current_weights
+            elif method in ['arm_implant', 'hormonal_iud', 'shot']:
+                weights_dict[method][3] = current_weights
+            elif method in ['patch', 'combo_pill', 'mini_pill', 'ring']:
+                weights_dict[method][4] = current_weights
+
+        scores = calculate_scores_for_input(input_arr, weights_dict, original_weights)
+
+        # Sort and format top 5 with scores
+        top_5_methods = sorted(scores.items(), key=lambda x: x[1], reverse=True)[:5]
+        #top_5_ranking = [f"{method} ({score:.1f})" for method, score in top_5_methods]
+        top_5_ranking = [f"{method}" for method, score in top_5_methods]
+
+        # Store rankings with weights as key
+        weight_key = f"({current_weights})"
+        input_results[weight_key] = top_5_ranking
+
+    all_results[input_identifier] = input_results
+
+# Create separate DataFrames for each input
+dfs = {}
+
+for input_key, results in all_results.items():
+    df = pd.DataFrame(index=range(5))
+    
+    for i in range(n):
+        weights = 3 * i
+        weight_key = f"({weights})"
+        column_name = f"Iteration {i+1} ({weights})"
+        df[column_name] = results[weight_key]
+
+    dfs[input_key] = df
+
+# Combine all DataFrames into one
+combined_df_list = []
+
+for i, (input_key, df) in enumerate(dfs.items()):
+    df = df.copy()
+    df.insert(0, "Input ID", input_key)
+    combined_df_list.append(df)
+
+    # Insert an empty row between different inputs, except after the last one
+    if i < len(dfs) - 1:
+        empty_row = pd.DataFrame([[None] * len(df.columns)], columns=df.columns)
+        combined_df_list.append(empty_row)
+
+# Concatenate all DataFrames vertically
+combined_df = pd.concat(combined_df_list, axis=0, ignore_index=True)
+
+# Save to CSV
+combined_df.to_csv('combined_weight_maintainance_rankings.csv', index=False)
+print("Combined rankings have been saved to 'combined_weight_maintainance_rankings.csv'")
+print("\nFirst few rows of the combined DataFrame:")
+print(combined_df.head())
+import csv
 with open('combined_weight_maintainance_rankings.csv', 'r') as file:
     reader = csv.reader(file)
     rows = list(reader)
@@ -1035,7 +1128,7 @@ rows.insert(1, input_to_append)
 empty_row = [''] * len(rows[0])  # Create an empty row with the same number of columns
 rows.insert(2, empty_row)
 # Write the updated content back to the CSV file
-with open('combined_weight_maintainance_rankings.csv', 'w', newline='') as file:
+with open('combined_weight_maintainance_ranking_2.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerows(rows)
 

@@ -736,7 +736,7 @@ print("\nFirst few rows of the combined DataFrame:")
 print(combined_df.head())
 '''
 import matplotlib.pyplot as plt
-
+'''
 # Define a list of very distinct colors
 distinct_colors = [
     '#FF0000',  # Red
@@ -826,5 +826,98 @@ for input_arr in inputs:
     
     # Show the plot
     plt.show()
+'''
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
+# Define weight multipliers
+weight_multipliers = range(1, 21)  # 1 to 20
 
+# Define a list of very distinct colors
+distinct_colors = [
+    '#FF0000',  # Red
+    '#0000FF',  # Blue
+    '#FFD700',  # Gold
+    '#FF1493',  # Deep Pink
+    '#00FF00',  # Lime
+    '#8B008B',  # Dark Magenta
+    '#FF8C00',  # Dark Orange
+    '#00FFFF',  # Cyan
+    '#800000',  # Maroon
+    '#000080',  # Navy
+    '#808000',  # Olive
+    '#FF00FF',  # Magenta
+    '#008080',  # Teal
+    '#FFA500',  # Orange
+    '#4B0082'   # Indigo
+]
+
+# Create separate plots for each cost effectiveness input
+for ce_index, ce_value in enumerate(cost_effectiveness):
+    fig = plt.figure(figsize=(12, 8))
+    ax = fig.add_subplot(111, projection='3d')
+    
+    # Iterate over acne severities
+    for acne_index, acne_severity in enumerate(acne):
+        # Filter inputs based on current cost effectiveness and acne severity
+        filtered_inputs = [input_arr for input_arr in inputs if input_arr[0] == ce_value and input_arr[11] == acne_severity]
+        
+        # Calculate scores for each weight multiplier
+        for input_arr in filtered_inputs:
+            scores_over_weights = {method: [] for method in calculate_scores_for_input(input_arr, weights_dict, original_weights).keys()}
+            
+            for multiplier in weight_multipliers:
+                # Update weights for cost effectiveness
+                current_weights = [-3 * multiplier, -2 * multiplier, -1 * multiplier,
+                                   1 * multiplier, 2 * multiplier, 3 * multiplier]
+                
+                # Create a copy of the weights dictionary for this iteration
+                weights_dict = {
+                    'condoms': copy.deepcopy(original_weight_condoms),
+                    'internal_condoms': copy.deepcopy(original_weight_internal_condoms),
+                    'cervical_cap': copy.deepcopy(original_weight_cervical_cap),
+                    'FAM': copy.deepcopy(original_weight_FAM),
+                    'patch': copy.deepcopy(original_weight_patch),
+                    'combo_pill': copy.deepcopy(original_weight_combo_pill),
+                    'mini_pill': copy.deepcopy(original_weight_mini_pill),
+                    'ring': copy.deepcopy(original_weight_ring),
+                    'spermicide': copy.deepcopy(original_weight_spermicide),
+                    'withdrawal': copy.deepcopy(original_weight_withdrawl)
+                }
+
+                # Update the cost effectiveness weights
+                for method in weights_dict:
+                    weights_dict[method][0] = current_weights
+
+                # Calculate scores for this input and weight combination
+                scores = calculate_scores_for_input(input_arr, weights_dict, original_weights)
+
+                # Append scores to the dictionary
+                for method, score in scores.items():
+                    scores_over_weights[method].append(score)
+
+            # Plot each method's scores with manually chosen distinct colors
+            for (method, scores), color in zip(scores_over_weights.items(), distinct_colors):
+                #ax.plot([(-3*multiplier,3*multiplier) for multiplier in weight_multipliers], [acne_index] * len(weight_multipliers), scores, label=method, marker='o', color=color, linewidth=2)
+                #ax.plot([(-3*multiplier,3*multiplier) for multiplier in weight_multipliers], [acne_index] * len(weight_multipliers), scores, label=method, marker='o', color=color, linewidth=2)
+                ax.plot([multiplier for multiplier in weight_multipliers], [acne_index] * len(weight_multipliers), scores, label=method, marker='o', color=color, linewidth=2)
+
+    # Customize the plot
+    ax.set_xlabel('Weight Multiplier')
+    ax.set_ylabel('Acne Severity')
+    ax.set_zlabel('Contraceptive Score')
+    ax.set_title(f'Contraceptive Scores vs Weight Range for Cost Effectiveness ({ce_value})')
+    ax.set_yticks(range(len(acne)))
+    ax.set_yticklabels(acne)
+    ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', ncol=2)
+    plt.grid(True)
+
+    # Save the plot to a file
+    filename = f'ce_{ce_value}_viz.png'  # or .pdf, .jpg, etc.
+    plt.savefig(filename, dpi=300, bbox_inches='tight')
+    
+    # Show the plot
+    plt.show()

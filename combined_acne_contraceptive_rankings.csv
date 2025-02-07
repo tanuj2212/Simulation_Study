@@ -1,0 +1,26 @@
+Input ID,"Iteration 1 ([-12, -22, -47], 3)","Iteration 2 ([-9, -19, -44], 3)","Iteration 3 ([-6, -16, -41], 3)","Iteration 4 ([-3, -13, -38], 3)","Iteration 5 ([0, -10, -35], 3)"
+Cost Effectiveness: imp,Lessens Periods: neutral,"Maintains Weight: sl_imp,Maintenance: weekly",Willingness: neutral,Prevents STI: neutral,Hormones Used: neutral,Vaginal Insertion: none,Seeking consultation: neutral,Medical Procedure Required: neutral,Acne: moderate,Anxiety: moderate,Depression: moderate,Hypertension: yes,Blood Clots: yes,History CHF or CAD: no,History of Breast Cancer: no,Smoker over 35 years: no,Migraine with aura: no,PCOS: no,Endometriosis: no,Top gender dysphoria: no,Top surgery: moderate,Bottom gender dysphoria period: moderate,Bottom gender dysphoria vaginal insertion: no,Bottom gender dysphoria pregnancy: yes,HRT: yes
+,,,,,
+no,Sterilization,Sterilization,Sterilization,Sterilization,Sterilization
+no,Condom,Condom,Condom,Condom,Condom
+no,FAM,FAM,FAM,FAM,FAM
+no,Spermicide Gel,Spermicide Gel,Spermicide Gel,Spermicide Gel,Spermicide Gel
+no,Withdrawal,Withdrawal,Withdrawal,Withdrawal,Withdrawal
+,,,,,
+mild,Sterilization,Sterilization,Sterilization,Sterilization,Sterilization
+mild,Condom,Condom,Condom,Condom,Condom
+mild,FAM,FAM,FAM,FAM,FAM
+mild,Spermicide Gel,Spermicide Gel,Spermicide Gel,Spermicide Gel,Spermicide Gel
+mild,Withdrawal,Withdrawal,Withdrawal,Withdrawal,Withdrawal
+,,,,,
+moderate,Sterilization,Sterilization,Sterilization,Sterilization,Sterilization
+moderate,Condom,Condom,Condom,Condom,Condom
+moderate,FAM,FAM,FAM,FAM,FAM
+moderate,Spermicide Gel,Spermicide Gel,Spermicide Gel,Spermicide Gel,Spermicide Gel
+moderate,Withdrawal,Withdrawal,Withdrawal,Withdrawal,Withdrawal
+,,,,,
+severe,Sterilization,Sterilization,Sterilization,Sterilization,Sterilization
+severe,Condom,Condom,Condom,Condom,Condom
+severe,FAM,FAM,FAM,FAM,FAM
+severe,Spermicide Gel,Spermicide Gel,Spermicide Gel,Spermicide Gel,Spermicide Gel
+severe,Withdrawal,Withdrawal,Withdrawal,Withdrawal,Withdrawal

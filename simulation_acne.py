@@ -919,7 +919,7 @@ for input_idx, input_arr in enumerate(inputs):
     for i in range(n):
         # Update weights for cost effectiveness
         multiplier = i + 1
-        current_weights_negative = [-15 + (i*3), -25 + (i*3), -50 + (i*3)]
+        current_weights_negative = [-15 + (i*3), -25 + (i*5), -50 + (i*10)]
         current_weights_positive = 3
 
         # Create a copy of the weights dictionary for this iteration
@@ -983,7 +983,7 @@ for input_key, results in all_results.items():
     
     for i in range(n):
         multiplier = i + 1
-        weights_neg = [-15 + (multiplier*3), -25 + (multiplier*3), -50 + (multiplier*3)]
+        weights_neg = [-15 + (multiplier*3), -25 + (multiplier*5), -50 + (multiplier*10)]
         weights_pos = 3
         #weight_key = f"({', '.join(map(str, weights_neg, weights_pos))})"
         weight_key = f"({', '.join(map(str, [current_weights_negative, current_weights_positive]))})"
@@ -1061,7 +1061,7 @@ for input_idx, input_arr in enumerate(inputs):
     
     for i in range(n):
         multiplier = i + 1
-        current_weights_negative = [-15 + (i*3), -25 + (i*3), -50 + (i*3)]
+        current_weights_negative = [-15 + (i*3), -25 + (i*5), -50 + (i*10)]
         current_weights_positive = 3
 
         # Create a copy of the weights dictionary for this iteration
@@ -1110,7 +1110,7 @@ for input_idx, input_arr in enumerate(inputs):
             scores_over_weights[method].append(score)
 
     # Create x-axis labels showing the actual weight ranges
-    x_labels = [f"({-15 + (i*3)}, {-25 + (i*3)}, {-50 + (i*3)}, +3)" for i in range(n)]
+    x_labels = [f"({-15 + (i*3)}, {-25 + (i*5)}, {-50 + (i*10)}, +3)" for i in range(n)]
 
     # Plot each method's scores with manually chosen distinct colors
     for (method, scores), color in zip(scores_over_weights.items(), distinct_colors):

@@ -1017,4 +1017,73 @@ for ce_index, ce_value in enumerate(cost_effectiveness):
     plt.savefig(filename, dpi=300, bbox_inches='tight')
     
     # Show the plot
-    plt.show()
+    #plt.show()
+
+
+import matplotlib.pyplot as plt
+
+# Define weight multipliers
+weight_multipliers = range(1, 21)  # 1 to 20
+acne_multipliers = range(-50, 4)  # -50 to +3
+
+# Define a list of very distinct colors
+distinct_colors = [
+    '#FF0000',  # Red
+    '#0000FF',  # Blue
+    '#FFD700',  # Gold
+    '#FF1493',  # Deep Pink
+    '#00FF00',  # Lime
+    '#8B008B',  # Dark Magenta
+    '#FF8C00',  # Dark Orange
+    '#00FFFF',  # Cyan
+    '#800000',  # Maroon
+    '#000080',  # Navy
+    '#808000',  # Olive
+    '#FF00FF',  # Magenta
+    '#008080',  # Teal
+    '#FFA500',  # Orange
+    '#4B0082'   # Indigo
+]
+
+# Function to calculate the score
+def calculate_score(a, b, c, x, y):
+    return a + b * x + c * y
+
+# Create a new figure for the combined plot
+fig = plt.figure(figsize=(12, 8))
+ax = fig.add_subplot(111, projection='3d')
+
+# Iterate over each contraceptive method
+for method, color in zip(weights_cost_effectiveness_to_change.keys(), distinct_colors):
+    # Calculate the average score due to other inputs (a)
+    a = np.mean([calculate_scores_for_input(input_arr, weights_cost_effectiveness_to_change, original_weights)[method] for input_arr in inputs])
+    
+    # Get the input score for cost effectiveness (b)
+    b = np.mean([input_arr[0] for input_arr in inputs])
+    
+    # Get the input score for acne (c)
+    c = np.mean([input_arr[11] for input_arr in inputs])
+    
+    # Create a meshgrid for weight multipliers
+    X, Y = np.meshgrid(weight_multipliers, acne_multipliers)
+    
+    # Calculate the score (Z) for each combination of weight multipliers
+    Z = calculate_score(a, b, c, X, Y)
+    
+    # Plot the surface
+    ax.plot_surface(X, Y, Z, color=color, alpha=0.6, label=method)
+
+# Customize the plot
+ax.set_xlabel('Weight Multiplier for Cost Effectiveness')
+ax.set_ylabel('Weight Multiplier for Acne')
+ax.set_zlabel('Contraceptive Score')
+ax.set_title('Contraceptive Scores vs Weight Multipliers for Cost Effectiveness and Acne')
+ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', ncol=2)
+plt.grid(True)
+
+# Save the plot to a file
+filename = 'combined_contraceptive_scores_viz.png'  # or .pdf, .jpg, etc.
+plt.savefig(filename, dpi=300, bbox_inches='tight')
+
+# Show the plot
+plt.show()

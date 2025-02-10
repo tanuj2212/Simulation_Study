@@ -553,7 +553,7 @@ distinct_colors = [
 ]
 
 input_labels = ['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp']
-
+'''
 # Create separate plots for each input
 for input_arr, input_label in zip(inputs, input_labels):
     # Create a new figure for each input
@@ -587,6 +587,56 @@ for input_arr, input_label in zip(inputs, input_labels):
     plt.tight_layout()
     filename = f'period_{input_label}_viz.png'  # or .pdf, .jpg, etc.
     plt.savefig(filename, dpi=300, bbox_inches='tight')
-    
+    '''
     # Show each plot
     #plt.show()
+
+import matplotlib.pyplot as plt
+
+weight_multipliers = [-60, -40, -20, 20, 40, 60]
+weight_labels = ['-60', '-40', '-20', '20', '40', '60']
+
+# Create a new figure
+plt.figure(figsize=(12, 8))
+
+# Calculate scores for each weight multiplier
+scores_over_weights = {method: [] for method in calculate_scores(inputs[0], 1).keys()}
+
+for multiplier in weight_multipliers:
+    scores = calculate_scores(inputs[0], multiplier)
+    for method, score in scores.items():
+        scores_over_weights[method].append(score)
+
+# Plot each method's scores
+for method, scores in scores_over_weights.items():
+    plt.plot(weight_multipliers, scores, label=method, marker='o')
+
+# Customize the plot
+plt.xlabel('Weight for Cost Effectiveness', labelpad=10)
+plt.ylabel('Contraceptive Score', labelpad=10)
+plt.title('Contraceptive Scores vs Weight for Cost Effectiveness')
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.grid(True)
+
+# Set x-axis ticks and labels
+plt.xticks(weight_multipliers, weight_labels, rotation=45)
+
+# Adjust layout to prevent label cutoff
+plt.tight_layout()
+
+# Show the plot
+plt.axhline(0, color='black', linewidth=1)
+plt.axvline(0, color='black', linewidth=1)
+plt.grid(color='gray', linestyle='--', linewidth=0.5)
+plt.ylim(-550, 200)
+# Move x-axis labels to be right beside the axis
+for label in plt.gca().get_xticklabels():
+    label.set_horizontalalignment('right')
+    label.set_position((label.get_position()[0], 0))
+
+# Move y-axis labels to be right beside the axis
+for label in plt.gca().get_yticklabels():
+    label.set_verticalalignment('top')
+    label.set_position((0, label.get_position()[1]))
+
+plt.show()

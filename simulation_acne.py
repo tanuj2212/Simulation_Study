@@ -1133,3 +1133,4 @@ for input_idx, input_arr in enumerate(inputs):
     filename = f'acne_{input_identifier}_viz.png'  # or .pdf, .jpg, etc.
     plt.savefig(filename, dpi=300, bbox_inches='tight')
     plt.show()
+

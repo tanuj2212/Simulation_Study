@@ -1902,7 +1902,7 @@ def change_score_hormonal_iud(arr, weights):
     elif arr[2] == "imp":
         hormonal_iud_score += weights[1][4]
     else:
-        hormonal_iud_score += weights[0][5]
+        hormonal_iud_score += weights[1][5]
 
     if arr[3] == "v_unp":
         hormonal_iud_score += weights[2][0]

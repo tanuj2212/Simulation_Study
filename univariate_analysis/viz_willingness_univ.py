@@ -349,7 +349,7 @@ original_weight_copper_IUD = [
 original_weight_hormonal_IUD = [
     [-3, -2, -1, 1, 2, 3],  # weights for arr[1] values: ["v_unp", "unp", "sl_unp", "neutral", "sl_imp", "imp"]
     [-3, -2, -1, 1, 2, 3],  # weights for arr[2]
-    [3, 2, 1, 0, -1, -2, -3],  # weights for arr[3]
+    [3, 2, 1, -1, -2, -3],  # weights for arr[3]
     3,  # weight for arr[4] == "yearly"
     [3, 0],  # weights for arr[5]: ["p", "ep"]
     [-3, -2, -1, 1, 2, 3],  # weights for arr[6]
@@ -544,5 +544,6 @@ plt.tight_layout()
 plt.axhline(0, color='black', linewidth=1)
 plt.axvline(0, color='black', linewidth=1)
 plt.grid(color='gray', linestyle='--', linewidth=0.5)
-plt.ylim(-550, 200)
-plt.show()
+plt.ylim(-550, 100)
+plt.savefig("willingness_univ_viz", dpi=300, bbox_inches='tight')
+#plt.show()

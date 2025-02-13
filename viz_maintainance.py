@@ -348,7 +348,7 @@ original_weight_copper_IUD = [
 original_weight_hormonal_IUD = [
     [-3, -2, -1, 1, 2, 3],  # weights for arr[1] values: ["v_unp", "unp", "sl_unp", "neutral", "sl_imp", "imp"]
     [-3, -2, -1, 1, 2, 3],  # weights for arr[2]
-    [3, 2, 1, 0, -1, -2, -3],  # weights for arr[3]
+    [3, 2, 1, -1, -2, -3],  # weights for arr[3]
     3,  # weight for arr[4] == "yearly"
     [3, 0],  # weights for arr[5]: ["p", "ep"]
     [-3, -2, -1, 1, 2, 3],  # weights for arr[6]
@@ -589,6 +589,58 @@ for input_arr, input_label in zip(inputs, input_labels):
     # Set x-axis ticks and labels
     plt.xticks(range(len(weight_multipliers)), x_labels, rotation=45)
 
+    # Adjust layout to prevent label cutoff
+    plt.tight_layout()
+    filename = f'maintainance_{input_label}_viz.png'  # or .pdf, .jpg, etc.
+    plt.savefig(filename, dpi=300, bbox_inches='tight')
+    
+    # Show each plot
+    #plt.show()
+
+# Define a function to group overlapping contraceptives
+def group_overlapping_scores(scores_dict):
+    grouped_scores = {}
+    for method, scores in scores_dict.items():
+        scores_tuple = tuple(scores)
+        if scores_tuple in grouped_scores:
+            grouped_scores[scores_tuple].append(method)
+        else:
+            grouped_scores[scores_tuple] = [method]
+    return grouped_scores
+
+# Create separate plots for each input
+for input_arr, input_label in zip(inputs, input_labels):
+    # Create a new figure for each input
+    plt.figure(figsize=(12, 8))
+    
+    # Calculate scores for each weight multiplier
+    scores_over_weights = {method: [] for method in calculate_scores(input_arr, 1).keys()}
+    for multiplier in weight_multipliers:
+        scores = calculate_scores(input_arr, multiplier)
+        for method, score in scores.items():
+            scores_over_weights[method].append(score)
+
+    # Group overlapping scores
+    grouped_scores = group_overlapping_scores(scores_over_weights)
+
+    # Create x-axis labels showing the actual weight ranges
+    x_labels = [f"({3*m})" for m in weight_multipliers]
+
+    # Plot each group of overlapping scores with manually chosen distinct colors
+    for (scores, methods), color in zip(grouped_scores.items(), distinct_colors):
+        label = '+'.join(methods)
+        plt.plot(range(len(weight_multipliers)), scores, label=label, marker='o', color=color, linewidth=2)
+
+    # Customize the plot
+    plt.xlabel('Weight Range')
+    plt.ylabel('Contraceptive Score')
+    plt.title(f'Contraceptive Scores vs Weight Range for maintainance (Input: {input_label})')
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.grid(True)
+
+    # Set x-axis ticks and labels
+    plt.xticks(range(len(weight_multipliers)), x_labels, rotation=45)
+    plt.ylim(-550, 100)
     # Adjust layout to prevent label cutoff
     plt.tight_layout()
     filename = f'maintainance_{input_label}_viz.png'  # or .pdf, .jpg, etc.

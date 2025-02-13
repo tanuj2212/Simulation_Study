@@ -348,7 +348,7 @@ original_weight_copper_IUD = [
 original_weight_hormonal_IUD = [
     [-3, -2, -1, 1, 2, 3],  # weights for arr[1] values: ["v_unp", "unp", "sl_unp", "neutral", "sl_imp", "imp"]
     [-3, -2, -1, 1, 2, 3],  # weights for arr[2]
-    [3, 2, 1, 0, -1, -2, -3],  # weights for arr[3]
+    [3, 2, 1, -1, -2, -3],  # weights for arr[3]
     3,  # weight for arr[4] == "yearly"
     [3, 0],  # weights for arr[5]: ["p", "ep"]
     [-3, -2, -1, 1, 2, 3],  # weights for arr[6]
@@ -565,7 +565,7 @@ distinct_colors = [
     '#FFA500',  # Orange
     '#4B0082'   # Indigo
 ]
-
+'''
 def plot_contraceptive_scores(neg_scores, pos_scores, zero_scores):
     # Set up the plot
     plt.figure(figsize=(12, 8))
@@ -639,4 +639,103 @@ def plot_contraceptive_scores(neg_scores, pos_scores, zero_scores):
 
 # Example usage:
 plt = plot_contraceptive_scores(neg_scores, pos_scores, zero_scores)
-plt.show()
+filename = f'gender_dysphoria_pregnancy_univ_viz.png'  # or .pdf, .jpg, etc.
+plt.savefig(filename, dpi=300, bbox_inches='tight')
+#plt.show()
+'''
+
+print(neg_scores)
+
+def plot_contraceptive_scores(neg_scores, pos_scores, zero_scores):
+    # Set up the plot
+    plt.figure(figsize=(12, 8))
+    
+    # Define weight labels and multipliers
+    weight_labels = ['-50', '-25', '-15', '0'] + [str(i) for i in range(3, 63, 3)]
+    weight_multipliers = [-50, -25, -15, 0] + list(range(3, 63, 3))
+    
+    # Prepare data for each contraceptive type
+    all_scores = {}
+
+    # Process negative scores
+    for method in neg_scores['severe'].keys():
+        scores = [neg_scores[severity][method] for severity in ['severe', 'moderate', 'mild', 'no']]
+        scores.extend([None] * (len(weight_multipliers) - len(scores)))  # Pad with None for positive range
+        all_scores[method] = scores
+
+    # Process positive scores
+    for method in pos_scores['3'].keys():
+        scores = [None] * 4  # Pad with None for negative range
+        method_scores = [pos_scores[str(weight)][method] for weight in range(3, 63, 3)]
+        scores.extend(method_scores)
+        all_scores[method] = scores
+
+    # Process zero scores (constant across the range)
+    for method in zero_scores['1'].keys():
+        scores = [zero_scores['1'][method]] * len(weight_multipliers)
+        all_scores[method] = scores
+
+    # Group methods with identical score patterns
+    grouped_methods = {}
+    for method, scores in all_scores.items():
+        scores_tuple = tuple(scores)  # Convert scores list to tuple for hashing
+        if scores_tuple in grouped_methods:
+            grouped_methods[scores_tuple].append(method)
+        else:
+            grouped_methods[scores_tuple] = [method]
+
+    distinct_colors = [
+        '#FF0000',  # Red
+        '#0000FF',  # Blue
+        '#FFD700',  # Gold
+        '#FF1493',  # Deep Pink
+        '#00FF00',  # Lime
+        '#8B008B',  # Dark Magenta
+        '#FF8C00',  # Dark Orange
+        '#00FFFF',  # Cyan
+        '#800000',  # Maroon
+        '#000080',  # Navy
+        '#808000',  # Olive
+        '#FF00FF',  # Magenta
+        '#008080',  # Teal
+        '#FFA500',  # Orange
+        '#4B0082'   # Indigo
+    ]
+
+    # Plot each unique score pattern
+    for i, (scores_tuple, methods) in enumerate(grouped_methods.items()):
+        combined_label = ' + '.join(methods)
+        valid_indices = [i for i, score in enumerate(scores_tuple) if score is not None]
+        valid_scores = [score for score in scores_tuple if score is not None]
+        valid_multipliers = [weight_multipliers[i] for i in valid_indices]
+        
+        plt.plot(valid_multipliers, valid_scores, 
+                 label=combined_label, 
+                 marker='o',
+                 color=distinct_colors[i % len(distinct_colors)])
+
+    # Customize the plot
+    plt.xlabel('Weight Categories')
+    plt.ylabel('Contraceptive Score')
+    plt.title('Contraceptive Scores across weights for Gender Dysphoria Pregnancy')
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.grid(True, color='gray', linestyle='--', linewidth=0.5)
+    plt.ylim(-550, 100)
+
+    # Set x-ticks
+    plt.xticks(weight_multipliers, weight_labels, rotation=45)
+
+    # Add axes at y=0 and x=0
+    plt.axhline(0, color='black', linewidth=1)
+    plt.axvline(0, color='black', linewidth=1)
+
+    # Adjust layout
+    plt.tight_layout()
+    
+    return plt
+
+# Example usage:
+plt = plot_contraceptive_scores(neg_scores, pos_scores, zero_scores)
+filename = f'gdp_univ_viz.png'  # or .pdf, .jpg, etc.
+plt.savefig(filename, dpi=300, bbox_inches='tight')
+#plt.show()

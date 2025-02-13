@@ -591,7 +591,6 @@ def calculate_scores_positive(input_arr, positive_weights):
     }
 
     for method in weights_dict:
-        if method == "arm_implant":
             if method == 'arm_implant':
                 weights_dict[method][7] = positive_weights
             elif method == 'mini_pill':
@@ -703,7 +702,7 @@ for i in range(1, 25):
 # Plotting the graph
 import matplotlib.pyplot as plt
 import numpy as np
-
+'''
 def plot_contraceptive_scores(neg_scores, pos_scores, zero_scores):
     plt.figure(figsize=(15, 8))
     
@@ -768,7 +767,7 @@ def plot_contraceptive_scores(neg_scores, pos_scores, zero_scores):
 # Example usage:
 plt = plot_contraceptive_scores(neg_scores, pos_scores, zero_scores)
 plt.show()
-
+'''
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -846,7 +845,7 @@ def plot_contraceptive_scores(neg_scores, pos_scores, zero_scores):
     # Customize the plot
     plt.xlabel('Weight Categories')
     plt.ylabel('Contraceptive Score')
-    plt.title('Contraceptive Scores Across Categories')
+    plt.title('Contraceptive Scores across weights for Acne')
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.grid(True, color='gray', linestyle='--', linewidth=0.5)
     

@@ -465,11 +465,11 @@ def score_ring(arr, weights):
     if arr[23] == 'no':
         pass
     elif arr[23] == 'mild':
-        ring_score += weights[22][0]
+        ring_score += weights[22]
     elif arr[23] == 'moderate':
-        ring_score += weights[22][1]
+        ring_score += weights[22]
     else:
-        ring_score += weights[22][2]
+        ring_score += weights[22]
 
     # HRT
     if arr[24] == 'no':

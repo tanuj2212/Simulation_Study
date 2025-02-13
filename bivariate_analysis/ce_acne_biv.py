@@ -553,7 +553,7 @@ def calculate_scores_ce_acne_pos(input_arr, positive_weights):
             elif method == 'shot':
                 weights_dict[method][7] = positive_weights
             else:
-                method[0] = weights
+                weights_dict[method][0] = weights
 
     original_weights = {
     'copper_iud': original_weight_copper_IUD,
@@ -571,9 +571,6 @@ def calculate_scores_ce_acne_pos(input_arr, positive_weights):
     cervical_cap_arr = ["cervical_cap", input_arr[0], input_arr[4], input_arr[8], input_arr[9], input_arr[25], input_arr[26]]
     fam_arr = ["fam", input_arr[0], input_arr[4], input_arr[5], input_arr[26]]
     copper_iud_arr = ["copper_iud", input_arr[1], input_arr[4], input_arr[8], input_arr[9], input_arr[10], input_arr[24], input_arr[25], input_arr[26]]
-    hormonal_iud_arr = ["hormonal_iud", input_arr[1], input_arr[2], input_arr[3], input_arr[4], input_arr[7], input_arr[8], input_arr[9], input_arr[10], input_arr[11], input_arr[12], input_arr[13], input_arr[17], input_arr[20], input_arr[21], input_arr[24], input_arr[25], input_arr[26]]
-    patch_arr = ["patch", input_arr[0], input_arr[1], input_arr[2], input_arr[3], input_arr[4], input_arr[7], input_arr[9], input_arr[11], input_arr[12], input_arr[13], input_arr[14], input_arr[15], input_arr[16], input_arr[17], input_arr[18], input_arr[19], input_arr[20], input_arr[21], input_arr[22], input_arr[23], input_arr[24], input_arr[26], input_arr[27]]
-    combo_pill_arr = ["combo_pill", input_arr[0], input_arr[1], input_arr[2], input_arr[3], input_arr[4], input_arr[7], input_arr[9], input_arr[11], input_arr[12], input_arr[13], input_arr[14], input_arr[15], input_arr[16], input_arr[17], input_arr[18], input_arr[19], input_arr[20], input_arr[21], input_arr[22], input_arr[23], input_arr[24], input_arr[26], input_arr[27]]
     sterilization_arr = ["sterilization", input_arr[1], input_arr[2], input_arr[9], input_arr[10], input_arr[20], input_arr[21], input_arr[24], input_arr[26]]
     gel_arr = ["gel", input_arr[0], input_arr[4], input_arr[5], input_arr[8]]
     withdrawal_arr = ["withdrawal", input_arr[0], input_arr[4], input_arr[5], input_arr[26]]
@@ -591,9 +588,6 @@ def calculate_scores_ce_acne_pos(input_arr, positive_weights):
     cervical_cap_score = change_score_cervical_cap(cervical_cap_arr, weights_dict['cervical_cap'])
     fam_score = change_fam(fam_arr, weights_dict['FAM'])
     copper_iud_score = change_copper_iud(copper_iud_arr, original_weights['copper_iud'])
-    hormonal_iud_score = change_score_hormonal_iud(hormonal_iud_arr, original_weights['hormonal_iud'])
-    patch_score = change_score_patch(patch_arr, weights_dict['patch'])
-    combo_pill_score = change_score_combo_pill(combo_pill_arr, weights_dict['combo_pill'])
     sterilization_score = change_score_sterilization(sterilization_arr, original_weights['sterilization'])
     gel_score = change_score_gel(gel_arr, weights_dict['spermicide'])
     withdrawal_score = change_score_withdrawal(withdrawal_arr, weights_dict['withdrawal'])
@@ -603,13 +597,13 @@ def calculate_scores_ce_acne_pos(input_arr, positive_weights):
         "Cervical Cap": cervical_cap_score,
         "FAM": fam_score,
         "Copper IUD": copper_iud_score,
-        "Hormonal IUD": hormonal_iud_score,
-        "Patch": patch_score,
-        "Combination Pill": combo_pill_score,
         "Sterilization": sterilization_score,
         "Spermicide Gel": gel_score,
         "Withdrawal": withdrawal_score,
-        "Arm Implant": arm_implant_score
+        "Arm Implant": arm_implant_score,
+        "Mini Pill": mini_pill_score,
+        "Ring": ring_score,
+        "Shot": shot_score
     }
 
 v_unp_dict = {
@@ -752,3 +746,212 @@ for arr in inputs[24:28]:
         scores_severe = calculate_scores_ce_acne_neg(arr)
         v_imp_dict["severe"] = calculate_scores_ce_acne_neg(arr)
 
+# POSITIVE
+
+v_unp_dict_pos = {
+
+}
+
+for arr in inputs[0:4]:
+    for i in range(1, 21):
+        if arr[11] == "no":
+            scores_no = calculate_scores_ce_acne_pos(arr, i*3)
+            v_unp_dict_pos["no"] = scores_no
+        else:
+            scores_yes = calculate_scores_ce_acne_pos(arr, i*3)
+            v_unp_dict_pos[f"{i*3}"] = scores_yes
+            unp_dict_pos = {}
+
+unp_dict_pos = {
+
+}
+for arr in inputs[4:8]:
+    for i in range(1, 21):
+        if arr[11] == "no":
+            scores_no = calculate_scores_ce_acne_pos(arr, i * 3)
+            unp_dict_pos["no"] = scores_no
+        else:
+            scores_yes = calculate_scores_ce_acne_pos(arr, i * 3)
+            unp_dict_pos[f"{i * 3}"] = scores_yes
+
+sl_unp_dict_pos = {}
+
+for arr in inputs[8:12]:
+    for i in range(1, 21):
+        if arr[11] == "no":
+            scores_no = calculate_scores_ce_acne_pos(arr, i * 3)
+            sl_unp_dict_pos["no"] = scores_no
+        else:
+            scores_yes = calculate_scores_ce_acne_pos(arr, i * 3)
+            sl_unp_dict_pos[f"{i * 3}"] = scores_yes
+
+neutral_dict_pos = {}
+
+for arr in inputs[12:16]:
+    for i in range(1, 21):
+        if arr[11] == "no":
+            scores_no = calculate_scores_ce_acne_pos(arr, i * 3)
+            neutral_dict_pos["no"] = scores_no
+        else:
+            scores_yes = calculate_scores_ce_acne_pos(arr, i * 3)
+            neutral_dict_pos[f"{i * 3}"] = scores_yes
+
+sl_imp_dict_pos = {}
+
+for arr in inputs[16:20]:
+    for i in range(1, 21):
+        if arr[11] == "no":
+            scores_no = calculate_scores_ce_acne_pos(arr, i * 3)
+            sl_imp_dict_pos["no"] = scores_no
+        else:
+            scores_yes = calculate_scores_ce_acne_pos(arr, i * 3)
+            sl_imp_dict_pos[f"{i * 3}"] = scores_yes
+
+imp_dict_pos = {}
+
+for arr in inputs[20:24]:
+    for i in range(1, 21):
+        if arr[11] == "no":
+            scores_no = calculate_scores_ce_acne_pos(arr, i * 3)
+            imp_dict_pos["no"] = scores_no
+        else:
+            scores_yes = calculate_scores_ce_acne_pos(arr, i * 3)
+            imp_dict_pos[f"{i * 3}"] = scores_yes
+
+v_imp_dict_pos = {}
+
+for arr in inputs[24:28]:
+    for i in range(1, 21):
+        if arr[11] == "no":
+            scores_no = calculate_scores_ce_acne_pos(arr, i * 3)
+            v_imp_dict_pos["no"] = scores_no
+        else:
+            scores_yes = calculate_scores_ce_acne_pos(arr, i * 3)
+            v_imp_dict_pos[f"{i * 3}"] = scores_yes
+
+
+import plotly.graph_objects as go
+import numpy as np
+
+# Define the x and y axes
+x_labels = ['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp']
+y_labels = ['no', 'mild', 'moderate', 'severe'] + [str(i*3) for i in range(1, 21)]
+
+# Create coordinate matrices
+x_coords = np.arange(len(x_labels))
+y_coords = np.arange(len(y_labels))
+X, Y = np.meshgrid(x_coords, y_coords)
+
+# Dictionary mapping preference levels to their respective dictionaries
+preference_dicts = {
+    'v_unp': (v_unp_dict, v_unp_dict_pos),
+    'unp': (unp_dict, unp_dict_pos),
+    'sl_unp': (sl_unp_dict, sl_unp_dict_pos),
+    'neutral': (neutral_dict, neutral_dict_pos),
+    'sl_imp': (sl_imp_dict, sl_imp_dict_pos),
+    'imp': (imp_dict, imp_dict_pos),
+    'v_imp': (v_imp_dict, v_imp_dict_pos)
+}
+
+# List of all contraceptive methods
+methods = [
+    "Condom", "Internal Condom", "Cervical Cap", "FAM", "Copper IUD",
+    "Hormonal IUD", "Patch", "Combination Pill", "Sterilization",
+    "Spermicide Gel", "Withdrawal", "Arm Implant", "Mini Pill",
+    "Ring", "Shot"
+]
+
+# Create color scale
+colors = [
+    '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
+    '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf',
+    '#aec7e8', '#ffbb78', '#98df8a', '#ff9896', '#c5b0d5'
+]
+
+# Create the 3D visualization
+fig = go.Figure()
+
+for method_idx, method in enumerate(methods):
+    # Initialize Z matrix for this method
+    Z = np.zeros((len(y_labels), len(x_labels)))
+    
+    # Fill Z matrix
+    for x_idx, x_label in enumerate(x_labels):
+        neg_dict, pos_dict = preference_dicts[x_label]
+        
+        # Fill negative and zero values
+        for y_idx, y_label in enumerate(y_labels[:4]):  # no, mild, moderate, severe
+            if y_label in neg_dict and method in neg_dict[y_label]:
+                Z[y_idx, x_idx] = neg_dict[y_label][method]
+        
+        # Fill positive values
+        for y_idx, y_label in enumerate(y_labels[4:], start=4):  # 3, 6, 9, ..., 60
+            if y_label in pos_dict and method in pos_dict[y_label]:
+                Z[y_idx, x_idx] = pos_dict[y_label][method]
+
+    # Add surface plot for this method
+    fig.add_trace(go.Surface(
+        x=X,
+        y=Y,
+        z=Z,
+        name=method,
+        showscale=True,
+        colorscale=[[0, colors[method_idx]], [1, colors[method_idx]]],
+        opacity=0.7
+    ))
+
+# Update layout
+fig.update_layout(
+    title='3D Visualization of Contraceptive Scores',
+    scene=dict(
+        xaxis=dict(
+            title='Preference Level',
+            ticktext=x_labels,
+            tickvals=list(range(len(x_labels)))
+        ),
+        yaxis=dict(
+            title='Acne Severity/Positive Weight',
+            ticktext=y_labels,
+            tickvals=list(range(len(y_labels)))
+        ),
+        zaxis=dict(title='Score')
+    ),
+    showlegend=True,
+    legend=dict(
+        x=1.1,
+        y=0.5
+    ),
+    width=1200,
+    height=800
+)
+
+# Add buttons to show/hide individual surfaces
+buttons = []
+for method_idx, method in enumerate(methods):
+    visible = [False] * len(methods)
+    visible[method_idx] = True
+    buttons.append(dict(
+        label=method,
+        method='update',
+        args=[{'visible': visible}]
+    ))
+
+# Add "Show All" button
+buttons.append(dict(
+    label="Show All",
+    method='update',
+    args=[{'visible': [True] * len(methods)}]
+))
+
+fig.update_layout(
+    updatemenus=[dict(
+        type="dropdown",
+        direction="down",
+        x=0.1,
+        y=1.1,
+        showactive=True,
+        buttons=buttons
+    )]
+)
+
+fig.show()

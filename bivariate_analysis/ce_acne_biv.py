@@ -1306,5 +1306,5 @@ fig.update_layout(
     )]
 )
 
-fig.show()
-fig.write_html("/Users/sanyamshah/Simulation_Study/bivariate_analysis/ce_acne_3d.html")
+#fig.show()
+#fig.write_html("/Users/sanyamshah/Simulation_Study/bivariate_analysis/ce_acne_3d.html")

@@ -572,17 +572,17 @@ def score_shot(arr):
     
     if arr[9] == 'no':
         pass
-    elif arr[9] == 'mild' and arr[8] != 'no':
+    elif arr[9] == 'mild' and arr[10] != 'no':
         shot_score -= 7.5
-    elif arr[9] == 'moderate' and arr[8] != 'no':
+    elif arr[9] == 'moderate' and arr[10] != 'no':
         shot_score -= 12.5
-    elif arr[9]=='severe' and arr[8] != 'no':
+    elif arr[9]=='severe' and arr[10] != 'no':
         shot_score -= 25
-    elif arr[9] == 'mild' and arr[8] == 'no':
+    elif arr[9] == 'mild' and arr[10] == 'no':
         shot_score -= 15
-    elif arr[9] == 'moderate' and arr[8] == 'no':
+    elif arr[9] == 'moderate' and arr[10] == 'no':
         shot_score -= 25
-    elif arr[9]== 'severe' and arr[8] == 'no':
+    elif arr[9]== 'severe' and arr[10] == 'no':
         shot_score -= 50
     
     if arr[10] == 'no':
@@ -779,17 +779,17 @@ def change_score_shot(arr, weights):
     # Anxiety
     if arr[9] == 'no':
         pass
-    elif arr[9] == 'mild' and arr[8] != 'no':
+    elif arr[9] == 'mild' and arr[10] != 'no':
         shot_score += weights[8][0]
-    elif arr[9] == 'moderate' and arr[8] != 'no':
+    elif arr[9] == 'moderate' and arr[10] != 'no':
         shot_score += weights[8][1]
-    elif arr[9]=='severe' and arr[8] != 'no':
+    elif arr[9]=='severe' and arr[10] != 'no':
         shot_score += weights[8][2]
-    elif arr[9] == 'mild' and arr[8] == 'no':
+    elif arr[9] == 'mild' and arr[10] == 'no':
         shot_score += weights[8][3]
-    elif arr[9] == 'moderate' and arr[8] == 'no':
+    elif arr[9] == 'moderate' and arr[10] == 'no':
         shot_score += weights[8][4]
-    elif arr[9]== 'severe' and arr[8] == 'no':
+    elif arr[9]== 'severe' and arr[10] == 'no':
         shot_score += weights[8][5]
     
     # Depression
@@ -993,17 +993,17 @@ def score_combo_pill(arr):
 
     if arr[9] == 'no':
         pass
-    elif arr[9] == 'mild' and arr[8] != 'no':
+    elif arr[9] == 'mild' and arr[10] != 'no':
         combo_pill_score -= 7.5
-    elif arr[9] == 'moderate' and arr[8] != 'no':
+    elif arr[9] == 'moderate' and arr[10] != 'no':
         combo_pill_score -= 12.5
-    elif arr[9]=='severe' and arr[8] != 'no':
+    elif arr[9]=='severe' and arr[10] != 'no':
         combo_pill_score -= 25
-    elif arr[9] == 'mild' and arr[8] == 'no':
+    elif arr[9] == 'mild' and arr[10] == 'no':
         combo_pill_score -= 15
-    elif arr[9] == 'moderate' and arr[8] == 'no':
+    elif arr[9] == 'moderate' and arr[10] == 'no':
         combo_pill_score -= 25
-    elif arr[9]== 'severe' and arr[8] == 'no':
+    elif arr[9]== 'severe' and arr[10] == 'no':
         combo_pill_score -= 50
     
     if arr[10] == 'no':
@@ -1194,17 +1194,17 @@ def change_score_combo_pill(arr, weights):
 
     if arr[9] == 'no':
         pass
-    elif arr[9] == 'mild' and arr[8] != 'no':
+    elif arr[9] == 'mild' and arr[10] != 'no':
         combo_pill_score += weights[8][0]
-    elif arr[9] == 'moderate' and arr[8] != 'no':
+    elif arr[9] == 'moderate' and arr[10] != 'no':
         combo_pill_score += weights[8][1]
-    elif arr[9]=='severe' and arr[8] != 'no':
+    elif arr[9]=='severe' and arr[10] != 'no':
         combo_pill_score += weights[8][2]
-    elif arr[9] == 'mild' and arr[8] == 'no':
+    elif arr[9] == 'mild' and arr[10] == 'no':
         combo_pill_score += weights[8][3]
-    elif arr[9] == 'moderate' and arr[8] == 'no':
+    elif arr[9] == 'moderate' and arr[10] == 'no':
         combo_pill_score += weights[8][4]
-    elif arr[9]== 'severe' and arr[8] == 'no':
+    elif arr[9]== 'severe' and arr[10] == 'no':
         combo_pill_score += weights[8][5]
     
     if arr[10] == 'no':
@@ -1394,17 +1394,17 @@ def score_patch(arr):
 
     if arr[9] == 'no':
         pass
-    elif arr[9] == 'mild' and arr[8] != 'no':
+    elif arr[9] == 'mild' and arr[10] != 'no':
         patch_score -= 7.5
-    elif arr[9] == 'moderate' and arr[8] != 'no':
+    elif arr[9] == 'moderate' and arr[10] != 'no':
         patch_score -= 12.5
-    elif arr[9]=='severe' and arr[8] != 'no':
+    elif arr[9]=='severe' and arr[10] != 'no':
         patch_score -= 25
-    elif arr[9] == 'mild' and arr[8] == 'no':
+    elif arr[9] == 'mild' and arr[10] == 'no':
         patch_score -= 15
-    elif arr[9] == 'moderate' and arr[8] == 'no':
+    elif arr[9] == 'moderate' and arr[10] == 'no':
         patch_score -= 25
-    elif arr[9]== 'severe' and arr[8] == 'no':
+    elif arr[9]== 'severe' and arr[10] == 'no':
         patch_score -= 50
     
     if arr[10] == 'no':
@@ -1594,17 +1594,17 @@ def change_score_patch(arr, weights):
 
     if arr[9] == 'no':
         pass
-    elif arr[9] == 'mild' and arr[8] != 'no':
+    elif arr[9] == 'mild' and arr[10] != 'no':
         patch_score += weights[8][0]
-    elif arr[9] == 'moderate' and arr[8] != 'no':
+    elif arr[9] == 'moderate' and arr[10] != 'no':
         patch_score += weights[8][1]
-    elif arr[9]=='severe' and arr[8] != 'no':
+    elif arr[9]=='severe' and arr[10] != 'no':
         patch_score += weights[8][2]
-    elif arr[9] == 'mild' and arr[8] == 'no':
+    elif arr[9] == 'mild' and arr[10] == 'no':
         patch_score += weights[8][3]
-    elif arr[9] == 'moderate' and arr[8] == 'no':
+    elif arr[9] == 'moderate' and arr[10] == 'no':
         patch_score += weights[8][4]
-    elif arr[9]== 'severe' and arr[8] == 'no':
+    elif arr[9]== 'severe' and arr[10] == 'no':
         patch_score += weights[8][5]
     
     if arr[10] == 'no':
@@ -1808,17 +1808,17 @@ def score_hormonal_iud(arr):
     
     if arr[10] == 'no':
         pass
-    elif arr[10] == 'mild' and arr[9] != 'no':
+    elif arr[10] == 'mild' and arr[11] != 'no':
         hormonal_iud_score -= 7.5
-    elif arr[10] == 'moderate' and arr[9] != 'no':
+    elif arr[10] == 'moderate' and arr[11] != 'no':
         hormonal_iud_score -= 12.5
-    elif arr[10]=='severe' and arr[9] != 'no':
+    elif arr[10]=='severe' and arr[11] != 'no':
         hormonal_iud_score -= 25
-    elif arr[10] == 'mild' and arr[9] == 'no':
+    elif arr[10] == 'mild' and arr[11] == 'no':
         hormonal_iud_score -= 15
-    elif arr[10] == 'moderate' and arr[9] == 'no':
+    elif arr[10] == 'moderate' and arr[11] == 'no':
         hormonal_iud_score -= 25
-    elif arr[10]== 'severe' and arr[9] == 'no':
+    elif arr[10]== 'severe' and arr[11] == 'no':
         hormonal_iud_score -= 50
     
     if arr[11] == 'no':
@@ -1985,17 +1985,17 @@ def change_score_hormonal_iud(arr, weights):
     
     if arr[10] == 'no':
         pass
-    elif arr[10] == 'mild' and arr[9] != 'no':
+    elif arr[10] == 'mild' and arr[11] != 'no':
         hormonal_iud_score += weights[9][0]
-    elif arr[10] == 'moderate' and arr[9] != 'no':
+    elif arr[10] == 'moderate' and arr[11] != 'no':
         hormonal_iud_score += weights[9][1]
-    elif arr[10]=='severe' and arr[9] != 'no':
+    elif arr[10]=='severe' and arr[11] != 'no':
         hormonal_iud_score += weights[9][2]
-    elif arr[10] == 'mild' and arr[9] == 'no':
+    elif arr[10] == 'mild' and arr[11] == 'no':
         hormonal_iud_score += weights[9][3]
-    elif arr[10] == 'moderate' and arr[9] == 'no':
+    elif arr[10] == 'moderate' and arr[11] == 'no':
         hormonal_iud_score += weights[9][4]
-    elif arr[10]== 'severe' and arr[9] == 'no':
+    elif arr[10]== 'severe' and arr[11] == 'no':
         hormonal_iud_score += weights[9][5]
     
     if arr[11] == 'no':

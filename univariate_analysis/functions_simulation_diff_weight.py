@@ -135,7 +135,7 @@ def ring(arr):
     elif arr[11] == 'severe' and arr[10] != 'no':
         ring_score -= 25
     elif arr[11] == 'mild' and arr[10] == 'no':
-        patch_score -= 15
+        ring_score -= 15
     elif arr[11] == 'moderate' and arr[10] == 'no':
         ring_score -= 25
     elif arr[11]== 'severe' and arr[10] == 'no':
@@ -532,6 +532,8 @@ def score_shot(arr):
     
     if arr[5] == 'p':
         shot_score +=3
+    elif arr[5] == 'ep':
+        shot_score += 3
     else:
         pass
 
@@ -1748,6 +1750,8 @@ def score_hormonal_iud(arr):
         hormonal_iud_score += 3
     
     if arr[5] == 'p':
+        hormonal_iud_score += 3
+    elif arr[5] == 'ep':
         hormonal_iud_score += 3
     else:
         pass

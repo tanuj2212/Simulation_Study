@@ -684,7 +684,7 @@ def plot_contraceptive_scores(zero_scores, pos_scores):
     # Customize the plot
     plt.xlabel('Weight Categories')
     plt.ylabel('Contraceptive Score')
-    plt.title('Contraceptive Scores across weights for Gender Dysphoria Vaginal Insertion')
+    plt.title('Contraceptive Scores across weights for Endometriosis')
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.grid(True, color='gray', linestyle='--', linewidth=0.5)
     plt.ylim(-550, 100)

@@ -221,12 +221,8 @@ def ring(arr):
 
     if arr[23] == 'no':
         pass
-    elif arr[23] == 'mild':
-        ring_score -= 7.5
-    elif arr[23] == 'moderate':
-        ring_score -= 12.5
     else:
-        ring_score -= 25
+        ring_score += 1.5
 
     # HRT
 
@@ -464,10 +460,6 @@ def score_ring(arr, weights):
     # GDP
     if arr[23] == 'no':
         pass
-    elif arr[23] == 'mild':
-        ring_score += weights[22]
-    elif arr[23] == 'moderate':
-        ring_score += weights[22]
     else:
         ring_score += weights[22]
 
@@ -1089,7 +1081,7 @@ def score_combo_pill(arr):
     if arr[22] == 'no':
         pass
     else:
-         combo_pill_score += 3
+         combo_pill_score += 1.5
     
     if arr[23] == 'no':
         pass
@@ -1490,7 +1482,7 @@ def score_patch(arr):
     if arr[22] == 'no':
         pass
     else:
-         patch_score += 3
+         patch_score += 1.5
     
     if arr[23] == 'no':
         pass

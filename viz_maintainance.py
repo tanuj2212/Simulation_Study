@@ -643,7 +643,7 @@ for input_arr, input_label in zip(inputs, input_labels):
     plt.ylim(-550, 100)
     # Adjust layout to prevent label cutoff
     plt.tight_layout()
-    filename = f'maintainance_{input_label}_viz.png'  # or .pdf, .jpg, etc.
+    filename = f'univariate_analysis/visualizations_univariate/personal_preferences/maintainance_{input_label}_viz.png'  # or .pdf, .jpg, etc.
     plt.savefig(filename, dpi=300, bbox_inches='tight')
     
     # Show each plot

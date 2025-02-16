@@ -135,7 +135,7 @@ def ring(arr):
     elif arr[11] == 'severe' and arr[10] != 'no':
         ring_score -= 25
     elif arr[11] == 'mild' and arr[10] == 'no':
-        patch_score -= 15
+        ring_score -= 15
     elif arr[11] == 'moderate' and arr[10] == 'no':
         ring_score -= 25
     elif arr[11]== 'severe' and arr[10] == 'no':
@@ -221,12 +221,8 @@ def ring(arr):
 
     if arr[23] == 'no':
         pass
-    elif arr[23] == 'mild':
-        ring_score -= 7.5
-    elif arr[23] == 'moderate':
-        ring_score -= 12.5
     else:
-        ring_score -= 25
+        ring_score += 1.5
 
     # HRT
 
@@ -464,12 +460,8 @@ def score_ring(arr, weights):
     # GDP
     if arr[23] == 'no':
         pass
-    elif arr[23] == 'mild':
-        ring_score += weights[22][0]
-    elif arr[23] == 'moderate':
-        ring_score += weights[22][1]
     else:
-        ring_score += weights[22][2]
+        ring_score += weights[22]
 
     # HRT
     if arr[24] == 'no':
@@ -531,7 +523,9 @@ def score_shot(arr):
         shot_score += 3
     
     if arr[5] == 'p':
-        shot_score +=3
+        shot_score += 3
+    elif arr[5] == 'ep':
+        shot_score += 3
     else:
         pass
 
@@ -572,17 +566,17 @@ def score_shot(arr):
     
     if arr[9] == 'no':
         pass
-    elif arr[9] == 'mild' and arr[8] != 'no':
+    elif arr[9] == 'mild' and arr[10] != 'no':
         shot_score -= 7.5
-    elif arr[9] == 'moderate' and arr[8] != 'no':
+    elif arr[9] == 'moderate' and arr[10] != 'no':
         shot_score -= 12.5
-    elif arr[9]=='severe' and arr[8] != 'no':
+    elif arr[9]=='severe' and arr[10] != 'no':
         shot_score -= 25
-    elif arr[9] == 'mild' and arr[8] == 'no':
+    elif arr[9] == 'mild' and arr[10] == 'no':
         shot_score -= 15
-    elif arr[9] == 'moderate' and arr[8] == 'no':
+    elif arr[9] == 'moderate' and arr[10] == 'no':
         shot_score -= 25
-    elif arr[9]== 'severe' and arr[8] == 'no':
+    elif arr[9]== 'severe' and arr[10] == 'no':
         shot_score -= 50
     
     if arr[10] == 'no':
@@ -779,17 +773,17 @@ def change_score_shot(arr, weights):
     # Anxiety
     if arr[9] == 'no':
         pass
-    elif arr[9] == 'mild' and arr[8] != 'no':
+    elif arr[9] == 'mild' and arr[10] != 'no':
         shot_score += weights[8][0]
-    elif arr[9] == 'moderate' and arr[8] != 'no':
+    elif arr[9] == 'moderate' and arr[10] != 'no':
         shot_score += weights[8][1]
-    elif arr[9]=='severe' and arr[8] != 'no':
+    elif arr[9]=='severe' and arr[10] != 'no':
         shot_score += weights[8][2]
-    elif arr[9] == 'mild' and arr[8] == 'no':
+    elif arr[9] == 'mild' and arr[10] == 'no':
         shot_score += weights[8][3]
-    elif arr[9] == 'moderate' and arr[8] == 'no':
+    elif arr[9] == 'moderate' and arr[10] == 'no':
         shot_score += weights[8][4]
-    elif arr[9]== 'severe' and arr[8] == 'no':
+    elif arr[9]== 'severe' and arr[10] == 'no':
         shot_score += weights[8][5]
     
     # Depression
@@ -993,17 +987,17 @@ def score_combo_pill(arr):
 
     if arr[9] == 'no':
         pass
-    elif arr[9] == 'mild' and arr[8] != 'no':
+    elif arr[9] == 'mild' and arr[10] != 'no':
         combo_pill_score -= 7.5
-    elif arr[9] == 'moderate' and arr[8] != 'no':
+    elif arr[9] == 'moderate' and arr[10] != 'no':
         combo_pill_score -= 12.5
-    elif arr[9]=='severe' and arr[8] != 'no':
+    elif arr[9]=='severe' and arr[10] != 'no':
         combo_pill_score -= 25
-    elif arr[9] == 'mild' and arr[8] == 'no':
+    elif arr[9] == 'mild' and arr[10] == 'no':
         combo_pill_score -= 15
-    elif arr[9] == 'moderate' and arr[8] == 'no':
+    elif arr[9] == 'moderate' and arr[10] == 'no':
         combo_pill_score -= 25
-    elif arr[9]== 'severe' and arr[8] == 'no':
+    elif arr[9]== 'severe' and arr[10] == 'no':
         combo_pill_score -= 50
     
     if arr[10] == 'no':
@@ -1087,7 +1081,7 @@ def score_combo_pill(arr):
     if arr[22] == 'no':
         pass
     else:
-         combo_pill_score += 3
+         combo_pill_score += 1.5
     
     if arr[23] == 'no':
         pass
@@ -1194,17 +1188,17 @@ def change_score_combo_pill(arr, weights):
 
     if arr[9] == 'no':
         pass
-    elif arr[9] == 'mild' and arr[8] != 'no':
+    elif arr[9] == 'mild' and arr[10] != 'no':
         combo_pill_score += weights[8][0]
-    elif arr[9] == 'moderate' and arr[8] != 'no':
+    elif arr[9] == 'moderate' and arr[10] != 'no':
         combo_pill_score += weights[8][1]
-    elif arr[9]=='severe' and arr[8] != 'no':
+    elif arr[9]=='severe' and arr[10] != 'no':
         combo_pill_score += weights[8][2]
-    elif arr[9] == 'mild' and arr[8] == 'no':
+    elif arr[9] == 'mild' and arr[10] == 'no':
         combo_pill_score += weights[8][3]
-    elif arr[9] == 'moderate' and arr[8] == 'no':
+    elif arr[9] == 'moderate' and arr[10] == 'no':
         combo_pill_score += weights[8][4]
-    elif arr[9]== 'severe' and arr[8] == 'no':
+    elif arr[9]== 'severe' and arr[10] == 'no':
         combo_pill_score += weights[8][5]
     
     if arr[10] == 'no':
@@ -1394,17 +1388,17 @@ def score_patch(arr):
 
     if arr[9] == 'no':
         pass
-    elif arr[9] == 'mild' and arr[8] != 'no':
+    elif arr[9] == 'mild' and arr[10] != 'no':
         patch_score -= 7.5
-    elif arr[9] == 'moderate' and arr[8] != 'no':
+    elif arr[9] == 'moderate' and arr[10] != 'no':
         patch_score -= 12.5
-    elif arr[9]=='severe' and arr[8] != 'no':
+    elif arr[9]=='severe' and arr[10] != 'no':
         patch_score -= 25
-    elif arr[9] == 'mild' and arr[8] == 'no':
+    elif arr[9] == 'mild' and arr[10] == 'no':
         patch_score -= 15
-    elif arr[9] == 'moderate' and arr[8] == 'no':
+    elif arr[9] == 'moderate' and arr[10] == 'no':
         patch_score -= 25
-    elif arr[9]== 'severe' and arr[8] == 'no':
+    elif arr[9]== 'severe' and arr[10] == 'no':
         patch_score -= 50
     
     if arr[10] == 'no':
@@ -1488,7 +1482,7 @@ def score_patch(arr):
     if arr[22] == 'no':
         pass
     else:
-         patch_score += 3
+         patch_score += 1.5
     
     if arr[23] == 'no':
         pass
@@ -1594,17 +1588,17 @@ def change_score_patch(arr, weights):
 
     if arr[9] == 'no':
         pass
-    elif arr[9] == 'mild' and arr[8] != 'no':
+    elif arr[9] == 'mild' and arr[10] != 'no':
         patch_score += weights[8][0]
-    elif arr[9] == 'moderate' and arr[8] != 'no':
+    elif arr[9] == 'moderate' and arr[10] != 'no':
         patch_score += weights[8][1]
-    elif arr[9]=='severe' and arr[8] != 'no':
+    elif arr[9]=='severe' and arr[10] != 'no':
         patch_score += weights[8][2]
-    elif arr[9] == 'mild' and arr[8] == 'no':
+    elif arr[9] == 'mild' and arr[10] == 'no':
         patch_score += weights[8][3]
-    elif arr[9] == 'moderate' and arr[8] == 'no':
+    elif arr[9] == 'moderate' and arr[10] == 'no':
         patch_score += weights[8][4]
-    elif arr[9]== 'severe' and arr[8] == 'no':
+    elif arr[9]== 'severe' and arr[10] == 'no':
         patch_score += weights[8][5]
     
     if arr[10] == 'no':
@@ -1749,6 +1743,8 @@ def score_hormonal_iud(arr):
     
     if arr[5] == 'p':
         hormonal_iud_score += 3
+    elif arr[5] == 'ep':
+        hormonal_iud_score += 3
     else:
         pass
     
@@ -1808,17 +1804,17 @@ def score_hormonal_iud(arr):
     
     if arr[10] == 'no':
         pass
-    elif arr[10] == 'mild' and arr[9] != 'no':
+    elif arr[10] == 'mild' and arr[11] != 'no':
         hormonal_iud_score -= 7.5
-    elif arr[10] == 'moderate' and arr[9] != 'no':
+    elif arr[10] == 'moderate' and arr[11] != 'no':
         hormonal_iud_score -= 12.5
-    elif arr[10]=='severe' and arr[9] != 'no':
+    elif arr[10]=='severe' and arr[11] != 'no':
         hormonal_iud_score -= 25
-    elif arr[10] == 'mild' and arr[9] == 'no':
+    elif arr[10] == 'mild' and arr[11] == 'no':
         hormonal_iud_score -= 15
-    elif arr[10] == 'moderate' and arr[9] == 'no':
+    elif arr[10] == 'moderate' and arr[11] == 'no':
         hormonal_iud_score -= 25
-    elif arr[10]== 'severe' and arr[9] == 'no':
+    elif arr[10]== 'severe' and arr[11] == 'no':
         hormonal_iud_score -= 50
     
     if arr[11] == 'no':
@@ -1902,7 +1898,7 @@ def change_score_hormonal_iud(arr, weights):
     elif arr[2] == "imp":
         hormonal_iud_score += weights[1][4]
     else:
-        hormonal_iud_score += weights[0][5]
+        hormonal_iud_score += weights[1][5]
 
     if arr[3] == "v_unp":
         hormonal_iud_score += weights[2][0]
@@ -1985,17 +1981,17 @@ def change_score_hormonal_iud(arr, weights):
     
     if arr[10] == 'no':
         pass
-    elif arr[10] == 'mild' and arr[9] != 'no':
+    elif arr[10] == 'mild' and arr[11] != 'no':
         hormonal_iud_score += weights[9][0]
-    elif arr[10] == 'moderate' and arr[9] != 'no':
+    elif arr[10] == 'moderate' and arr[11] != 'no':
         hormonal_iud_score += weights[9][1]
-    elif arr[10]=='severe' and arr[9] != 'no':
+    elif arr[10]=='severe' and arr[11] != 'no':
         hormonal_iud_score += weights[9][2]
-    elif arr[10] == 'mild' and arr[9] == 'no':
+    elif arr[10] == 'mild' and arr[11] == 'no':
         hormonal_iud_score += weights[9][3]
-    elif arr[10] == 'moderate' and arr[9] == 'no':
+    elif arr[10] == 'moderate' and arr[11] == 'no':
         hormonal_iud_score += weights[9][4]
-    elif arr[10]== 'severe' and arr[9] == 'no':
+    elif arr[10]== 'severe' and arr[11] == 'no':
         hormonal_iud_score += weights[9][5]
     
     if arr[11] == 'no':
@@ -2732,34 +2728,34 @@ def scoring_arm_implant(arr):
         pass
 
     if arr[6] == "v_unp":
-        arm_implant_score += 3
+        arm_implant_score -= 3
     elif arr[6] == "unp":
-        arm_implant_score += 2
+        arm_implant_score -= 2
     elif arr[6] == "sl_unp":
-        arm_implant_score += 1
+        arm_implant_score -= 1
     elif arr[6] == "neutral":
         pass
     elif arr[6] == "sl_imp":
-        arm_implant_score -= 1
+        arm_implant_score += 1
     elif arr[6] == "imp":
-        arm_implant_score -= 2
+        arm_implant_score += 2
     else:
-        arm_implant_score -= 3
+        arm_implant_score += 3
 
     if arr[7] == "v_unp":
-        arm_implant_score += 3
+        arm_implant_score -= 3
     elif arr[7] == "unp":
-        arm_implant_score += 2
+        arm_implant_score -= 2
     elif arr[7] == "sl_unp":
-        arm_implant_score += 1
+        arm_implant_score -= 1
     elif arr[7] == "neutral":
         pass
     elif arr[7] == "sl_imp":
-        arm_implant_score -= 1
+        arm_implant_score += 1
     elif arr[7] == "imp":
-        arm_implant_score -= 2
+        arm_implant_score += 2
     else:
-        arm_implant_score -= 3
+        arm_implant_score += 3
 
     if arr[8] == 'no':
         pass

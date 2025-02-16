@@ -523,7 +523,7 @@ def score_shot(arr):
         shot_score += 3
     
     if arr[5] == 'p':
-        shot_score +=3
+        shot_score += 3
     elif arr[5] == 'ep':
         shot_score += 3
     else:
@@ -2728,34 +2728,34 @@ def scoring_arm_implant(arr):
         pass
 
     if arr[6] == "v_unp":
-        arm_implant_score += 3
+        arm_implant_score -= 3
     elif arr[6] == "unp":
-        arm_implant_score += 2
+        arm_implant_score -= 2
     elif arr[6] == "sl_unp":
-        arm_implant_score += 1
+        arm_implant_score -= 1
     elif arr[6] == "neutral":
         pass
     elif arr[6] == "sl_imp":
-        arm_implant_score -= 1
+        arm_implant_score += 1
     elif arr[6] == "imp":
-        arm_implant_score -= 2
+        arm_implant_score += 2
     else:
-        arm_implant_score -= 3
+        arm_implant_score += 3
 
     if arr[7] == "v_unp":
-        arm_implant_score += 3
+        arm_implant_score -= 3
     elif arr[7] == "unp":
-        arm_implant_score += 2
+        arm_implant_score -= 2
     elif arr[7] == "sl_unp":
-        arm_implant_score += 1
+        arm_implant_score -= 1
     elif arr[7] == "neutral":
         pass
     elif arr[7] == "sl_imp":
-        arm_implant_score -= 1
+        arm_implant_score += 1
     elif arr[7] == "imp":
-        arm_implant_score -= 2
+        arm_implant_score += 2
     else:
-        arm_implant_score -= 3
+        arm_implant_score += 3
 
     if arr[8] == 'no':
         pass

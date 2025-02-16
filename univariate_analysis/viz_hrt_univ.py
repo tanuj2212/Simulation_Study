@@ -1,6 +1,7 @@
 from functions_simulation_diff_weight import *
 import copy
-
+from correct_original_weights import *
+'''
 # Define original weights (example values, replace with actual weights)
 original_weight_condoms = [
     [-3, -2, -1, 1, 2, 3],  # Cost effectiveness
@@ -364,7 +365,7 @@ original_weight_hormonal_IUD = [
     [-15, -25, -50],  # weights for arr[16]: ["mild", "moderate", "severe"]
     3  # weight for arr[17] != "no"
 ]
-
+'''
 inputs = [
     ['imp', 'neutral', 'sl_imp', 'neutral', 'weekly', 'neutral', 'neutral', 'none', 'neutral', 'neutral', 'neutral', 'no',
      'moderate', 'moderate', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'yes'],
@@ -857,4 +858,6 @@ def plot_contraceptive_scores(neg_scores, zero_scores):
     return plt
 
 plt = plot_contraceptive_scores(neg_scores, zero_scores)
-plt.show()
+filename = f'univariate_analysis/visualizations_univariate/medical_conditions/hrt_univ_viz.png'  # or .pdf, .jpg, etc.
+plt.savefig(filename, dpi=300, bbox_inches='tight')
+#plt.show()

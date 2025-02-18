@@ -523,7 +523,7 @@ def score_shot(arr):
         shot_score += 3
     
     if arr[5] == 'p':
-        shot_score +=3
+        shot_score += 3
     elif arr[5] == 'ep':
         shot_score += 3
     else:
@@ -2113,8 +2113,13 @@ def score_condoms(arr):
         score_condoms += 2
     else:
         score_condoms += 3
+
+
     
-    if arr[6] == 'no':
+    if arr[6] == "none":
+        score_condoms += 3
+    
+    if arr[7] == 'no':
         pass
     else:
         score_condoms += 1.5
@@ -2195,10 +2200,13 @@ def change_score_condoms(arr, weights):
         score_condoms += 1 * weights[4][5]
     
     # Bottom gender dysphoria pregnancy
-    if arr[6] == 'no':
+    if arr[6] == "none":
+        score_condoms += weights[5]
+
+    if arr[7] == 'no':
         pass
     else:
-        score_condoms += 1 * weights[5]
+        score_condoms += 1 * weights[6]
     
     return score_condoms
 
@@ -2271,32 +2279,36 @@ def score_internal_condoms(arr):
         internal_condom_score += 2
     else:
         internal_condom_score += 3
+
+    if arr[6] == "none":
+        internal_condom_score += 3
     
-    if arr[6] == "v_unp":
+    if arr[7] == "v_unp":
         internal_condom_score -= 3
-    elif arr[6] == "unp":
+    elif arr[7] == "unp":
         internal_condom_score -= 2
-    elif arr[6] == "sl_unp":
+    elif arr[7] == "sl_unp":
         internal_condom_score -= 1
-    elif arr[6] == "neutral":
+    elif arr[7] == "neutral":
         pass
-    elif arr[6] == "sl_imp":
+    elif arr[7] == "sl_imp":
         internal_condom_score += 1
-    elif arr[6] == "imp":
+    elif arr[7] == "imp":
         internal_condom_score += 2
     else:
         internal_condom_score += 3
     
-    if arr[7] == 'no':
+    
+    if arr[8] == 'no':
         pass
-    elif arr[7] == 'mild':
+    elif arr[8] == 'mild':
         internal_condom_score -= 15
-    elif arr[7] == 'moderate':
+    elif arr[8] == 'moderate':
         internal_condom_score -= 25
     else:
         internal_condom_score -= 50
     
-    if arr[8] == 'no':
+    if arr[9] == 'no':
         pass
     else:
         internal_condom_score += 1.5
@@ -2376,38 +2388,41 @@ def change_internal_condoms(arr, weights):
     else:
         score_internal_condoms += 1 * weights[4][5]
     
+    if arr[6] == "none":
+        score_internal_condoms += weights[5]
+    
     # Vaginal Insertion
-    if arr[6] == "v_unp":
-        score_internal_condoms += 1 * weights[5][0]
-    elif arr[6] == "unp":
-        score_internal_condoms += 1 * weights[5][1]
-    elif arr[6] == "sl_unp":
-        score_internal_condoms += 1 * weights[5][2]
-    elif arr[6] == "neutral":
+    if arr[7] == "v_unp":
+        score_internal_condoms += 1 * weights[6][0]
+    elif arr[7] == "unp":
+        score_internal_condoms += 1 * weights[6][1]
+    elif arr[7] == "sl_unp":
+        score_internal_condoms += 1 * weights[6][2]
+    elif arr[7] == "neutral":
         pass
-    elif arr[6] == "sl_imp":
-        score_internal_condoms += 1 * weights[5][3]
-    elif arr[6] == "imp":
-        score_internal_condoms += 1 * weights[5][4]
+    elif arr[7] == "sl_imp":
+        score_internal_condoms += 1 * weights[6][3]
+    elif arr[7] == "imp":
+        score_internal_condoms += 1 * weights[6][4]
     else:
-        score_internal_condoms += 1 * weights[5][5]
+        score_internal_condoms += 1 * weights[6][5]
     
     # Gender Dysphoria Vaginal Insertion
-    if arr[7] == "no":
-        pass
-    elif arr[7] == "mild":
-        score_internal_condoms += weights[6][0]
-    elif arr[7] == "moderate":
-        score_internal_condoms += weights[6][1]
-    else:
-        score_internal_condoms += weights[6][2]
-    
-    # Gender Dysphoria Pregnancy
     if arr[8] == "no":
         pass
+    elif arr[8] == "mild":
+        score_internal_condoms += weights[7][0]
+    elif arr[8] == "moderate":
+        score_internal_condoms += weights[7][1]
+    else:
+        score_internal_condoms += weights[7][2]
+    
+    # Gender Dysphoria Pregnancy
+    if arr[9] == "no":
+        pass
     
     else:
-        score_internal_condoms += weights[7]
+        score_internal_condoms += weights[8]
 
     return score_internal_condoms
 # Cervical Cap
@@ -2433,21 +2448,9 @@ def scoring_cervical_cap(arr):
     if arr[2] == "daily":
         cervical_cap_score += 3
     
-    if arr[3] == "v_unp":
-        cervical_cap_score -= 3
-    elif arr[3] == "unp":
-        cervical_cap_score -= 2
-    elif arr[3] == "sl_unp":
-        cervical_cap_score -= 1
-    elif arr[3] == "neutral":
-        pass
-    elif arr[3] == "sl_imp":
-        cervical_cap_score += 1
-    elif arr[3] == "imp":
-        cervical_cap_score += 2
-    else:
+    if arr[3] == "none":
         cervical_cap_score += 3
-
+    
     if arr[4] == "v_unp":
         cervical_cap_score -= 3
     elif arr[4] == "unp":
@@ -2462,21 +2465,36 @@ def scoring_cervical_cap(arr):
         cervical_cap_score += 2
     else:
         cervical_cap_score += 3
-    
-    if arr[5] == 'no':
+
+    if arr[5] == "v_unp":
+        cervical_cap_score -= 3
+    elif arr[5] == "unp":
+        cervical_cap_score -= 2
+    elif arr[5] == "sl_unp":
+        cervical_cap_score -= 1
+    elif arr[5] == "neutral":
         pass
-    elif arr[5] == 'mild':
-        cervical_cap_score -= 15
-    elif arr[5] == 'moderate':
-        cervical_cap_score -= 25
+    elif arr[5] == "sl_imp":
+        cervical_cap_score += 1
+    elif arr[5] == "imp":
+        cervical_cap_score += 2
     else:
-        cervical_cap_score -= 50
+        cervical_cap_score += 3
     
     if arr[6] == 'no':
         pass
     elif arr[6] == 'mild':
         cervical_cap_score -= 15
     elif arr[6] == 'moderate':
+        cervical_cap_score -= 25
+    else:
+        cervical_cap_score -= 50
+    
+    if arr[7] == 'no':
+        pass
+    elif arr[7] == 'mild':
+        cervical_cap_score -= 15
+    elif arr[7] == 'moderate':
         cervical_cap_score -= 25
     else:
         cervical_cap_score -= 50
@@ -2508,23 +2526,10 @@ def change_score_cervical_cap(arr, weights):
     else:
         pass
 
+    if arr[3] == "none":
+        score_cervical_cap += weights[2]
+
     # Vaginal insertion
-    if arr[3] == "v_unp":
-        score_cervical_cap += 1 * weights[2][0]
-    elif arr[3] == "unp":
-        score_cervical_cap += 1 * weights[2][1]
-    elif arr[3] == "sl_unp":
-        score_cervical_cap += 1 * weights[2][2]
-    elif arr[3] == "neutral":
-        pass
-    elif arr[3] == "sl_imp":
-        score_cervical_cap += 1 * weights[2][3]
-    elif arr[3] == "imp":
-        score_cervical_cap += 1 * weights[2][4]
-    else:
-        score_cervical_cap += 1 * weights[2][5]
-    
-    # Seeking consultation
     if arr[4] == "v_unp":
         score_cervical_cap += 1 * weights[3][0]
     elif arr[4] == "unp":
@@ -2540,17 +2545,23 @@ def change_score_cervical_cap(arr, weights):
     else:
         score_cervical_cap += 1 * weights[3][5]
     
-    # Gender Dysphoria Vaginal Insertion
-    if arr[5] == 'no':
-        pass
-    elif arr[5] == 'mild':
+    # Seeking consultation
+    if arr[5] == "v_unp":
         score_cervical_cap += 1 * weights[4][0]
-    elif arr[5] == 'moderate':
+    elif arr[5] == "unp":
         score_cervical_cap += 1 * weights[4][1]
-    else:
+    elif arr[5] == "sl_unp":
         score_cervical_cap += 1 * weights[4][2]
+    elif arr[5] == "neutral":
+        pass
+    elif arr[5] == "sl_imp":
+        score_cervical_cap += 1 * weights[4][3]
+    elif arr[5] == "imp":
+        score_cervical_cap += 1 * weights[4][4]
+    else:
+        score_cervical_cap += 1 * weights[4][5]
     
-    # Gender dysphoria pregnancy
+    # Gender Dysphoria Vaginal Insertion
     if arr[6] == 'no':
         pass
     elif arr[6] == 'mild':
@@ -2559,6 +2570,16 @@ def change_score_cervical_cap(arr, weights):
         score_cervical_cap += 1 * weights[5][1]
     else:
         score_cervical_cap += 1 * weights[5][2]
+    
+    # Gender dysphoria pregnancy
+    if arr[7] == 'no':
+        pass
+    elif arr[7] == 'mild':
+        score_cervical_cap += 1 * weights[6][0]
+    elif arr[7] == 'moderate':
+        score_cervical_cap += 1 * weights[6][1]
+    else:
+        score_cervical_cap += 1 * weights[6][2]
     
     return score_cervical_cap
 
@@ -2586,6 +2607,7 @@ def scoring_fam(arr):
     if arr[2] == "daily":
         fam_score += 3
     
+    
     if arr[3] == "v_unp":
         fam_score -= 3
     elif arr[3] == "unp":
@@ -2601,11 +2623,14 @@ def scoring_fam(arr):
     else:
         fam_score += 3
     
-    if arr[4] == 'no':
+    if arr[4] == "none":
+        fam_score += 3
+
+    if arr[5] == 'no':
         pass
-    elif arr[4] == 'mild':
+    elif arr[5] == 'mild':
         fam_score -= 15
-    elif arr[4] == 'moderate':
+    elif arr[5] == 'moderate':
         fam_score -= 25
     else:
         fam_score -= 50
@@ -2653,15 +2678,18 @@ def change_fam(arr, weights):
     else:
         score_fam += 1 * weights[2][5]
     
+    if arr[4] == "none":
+        score_fam += weights[3]
+    
     # Gender Dysphoria Pregnancy
-    if arr[4] == "no":
+    if arr[5] == "no":
         pass
-    elif arr[4] == "mild":
-        score_fam += 1 * weights[3][0]
-    elif arr[4] == "moderate":
-        score_fam += 1 * weights[3][1]
+    elif arr[5] == "mild":
+        score_fam += 1 * weights[4][0]
+    elif arr[5] == "moderate":
+        score_fam += 1 * weights[4][1]
     else:
-        score_fam += 1 * weights[3][2]
+        score_fam += 1 * weights[4][2]
     
     return score_fam
 
@@ -2728,34 +2756,34 @@ def scoring_arm_implant(arr):
         pass
 
     if arr[6] == "v_unp":
-        arm_implant_score += 3
+        arm_implant_score -= 3
     elif arr[6] == "unp":
-        arm_implant_score += 2
+        arm_implant_score -= 2
     elif arr[6] == "sl_unp":
-        arm_implant_score += 1
+        arm_implant_score -= 1
     elif arr[6] == "neutral":
         pass
     elif arr[6] == "sl_imp":
-        arm_implant_score -= 1
+        arm_implant_score += 1
     elif arr[6] == "imp":
-        arm_implant_score -= 2
+        arm_implant_score += 2
     else:
-        arm_implant_score -= 3
+        arm_implant_score += 3
 
     if arr[7] == "v_unp":
-        arm_implant_score += 3
+        arm_implant_score -= 3
     elif arr[7] == "unp":
-        arm_implant_score += 2
+        arm_implant_score -= 2
     elif arr[7] == "sl_unp":
-        arm_implant_score += 1
+        arm_implant_score -= 1
     elif arr[7] == "neutral":
         pass
     elif arr[7] == "sl_imp":
-        arm_implant_score -= 1
+        arm_implant_score += 1
     elif arr[7] == "imp":
-        arm_implant_score -= 2
+        arm_implant_score += 2
     else:
-        arm_implant_score -= 3
+        arm_implant_score += 3
 
     if arr[8] == 'no':
         pass
@@ -2977,19 +3005,7 @@ def scoring_copper_iud(arr):
     if arr[2] == 'yearly':
         copper_iud_score += 3
     
-    if arr[3] == "v_unp":
-        copper_iud_score -= 3
-    elif arr[3] == "unp":
-        copper_iud_score -= 2
-    elif arr[3] == "sl_unp":
-        copper_iud_score -= 1
-    elif arr[3] == "neutral":
-        pass
-    elif arr[3] == "sl_imp":
-        copper_iud_score += 1
-    elif arr[3] == "imp":
-        copper_iud_score += 2
-    else:
+    if arr[3] == "none":
         copper_iud_score += 3
     
     if arr[4] == "v_unp":
@@ -3022,14 +3038,20 @@ def scoring_copper_iud(arr):
     else:
         copper_iud_score += 3
     
-    if arr[6] == 'no':
+    if arr[6] == "v_unp":
+        copper_iud_score -= 3
+    elif arr[6] == "unp":
+        copper_iud_score -= 2
+    elif arr[6] == "sl_unp":
+        copper_iud_score -= 1
+    elif arr[6] == "neutral":
         pass
-    elif arr[6] == 'mild':
-        copper_iud_score -= 15
-    elif arr[6] == 'moderate':
-        copper_iud_score -= 25
+    elif arr[6] == "sl_imp":
+        copper_iud_score += 1
+    elif arr[6] == "imp":
+        copper_iud_score += 2
     else:
-        copper_iud_score -= 50
+        copper_iud_score += 3
     
     if arr[7] == 'no':
         pass
@@ -3041,6 +3063,15 @@ def scoring_copper_iud(arr):
         copper_iud_score -= 50
     
     if arr[8] == 'no':
+        pass
+    elif arr[8] == 'mild':
+        copper_iud_score -= 15
+    elif arr[8] == 'moderate':
+        copper_iud_score -= 25
+    else:
+        copper_iud_score -= 50
+    
+    if arr[9] == 'no':
         pass
     else:
         copper_iud_score += 3
@@ -3070,76 +3101,79 @@ def change_copper_iud(arr, weights):
     if arr[2] == 'yearly':
         copper_iud_score += weights[1]
     
-    # Vaginal insertion
-    if arr[3] == "v_unp":
-        copper_iud_score += weights[2][0]
-    elif arr[3] == "unp":
-        copper_iud_score += weights[2][1]
-    elif arr[3] == "sl_unp":
-        copper_iud_score += weights[2][2]
-    elif arr[3] == "neutral":
-        pass
-    elif arr[3] == "sl_imp":
-        copper_iud_score += weights[2][3]
-    elif arr[3] == "imp":
-        copper_iud_score += weights[2][4]
-    else:
-        copper_iud_score += weights[2][5]
+    if arr[3] == "none":
+        copper_iud_score += weights[2]
     
-    # Seeking consultation
+    # Vaginal insertion
     if arr[4] == "v_unp":
-        copper_iud_score += 1 * weights[3][0]
+        copper_iud_score += weights[3][0]
     elif arr[4] == "unp":
-        copper_iud_score += 1 * weights[3][1]
+        copper_iud_score += weights[3][1]
     elif arr[4] == "sl_unp":
-        copper_iud_score += 1 * weights[3][2]
+        copper_iud_score += weights[3][2]
     elif arr[4] == "neutral":
         pass
     elif arr[4] == "sl_imp":
-        copper_iud_score += 1 * weights[3][3]
+        copper_iud_score += weights[3][3]
     elif arr[4] == "imp":
-        copper_iud_score += 1 * weights[3][4]
+        copper_iud_score += weights[3][4]
     else:
-        copper_iud_score += 1 * weights[3][5]
+        copper_iud_score += weights[3][5]
     
-    # Medical Procedure
+    # Seeking consultation
     if arr[5] == "v_unp":
-        copper_iud_score += weights[4][0]
+        copper_iud_score += 1 * weights[4][0]
     elif arr[5] == "unp":
-        copper_iud_score += weights[4][1]
+        copper_iud_score += 1 * weights[4][1]
     elif arr[5] == "sl_unp":
-        copper_iud_score += weights[4][2]
+        copper_iud_score += 1 * weights[4][2]
     elif arr[5] == "neutral":
         pass
     elif arr[5] == "sl_imp":
-        copper_iud_score += weights[4][3]
+        copper_iud_score += 1 * weights[4][3]
     elif arr[5] == "imp":
-        copper_iud_score += weights[4][4]
+        copper_iud_score += 1 * weights[4][4]
     else:
-        copper_iud_score += weights[4][5]
+        copper_iud_score += 1 * weights[4][5]
+    
+    # Medical Procedure
+    if arr[6] == "v_unp":
+        copper_iud_score += weights[5][0]
+    elif arr[6] == "unp":
+        copper_iud_score += weights[5][1]
+    elif arr[6] == "sl_unp":
+        copper_iud_score += weights[5][2]
+    elif arr[6] == "neutral":
+        pass
+    elif arr[6] == "sl_imp":
+        copper_iud_score += weights[5][3]
+    elif arr[6] == "imp":
+        copper_iud_score += weights[5][4]
+    else:
+        copper_iud_score += weights[5][5]
     
     # Gender dysphoria period
-    if arr[6] == 'no':
-        pass
-    elif arr[6] == 'mild':
-        copper_iud_score += weights[5][0]
-    elif arr[6] == 'moderate':
-        copper_iud_score += weights[5][1]
-    else:
-        copper_iud_score += weights[5][2]
-    
-    # Gender Dysphoria Vaginal Insertion
     if arr[7] == 'no':
         pass
     elif arr[7] == 'mild':
-        copper_iud_score += weights[6][0] 
+        copper_iud_score += weights[6][0]
     elif arr[7] == 'moderate':
         copper_iud_score += weights[6][1]
     else:
         copper_iud_score += weights[6][2]
     
-    # Gender Dysphoria Pregnancy
+    # Gender Dysphoria Vaginal Insertion
     if arr[8] == 'no':
+        pass
+    elif arr[8] == 'mild':
+        copper_iud_score += weights[7][0] 
+    elif arr[8] == 'moderate':
+        copper_iud_score += weights[7][1]
+    else:
+        copper_iud_score += weights[7][2]
+    
+    # Gender Dysphoria Pregnancy
+    if arr[9] == 'no':
         pass
     else:
         copper_iud_score += weights[7]
@@ -3180,19 +3214,7 @@ def scoring_sterilization(arr):
     else:
         sterilization_scores += 3
     
-    if arr[3] == "v_unp":
-        sterilization_scores -= 3
-    elif arr[3] == "unp":
-        sterilization_scores -= 2
-    elif arr[3] == "sl_unp":
-        sterilization_scores -= 1
-    elif arr[3] == "neutral":
-        pass
-    elif arr[3] == "sl_imp":
-        sterilization_scores += 1
-    elif arr[3] == "imp":
-        sterilization_scores += 2
-    else:
+    if arr[3] == "none":
         sterilization_scores += 3
     
     if arr[4] == "v_unp":
@@ -3210,8 +3232,18 @@ def scoring_sterilization(arr):
     else:
         sterilization_scores += 3
     
-    if arr[5] == 'no':
+    if arr[5] == "v_unp":
+        sterilization_scores -= 3
+    elif arr[5] == "unp":
+        sterilization_scores -= 2
+    elif arr[5] == "sl_unp":
+        sterilization_scores -= 1
+    elif arr[5] == "neutral":
         pass
+    elif arr[5] == "sl_imp":
+        sterilization_scores += 1
+    elif arr[5] == "imp":
+        sterilization_scores += 2
     else:
         sterilization_scores += 3
     
@@ -3226,6 +3258,11 @@ def scoring_sterilization(arr):
         sterilization_scores += 3
     
     if arr[8] == 'no':
+        pass
+    else:
+        sterilization_scores += 3
+    
+    if arr[9] == 'no':
         pass
     else:
         sterilization_scores += 3
@@ -3267,23 +3304,10 @@ def change_score_sterilization(arr, weights):
     else:
         sterilization_scores += weights[1][5]
     
-    # Seeking consultation
-    if arr[3] == "v_unp":
-        sterilization_scores += weights[2][0]
-    elif arr[3] == "unp":
-        sterilization_scores += weights[2][1]
-    elif arr[3] == "sl_unp":
-        sterilization_scores += weights[2][2]
-    elif arr[3] == "neutral":
-        pass
-    elif arr[3] == "sl_imp":
-        sterilization_scores += weights[2][3]
-    elif arr[3] == "imp":
-        sterilization_scores += weights[2][4]
-    else:
-        sterilization_scores += weights[2][5]
+    if arr[3] == "none":
+        sterilization_scores += weights[2]
     
-    # Medical Procedure
+    # Seeking consultation
     if arr[4] == "v_unp":
         sterilization_scores += weights[3][0]
     elif arr[4] == "unp":
@@ -3299,26 +3323,42 @@ def change_score_sterilization(arr, weights):
     else:
         sterilization_scores += weights[3][5]
     
+    # Medical Procedure
+    if arr[5] == "v_unp":
+        sterilization_scores += weights[4][0]
+    elif arr[5] == "unp":
+        sterilization_scores += weights[4][1]
+    elif arr[5] == "sl_unp":
+        sterilization_scores += weights[4][2]
+    elif arr[5] == "neutral":
+        pass
+    elif arr[5] == "sl_imp":
+        sterilization_scores += weights[4][3]
+    elif arr[5] == "imp":
+        sterilization_scores += weights[4][4]
+    else:
+        sterilization_scores += weights[4][5]
+    
     # PCOS
-    if arr[5] == 'no':
+    if arr[6] == 'no':
         pass
     else:
         sterilization_scores += weights[4]
     
     # ENDMT
-    if arr[6] == 'no':
+    if arr[7] == 'no':
         pass
     else:
         sterilization_scores += weights[5]
     
     # Gender Dypsphoria Period
-    if arr[7] == 'no':
+    if arr[8] == 'no':
         pass
     else:
         sterilization_scores += weights[6]
     
     # Gender Dysphoria Pregnancy
-    if arr[8] == 'no':
+    if arr[9] == 'no':
         pass
     else:
         sterilization_scores += weights[7]
@@ -3361,18 +3401,21 @@ def scoring_gel(arr):
         gel_score += 2
     else:
         gel_score += 3
+
+    if arr[4] == "none":
+        gel_score += 3
     
-    if arr[4] == "v_unp":
+    if arr[5] == "v_unp":
         gel_score -= 3
-    elif arr[4] == "unp":
+    elif arr[5] == "unp":
         gel_score -= 2
-    elif arr[4] == "sl_unp":
+    elif arr[5] == "sl_unp":
         gel_score -= 1
-    elif arr[4] == "neutral":
+    elif arr[5] == "neutral":
         pass
-    elif arr[4] == "sl_imp":
+    elif arr[5] == "sl_imp":
         gel_score += 1
-    elif arr[4] == "imp":
+    elif arr[5] == "imp":
         gel_score += 2
     else:
         gel_score += 3
@@ -3420,21 +3463,24 @@ def change_score_gel(arr, weights):
     else:
         gel_score += 1 * weights[2][5]
     
+    if arr[4] == "none":
+        gel_score += weights[3]
+    
     # Vaginal Insertion
-    if arr[4] == "v_unp":
-        gel_score += 1 * weights[3][0]
-    elif arr[4] == "unp":
-        gel_score += 1 * weights[3][1]
-    elif arr[4] == "sl_unp":
-        gel_score += 1 * weights[3][2]
-    elif arr[4] == "neutral":
+    if arr[5] == "v_unp":
+        gel_score += 1 * weights[4][0]
+    elif arr[5] == "unp":
+        gel_score += 1 * weights[4][1]
+    elif arr[5] == "sl_unp":
+        gel_score += 1 * weights[4][2]
+    elif arr[5] == "neutral":
         pass
-    elif arr[4] == "sl_imp":
-        gel_score += 1 * weights[3][3]
-    elif arr[4] == "imp":
-        gel_score += 1 * weights[3][4]
+    elif arr[5] == "sl_imp":
+        gel_score += 1 * weights[4][3]
+    elif arr[5] == "imp":
+        gel_score += 1 * weights[4][4]
     else:
-        gel_score += 1 * weights[3][5]
+        gel_score += 1 * weights[4][5]
     
     return gel_score
 
@@ -3476,11 +3522,14 @@ def scoring_withdrawal(arr):
     else:
         withdrawal_score += 3
     
-    if arr[4] == 'no':
+    if arr[4] == "none":
+        withdrawal_score += 3
+    
+    if arr[5] == 'no':
         pass
-    elif arr[4] == 'mild':
+    elif arr[5] == 'mild':
         withdrawal_score -= 15
-    elif arr[4]== 'moderate':
+    elif arr[5]== 'moderate':
         withdrawal_score -= 25
     else:
         withdrawal_score -= 50
@@ -3526,15 +3575,18 @@ def change_score_withdrawal(arr, weights):
     else:
         withdrawal_score += weights[2][5]
     
+    if arr[4] == "none":
+        withdrawal_score += weights[3]
+    
     # Gender Dysphoria Pregnancy
-    if arr[4] == 'no':
+    if arr[5] == 'no':
         pass
-    elif arr[4] == 'mild':
-        withdrawal_score += weights[3][0]
-    elif arr[4]== 'moderate':
-        withdrawal_score += weights[3][1]
+    elif arr[5] == 'mild':
+        withdrawal_score += weights[4][0]
+    elif arr[5]== 'moderate':
+        withdrawal_score += weights[4][1]
     else:
-        withdrawal_score += weights[3][2]
+        withdrawal_score += weights[4][2]
     
     return withdrawal_score
 

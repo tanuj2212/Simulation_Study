@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import copy
-from correct_original_weights import *
-from functions_simulation_diff_weight import *
+from correct_original_weights_hor import *
+from functions_simulation_diff_weight_hor import *
 
 # Define the input data
 inputs = [
@@ -31,19 +31,19 @@ def calculate_scores(input_arr, multiplier):
             'mini_pill': copy.deepcopy(original_weight_mini_pill),
             'ring': copy.deepcopy(original_weight_ring),
             'shot': copy.deepcopy(original_weight_shot),
-            
+            "condoms": copy.deepcopy(original_weight_condoms),
+            'internal_condoms': copy.deepcopy(original_weight_internal_condoms),
+            "cervical_cap": copy.deepcopy(original_weight_cervical_cap),
+            "FAM": copy.deepcopy(original_weight_FAM),
+            'sterilization': copy.deepcopy(original_weight_sterilization),
+            'copper_iud': copy.deepcopy(original_weight_copper_IUD),
+            "spermicide": copy.deepcopy(original_weight_spermicide),
+            "withdrawal": copy.deepcopy(original_weight_withdrawl)
+
         }
 
     original_weights = {
-            'sterilization': copy.deepcopy(original_weight_sterilization),
-            'copper_iud': copy.deepcopy(original_weight_copper_IUD),
-            'internal_condoms': copy.deepcopy(original_weight_internal_condoms),
-            'condoms': copy.deepcopy(original_weight_condoms),
-            "cervical_cap": copy.deepcopy(original_weight_cervical_cap),
-            "FAM": copy.deepcopy(original_weight_FAM),
-            "spermicide": copy.deepcopy(original_weight_spermicide),
-            "withdrawal": copy.deepcopy(original_weight_withdrawl)
-        }
+                    }
 
         # Update the cost effectiveness weights
     for method in weights_dict:
@@ -61,40 +61,56 @@ def calculate_scores(input_arr, multiplier):
                 weights_dict[method][5] = current_weights
             elif method == 'shot':
                 weights_dict[method][4] = [current_weights, current_weights]
+            elif method == "condoms":
+                weights_dict[method][5] = current_weights
+            elif method == "internal_condoms":
+                weights_dict[method][5] = current_weights
+            elif method == "cervical_cap":
+                weights_dict[method][2] = current_weights
+            elif method == "FAM":
+                weights_dict[method][3] = current_weights
+            elif method == "sterilization":
+                weights_dict[method][2] = current_weights
+            elif method == "spermicide":
+                weights_dict[method][3] = current_weights
+            elif method == "withdrawal":
+                weights_dict[method][3] = current_weights
+            elif method == "copper_iud":
+                weights_dict[method][2] = current_weights
 
 
     # Calculate scores
-    condom_arr = ["condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[26]]
-    internal_condom_arr = ["int_condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[8], input_arr[25], input_arr[26]]
-    cervical_cap_arr = ["cervical_cap", input_arr[0], input_arr[4], input_arr[8], input_arr[9], input_arr[25], input_arr[26]]
-    fam_arr = ["fam", input_arr[0], input_arr[4], input_arr[5], input_arr[26]]
+    condom_arr = ["condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[7], input_arr[26]]
+    internal_condom_arr = ["int_condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[7], input_arr[8], input_arr[25], input_arr[26]]
+    cervical_cap_arr = ["cervical_cap", input_arr[0], input_arr[4], input_arr[7], input_arr[8], input_arr[9], input_arr[25], input_arr[26]]
+    fam_arr = ["fam", input_arr[0], input_arr[4], input_arr[5], input_arr[7], input_arr[26]]
     arm_implant_arr = ["arm_implant", input_arr[1], input_arr[2], input_arr[3], input_arr[4], input_arr[7], input_arr[9], input_arr[10], input_arr[11], input_arr[12], input_arr[13], input_arr[24], input_arr[26]]
-    copper_iud_arr = ["copper_iud", input_arr[1], input_arr[4], input_arr[8], input_arr[9], input_arr[10], input_arr[24], input_arr[25], input_arr[26]]
+    copper_iud_arr = ["copper_iud", input_arr[1], input_arr[4], input_arr[7], input_arr[8], input_arr[9], input_arr[10], input_arr[24], input_arr[25], input_arr[26]]
     hormonal_iud_arr = ["hormonal_iud", input_arr[1], input_arr[2], input_arr[3], input_arr[4], input_arr[7], input_arr[8], input_arr[9], input_arr[10], input_arr[11], input_arr[12], input_arr[13], input_arr[17], input_arr[20], input_arr[21], input_arr[24], input_arr[25], input_arr[26]]
     patch_arr = ["patch", input_arr[0], input_arr[1], input_arr[2], input_arr[3], input_arr[4], input_arr[7], input_arr[9], input_arr[11], input_arr[12], input_arr[13], input_arr[14], input_arr[15], input_arr[16], input_arr[17], input_arr[18], input_arr[19], input_arr[20], input_arr[21], input_arr[22], input_arr[23], input_arr[24], input_arr[26], input_arr[27]]
     combo_pill_arr = ["combo_pill", input_arr[0], input_arr[1], input_arr[2], input_arr[3], input_arr[4], input_arr[7], input_arr[9], input_arr[11], input_arr[12], input_arr[13], input_arr[14], input_arr[15], input_arr[16], input_arr[17], input_arr[18], input_arr[19], input_arr[20], input_arr[21], input_arr[22], input_arr[23], input_arr[24], input_arr[26], input_arr[27]]
     mini_pill_arr = ["mini_pill", input_arr[0], input_arr[1], input_arr[2], input_arr[3], input_arr[4], input_arr[7], input_arr[9], input_arr[11], input_arr[12], input_arr[13], input_arr[17], input_arr[20], input_arr[21], input_arr[24], input_arr[26]]
     ring_arr = ["ring", input_arr[0], input_arr[1], input_arr[2], input_arr[3], input_arr[4], input_arr[7], input_arr[9], input_arr[10], input_arr[11], input_arr[12], input_arr[13], input_arr[14], input_arr[15], input_arr[16], input_arr[17], input_arr[18], input_arr[19], input_arr[20], input_arr[21], input_arr[22], input_arr[23], input_arr[24], input_arr[26], input_arr[27]]
     shot_arr = ["shot", input_arr[1], input_arr[2], input_arr[3], input_arr[4], input_arr[7], input_arr[9], input_arr[10], input_arr[11], input_arr[12], input_arr[13], input_arr[14], input_arr[15], input_arr[16], input_arr[17], input_arr[18], input_arr[19], input_arr[20], input_arr[21], input_arr[22], input_arr[23], input_arr[24], input_arr[26], input_arr[27]]
-    sterilization_arr = ["sterilization", input_arr[1], input_arr[2], input_arr[9], input_arr[10], input_arr[20], input_arr[21], input_arr[24], input_arr[26]]
-    gel_arr = ["gel", input_arr[0], input_arr[4], input_arr[5], input_arr[8]]
-    withdrawal_arr = ["withdrawal", input_arr[0], input_arr[4], input_arr[5], input_arr[26]]
+    sterilization_arr = ["sterilization", input_arr[1], input_arr[2], input_arr[7], input_arr[9], input_arr[10], input_arr[20], input_arr[21], input_arr[24], input_arr[26]]
+    gel_arr = ["gel", input_arr[0], input_arr[4], input_arr[5], input_arr[7], input_arr[8]]
+    withdrawal_arr = ["withdrawal", input_arr[0], input_arr[4], input_arr[5], input_arr[7], input_arr[26]]
     # Calculate scores using the updated weights
-    condom_score = change_score_condoms(condom_arr, original_weights['condoms'])
-    internal_condom_score = change_internal_condoms(internal_condom_arr, original_weights['internal_condoms'])
-    cervical_cap_score = change_score_cervical_cap(cervical_cap_arr, original_weights['cervical_cap'])
-    fam_score = change_fam(fam_arr, original_weights['FAM'])
+    condom_score = change_score_condoms(condom_arr, weights_dict['condoms'])
+    internal_condom_score = change_internal_condoms(internal_condom_arr, weights_dict['internal_condoms'])
+    cervical_cap_score = change_score_cervical_cap(cervical_cap_arr, weights_dict['cervical_cap'])
+    fam_score = change_fam(fam_arr, weights_dict['FAM'])
     arm_implant_score = change_arm_implant(arm_implant_arr, weights_dict['arm_implant'])
-    copper_iud_score = change_copper_iud(copper_iud_arr, original_weights['copper_iud'])
+    copper_iud_score = change_copper_iud(copper_iud_arr, weights_dict['copper_iud'])
     hormonal_iud_score = change_score_hormonal_iud(hormonal_iud_arr, weights_dict['hormonal_iud'])
     patch_score = change_score_patch(patch_arr, weights_dict['patch'])
     combo_pill_score = change_score_combo_pill(combo_pill_arr, weights_dict['combo_pill'])
     mini_pill_score = change_scoring_mini_pill(mini_pill_arr, weights_dict['mini_pill'])
     ring_score = score_ring(ring_arr, weights_dict['ring'])
     shot_score = change_score_shot(shot_arr, weights_dict['shot'])
-    sterilization_score = change_score_sterilization(sterilization_arr, original_weights['sterilization'])
-    gel_score = change_score_gel(gel_arr, original_weights['spermicide'])
-    withdrawal_score = change_score_withdrawal(withdrawal_arr, original_weights['withdrawal'])
+    sterilization_score = change_score_sterilization(sterilization_arr, weights_dict['sterilization'])
+    gel_score = change_score_gel(gel_arr, weights_dict['spermicide'])
+    withdrawal_score = change_score_withdrawal(withdrawal_arr, weights_dict['withdrawal'])
     contraceptive_scores = {
         "Condom": condom_score,
         "Internal Condom": internal_condom_score,

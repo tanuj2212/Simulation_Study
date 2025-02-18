@@ -497,29 +497,13 @@ def calculate_scores_ce_acne_neg(input_arr):
     gel_arr = ["gel", input_arr[0], input_arr[4], input_arr[5], input_arr[8]]
     withdrawal_arr = ["withdrawal", input_arr[0], input_arr[4], input_arr[5], input_arr[26]]
     # Calculate scores using the updated weights
-    condom_score = change_score_condoms(condom_arr, weights_dict['condoms'])
-    internal_condom_score = change_internal_condoms(internal_condom_arr, weights_dict['internal_condoms'])
-    cervical_cap_score = change_score_cervical_cap(cervical_cap_arr, weights_dict['cervical_cap'])
-    fam_score = change_fam(fam_arr, weights_dict['FAM'])
-    copper_iud_score = change_copper_iud(copper_iud_arr, original_weights['copper_iud'])
     hormonal_iud_score = change_score_hormonal_iud(hormonal_iud_arr, original_weights['hormonal_iud'])
     patch_score = change_score_patch(patch_arr, weights_dict['patch'])
     combo_pill_score = change_score_combo_pill(combo_pill_arr, weights_dict['combo_pill'])
-    sterilization_score = change_score_sterilization(sterilization_arr, original_weights['sterilization'])
-    gel_score = change_score_gel(gel_arr, weights_dict['spermicide'])
-    withdrawal_score = change_score_withdrawal(withdrawal_arr, weights_dict['withdrawal'])
     return {
-        "Condom": condom_score,
-        "Internal Condom": internal_condom_score,
-        "Cervical Cap": cervical_cap_score,
-        "FAM": fam_score,
-        "Copper IUD": copper_iud_score,
         "Hormonal IUD": hormonal_iud_score,
         "Patch": patch_score,
         "Combination Pill": combo_pill_score,
-        "Sterilization": sterilization_score,
-        "Spermicide Gel": gel_score,
-        "Withdrawal": withdrawal_score
     }
 
 
@@ -583,28 +567,69 @@ def calculate_scores_ce_acne_pos(input_arr, positive_weights):
     ring_score = score_ring(ring_arr, weights_dict['ring'])
     shot_score = change_score_shot(shot_arr, weights_dict['shot'])
     # Calculate scores using the updated weights
-    condom_score = change_score_condoms(condom_arr, weights_dict['condoms'])
-    internal_condom_score = change_internal_condoms(internal_condom_arr, weights_dict['internal_condoms'])
-    cervical_cap_score = change_score_cervical_cap(cervical_cap_arr, weights_dict['cervical_cap'])
-    fam_score = change_fam(fam_arr, weights_dict['FAM'])
-    copper_iud_score = change_copper_iud(copper_iud_arr, original_weights['copper_iud'])
-    sterilization_score = change_score_sterilization(sterilization_arr, original_weights['sterilization'])
-    gel_score = change_score_gel(gel_arr, weights_dict['spermicide'])
-    withdrawal_score = change_score_withdrawal(withdrawal_arr, weights_dict['withdrawal'])
+   
     return {
-        "Condom": condom_score,
-        "Internal Condom": internal_condom_score,
-        "Cervical Cap": cervical_cap_score,
-        "FAM": fam_score,
-        "Copper IUD": copper_iud_score,
-        "Sterilization": sterilization_score,
-        "Spermicide Gel": gel_score,
-        "Withdrawal": withdrawal_score,
         "Arm Implant": arm_implant_score,
         "Mini Pill": mini_pill_score,
         "Ring": ring_score,
         "Shot": shot_score
     }
+
+def calculate_scores_ce_acne_zero(input_arr):
+     weights = [-60, -40, -20, 20, 40, 60]
+
+
+    # Update weights for each method
+     weights_dict = {
+            'condoms': copy.deepcopy(original_weight_condoms),
+            'internal_condoms': copy.deepcopy(original_weight_internal_condoms),
+            'cervical_cap': copy.deepcopy(original_weight_cervical_cap),
+            'FAM': copy.deepcopy(original_weight_FAM),
+            'copper_iud': copy.deepcopy(original_weight_copper_IUD),
+            'sterilization': copy.deepcopy(original_weight_sterilization),
+            'spermicide': copy.deepcopy(original_weight_spermicide),
+            'withdrawal': copy.deepcopy(original_weight_withdrawl),
+        }
+
+
+
+    # Update the cost effectiveness weights
+     for method in weights_dict:
+        if method == 'copper_iud' or method == 'sterilization':
+            pass
+        else:
+
+            weights_dict[method][0] = weights
+
+        # Calculate scores
+        condom_arr = ["condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[26]]
+        internal_condom_arr = ["int_condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[8], input_arr[25], input_arr[26]]
+        cervical_cap_arr = ["cervical_cap", input_arr[0], input_arr[4], input_arr[8], input_arr[9], input_arr[25], input_arr[26]]
+        fam_arr = ["fam", input_arr[0], input_arr[4], input_arr[5], input_arr[26]]
+        copper_iud_arr = ["copper_iud", input_arr[1], input_arr[4], input_arr[8], input_arr[9], input_arr[10], input_arr[24], input_arr[25], input_arr[26]]
+        sterilization_arr = ["sterilization", input_arr[1], input_arr[2], input_arr[9], input_arr[10], input_arr[20], input_arr[21], input_arr[24], input_arr[26]]
+        gel_arr = ["gel", input_arr[0], input_arr[4], input_arr[5], input_arr[8]]
+        withdrawal_arr = ["withdrawal", input_arr[0], input_arr[4], input_arr[5], input_arr[26]]
+        # Calculate scores using the updated weights
+        condom_score = change_score_condoms(condom_arr, weights_dict['condoms'])
+        internal_condom_score = change_internal_condoms(internal_condom_arr, weights_dict['internal_condoms'])
+        cervical_cap_score = change_score_cervical_cap(cervical_cap_arr, weights_dict['cervical_cap'])
+        fam_score = change_fam(fam_arr, weights_dict['FAM'])
+        copper_iud_score = change_copper_iud(copper_iud_arr, weights_dict['copper_iud'])
+        sterilization_score = change_score_sterilization(sterilization_arr, weights_dict['sterilization'])
+        gel_score = change_score_gel(gel_arr, weights_dict['spermicide'])
+        withdrawal_score = change_score_withdrawal(withdrawal_arr, weights_dict['withdrawal'])
+        return {
+            "Condoms": condom_score,
+            "Internal Condoms": internal_condom_score,
+            "Cervical Cap": cervical_cap_score,
+            "FAM": fam_score,
+            "Copper IUD": copper_iud_score,
+            "Sterilization": sterilization_score,
+            "Spermicide": gel_score,
+            "Withdrawal": withdrawal_score
+        }
+
 
 v_unp_dict = {
 
@@ -830,345 +855,181 @@ for arr in inputs[24:28]:
             v_imp_dict_pos[f"{i * 3}"] = scores_yes
 
 
-import plotly.graph_objects as go
-import numpy as np
-'''
-# Define the x and y axes
-x_labels = ['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp']
-y_labels = ['no', 'mild', 'moderate', 'severe'] + [str(i*3) for i in range(1, 21)]
+# Zero 
 
-x_labels = ['-60', '-40', '-20', '0', '20', '40', '60']
-y_labels = ['0', '', 'moderate', 'severe'] + [str(i*3) for i in range(1, 21)]
 
-# Create coordinate matrices
-x_coords = np.arange(len(x_labels))
-y_coords = np.arange(len(y_labels))
-X, Y = np.meshgrid(x_coords, y_coords)
+v_unp_dict_zero = {
 
-# Dictionary mapping preference levels to their respective dictionaries
-preference_dicts = {
-    'v_unp': (v_unp_dict, v_unp_dict_pos),
-    'unp': (unp_dict, unp_dict_pos),
-    'sl_unp': (sl_unp_dict, sl_unp_dict_pos),
-    'neutral': (neutral_dict, neutral_dict_pos),
-    'sl_imp': (sl_imp_dict, sl_imp_dict_pos),
-    'imp': (imp_dict, imp_dict_pos),
-    'v_imp': (v_imp_dict, v_imp_dict_pos)
 }
 
-# List of all contraceptive methods
-methods = [
-    "Condom", "Internal Condom", "Cervical Cap", "FAM", "Copper IUD",
-    "Hormonal IUD", "Patch", "Combination Pill", "Sterilization",
-    "Spermicide Gel", "Withdrawal", "Arm Implant", "Mini Pill",
-    "Ring", "Shot"
-]
+for arr in inputs[0:4]:
+    if arr[11] == "no":
+        scores_no = calculate_scores_ce_acne_zero(arr)
+        v_unp_dict_zero["no"] = scores_no
 
-# Create color scale
-colors = [
-    '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
-    '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf',
-    '#aec7e8', '#ffbb78', '#98df8a', '#ff9896', '#c5b0d5'
-]
-
-# Create the 3D visualization
-fig = go.Figure()
-
-for method_idx, method in enumerate(methods):
-    # Initialize Z matrix for this method
-    Z = np.zeros((len(y_labels), len(x_labels)))
+    elif arr[11] == "mild":
+        scores_mild = calculate_scores_ce_acne_zero(arr)
+        v_unp_dict_zero["mild"] = calculate_scores_ce_acne_zero(arr)
     
-    # Fill Z matrix
-    for x_idx, x_label in enumerate(x_labels):
-        neg_dict, pos_dict = preference_dicts[x_label]
-        
-        # Fill negative and zero values
-        for y_idx, y_label in enumerate(y_labels[:4]):  # no, mild, moderate, severe
-            if y_label in neg_dict and method in neg_dict[y_label]:
-                Z[y_idx, x_idx] = neg_dict[y_label][method]
-        
-        # Fill positive values
-        for y_idx, y_label in enumerate(y_labels[4:], start=4):  # 3, 6, 9, ..., 60
-            if y_label in pos_dict and method in pos_dict[y_label]:
-                Z[y_idx, x_idx] = pos_dict[y_label][method]
+    elif arr[11] == "moderate":
+        scores_moderate = calculate_scores_ce_acne_zero(arr)
+        v_unp_dict_zero["moderate"] = calculate_scores_ce_acne_zero(arr)
+    elif arr[11] == "severe":
+        scores_severe = calculate_scores_ce_acne_zero(arr)
+        v_unp_dict_zero["severe"] = calculate_scores_ce_acne_zero(arr)
+    
+    for i in range(1, 21):
+        v_unp_dict_zero[f"{i*3}"] = calculate_scores_ce_acne_zero(arr)
 
-    # Add surface plot for this method
-    fig.add_trace(go.Surface(
-        x=X,
-        y=Y,
-        z=Z,
-        name=method,
-        showscale=True,
-        colorscale=[[0, colors[method_idx]], [1, colors[method_idx]]],
-        opacity=0.7
-    ))
 
-# Update layout
-fig.update_layout(
-    title='3D Visualization of Contraceptive Scores',
-    scene=dict(
-        xaxis=dict(
-            title='Preference Level',
-            ticktext=x_labels,
-            tickvals=list(range(len(x_labels)))
-        ),
-        yaxis=dict(
-            title='Acne Severity/Positive Weight',
-            ticktext=y_labels,
-            tickvals=list(range(len(y_labels)))
-        ),
-        zaxis=dict(title='Score')
-    ),
-    showlegend=True,
-    legend=dict(
-        x=1.1,
-        y=0.5
-    ),
-    width=1200,
-    height=800
-)
+unp_dict_zero = {
 
-# Add buttons to show/hide individual surfaces
-buttons = []
-for method_idx, method in enumerate(methods):
-    visible = [False] * len(methods)
-    visible[method_idx] = True
-    buttons.append(dict(
-        label=method,
-        method='update',
-        args=[{'visible': visible}]
-    ))
-
-# Add "Show All" button
-buttons.append(dict(
-    label="Show All",
-    method='update',
-    args=[{'visible': [True] * len(methods)}]
-))
-
-fig.update_layout(
-    updatemenus=[dict(
-        type="dropdown",
-        direction="down",
-        x=0.1,
-        y=1.1,
-        showactive=True,
-        buttons=buttons
-    )]
-)
-
-fig.show()
-
-# Save the plot as an HTML file
-fig.write_html("/Users/sanyamshah/Simulation_Study/bivariate_analysis/contraceptive_scores_3d_plot.html")
-
-'''
-import plotly.graph_objects as go
-import numpy as np
-'''
-# Define the x and y axes with their actual numerical values
-x_labels = ['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp']
-x_values = [-60, -40, -20, 0, 20, 40, 60]
-x_labels = ["-60", "-40", "-20", "0", "20", "40", "60"]
-
-# Define y values and labels
-severity_values = [-50, -25, -15, 0]  # Actual numerical values for severity levels
-positive_values = [i*3 for i in range(1, 21)]  # Positive values from 3 to 60
-y_values = severity_values + positive_values
-y_labels = ['severe', 'moderate', 'mild', 'no'] + [str(i*3) for i in range(1, 21)]
-y_labels = ['-50', '-25', '-15', '0'] + [str(i*3) for i in range(1, 21)]
-
-# Create coordinate matrices using actual numerical values
-X, Y = np.meshgrid(x_values, y_values)
-
-# Dictionary mapping severity levels to their y-axis positions
-severity_map = {
-    'severe': -50,
-    'moderate': -25,
-    'mild': -15,
-    'no': 0
 }
 
-# Dictionary mapping preference levels to their respective dictionaries
-preference_dicts = {
-    'v_unp': (v_unp_dict, v_unp_dict_pos),
-    'unp': (unp_dict, unp_dict_pos),
-    'sl_unp': (sl_unp_dict, sl_unp_dict_pos),
-    'neutral': (neutral_dict, neutral_dict_pos),
-    'sl_imp': (sl_imp_dict, sl_imp_dict_pos),
-    'imp': (imp_dict, imp_dict_pos),
-    'v_imp': (v_imp_dict, v_imp_dict_pos)
+for arr in inputs[4:8]:
+    if arr[11] == "no":
+        scores_no = calculate_scores_ce_acne_zero(arr)
+        unp_dict_zero["no"] = scores_no
+
+    elif arr[11] == "mild":
+        scores_mild = calculate_scores_ce_acne_zero(arr)
+        unp_dict_zero["mild"] = calculate_scores_ce_acne_zero(arr)
+    
+    elif arr[11] == "moderate":
+        scores_moderate = calculate_scores_ce_acne_zero(arr)
+        unp_dict_zero["moderate"] = calculate_scores_ce_acne_zero(arr)
+    elif arr[11] == "severe":
+        scores_severe = calculate_scores_ce_acne_zero(arr)
+        unp_dict_zero["severe"] = calculate_scores_ce_acne_zero(arr)
+    
+    for i in range(1, 21):
+        unp_dict_zero[f"{i*3}"] = calculate_scores_ce_acne_zero(arr)
+
+sl_unp_dict_zero = {
+
 }
 
-# Separate methods into negative-only and full-range groups
-negative_only_methods = [
-    "Condom", "Internal Condom", "Cervical Cap", "FAM", "Copper IUD",
-    "Hormonal IUD", "Patch", "Combination Pill", "Sterilization",
-    "Spermicide Gel", "Withdrawal"
-]
+for arr in inputs[8:12]:
+    if arr[11] == "no":
+        scores_no = calculate_scores_ce_acne_zero(arr)
+        sl_unp_dict_zero["no"] = scores_no
 
-full_range_methods = [
-    "Arm Implant", "Mini Pill", "Ring", "Shot"
-]
-
-# Combined list for color assignment
-all_methods = negative_only_methods + full_range_methods
-
-# Create distinct color scale
-distinct_colors = [
-    '#FF0000',  # Red
-    '#0000FF',  # Blue
-    '#FFD700',  # Gold
-    '#FF1493',  # Deep Pink
-    '#00FF00',  # Lime
-    '#8B008B',  # Dark Magenta
-    '#FF8C00',  # Dark Orange
-    '#00FFFF',  # Cyan
-    '#800000',  # Maroon
-    '#000080',  # Navy
-    '#808000',  # Olive
-    '#FF00FF',  # Magenta
-    '#008080',  # Teal
-    '#FFA500',  # Orange
-    '#4B0082'   # Indigo
-]
-
-# Create the 3D visualization
-fig = go.Figure()
-
-# Process negative-only methods
-for method_idx, method in enumerate(negative_only_methods):
-    # Initialize Z matrix for this method
-    Z = np.zeros((len(y_values), len(x_values)))
+    elif arr[11] == "mild":
+        scores_mild = calculate_scores_ce_acne_zero(arr)
+        sl_unp_dict_zero["mild"] = calculate_scores_ce_acne_zero(arr)
     
-    # Fill Z matrix only for severity values
-    for x_idx, (x_label, x_value) in enumerate(zip(x_labels, x_values)):
-        neg_dict, _ = preference_dicts[x_label]
-        
-        # Fill negative values and zero only
-        for severity, y_pos in severity_map.items():
-            y_idx = y_values.index(y_pos)
-            if severity in neg_dict and method in neg_dict[severity]:
-                Z[y_idx, x_idx] = neg_dict[severity][method]
+    elif arr[11] == "moderate":
+        scores_moderate = calculate_scores_ce_acne_zero(arr)
+        sl_unp_dict_zero["moderate"] = calculate_scores_ce_acne_zero(arr)
+    elif arr[11] == "severe":
+        scores_severe = calculate_scores_ce_acne_zero(arr)
+        sl_unp_dict_zero["severe"] = calculate_scores_ce_acne_zero(arr)
     
-    # Add surface plot for this method with fixed opacity
-    fig.add_trace(go.Surface(
-        x=X,
-        y=Y,
-        z=Z,
-        name=method,
-        showscale=False,
-        colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
-        opacity=0.7,
-        showlegend=True,  # Ensure legend is shown
-        legendgroup=method  # Group entries by method
-    ))
+    for i in range(1, 21):
+        sl_unp_dict_zero[f"{i*3}"] = calculate_scores_ce_acne_zero(arr)
 
-# Process full-range methods
-for method_idx, method in enumerate(full_range_methods, start=len(negative_only_methods)):
-    # Initialize Z matrix for this method
-    Z = np.zeros((len(y_values), len(x_values)))
+neutral_dict_zero = {
+
+}
+
+for arr in inputs[12:16]:
+    if arr[11] == "no":
+        scores_no = calculate_scores_ce_acne_zero(arr)
+        neutral_dict_zero["no"] = scores_no
+
+    elif arr[11] == "mild":
+        scores_mild = calculate_scores_ce_acne_zero(arr)
+        neutral_dict_zero["mild"] = calculate_scores_ce_acne_zero(arr)
     
-    # Fill Z matrix for both negative and positive values
-    for x_idx, (x_label, x_value) in enumerate(zip(x_labels, x_values)):
-        neg_dict, pos_dict = preference_dicts[x_label]
-        
-        # Fill negative values and zero
-        for severity, y_pos in severity_map.items():
-            y_idx = y_values.index(y_pos)
-            if severity in neg_dict and method in neg_dict[severity]:
-                Z[y_idx, x_idx] = neg_dict[severity][method]
-        
-        # Fill positive values
-        for y_value in positive_values:
-            y_idx = y_values.index(y_value)
-            if str(y_value) in pos_dict and method in pos_dict[str(y_value)]:
-                Z[y_idx, x_idx] = pos_dict[str(y_value)][method]
+    elif arr[11] == "moderate":
+        scores_moderate = calculate_scores_ce_acne_zero(arr)
+        neutral_dict_zero["moderate"] = calculate_scores_ce_acne_zero(arr)
+    elif arr[11] == "severe":
+        scores_severe = calculate_scores_ce_acne_zero(arr)
+        neutral_dict_zero["severe"] = calculate_scores_ce_acne_zero(arr)
+    
+    for i in range(1, 21):
+        neutral_dict_zero[f"{i*3}"] = calculate_scores_ce_acne_zero(arr)
 
-    # Add surface plot for this method with fixed opacity
-    fig.add_trace(go.Surface(
-        x=X,
-        y=Y,
-        z=Z,
-        name=method,
-        showscale=False,
-        colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
-        opacity=0.7,
-        showlegend=True,  # Ensure legend is shown
-        legendgroup=method  # Group entries by method
-    ))
+sl_imp_dict_zero = {
 
-# Update layout with modified legend positioning
-fig.update_layout(
-    title='3D Visualization of Contraceptive Scores',
-    scene=dict(
-        xaxis=dict(
-            title='Preference Level',
-            ticktext=x_labels,
-            tickvals=x_values,
-            range=[-70, 70]
-        ),
-        yaxis=dict(
-            title='Acne Severity/Positive Weight',
-            ticktext=y_labels,
-            tickvals=y_values,
-            range=[-60, 60]
-        ),
-        zaxis=dict(title='Score')
-    ),
-    showlegend=True,
-    legend=dict(
-        x=1.05,  # Adjusted position
-        y=0.5,
-        bgcolor='rgba(255, 255, 255, 0.8)',  # Semi-transparent white background
-        bordercolor='rgba(0, 0, 0, 0.2)',
-        borderwidth=1
-    ),
-    width=1200,
-    height=800
-)
+}
 
-# Add buttons to show/hide individual surfaces
-buttons = []
-for method_idx, method in enumerate(all_methods):
-    visible = [False] * len(all_methods)
-    visible[method_idx] = True
-    buttons.append(dict(
-        label=method,
-        method='update',
-        args=[{'visible': visible}]
-    ))
+for arr in inputs[16:20]:
+    if arr[11] == "no":
+        scores_no = calculate_scores_ce_acne_zero(arr)
+        sl_imp_dict_zero["no"] = scores_no
 
-# Add "Show All" button
-buttons.append(dict(
-    label="Show All",
-    method='update',
-    args=[{'visible': [True] * len(all_methods)}]
-))
+    elif arr[11] == "mild":
+        scores_mild = calculate_scores_ce_acne_zero(arr)
+        sl_imp_dict_zero["mild"] = calculate_scores_ce_acne_zero(arr)
+    
+    elif arr[11] == "moderate":
+        scores_moderate = calculate_scores_ce_acne_zero(arr)
+        sl_imp_dict_zero["moderate"] = calculate_scores_ce_acne_zero(arr)
+    elif arr[11] == "severe":
+        scores_severe = calculate_scores_ce_acne_zero(arr)
+        sl_imp_dict_zero["severe"] = calculate_scores_ce_acne_zero(arr)
+    
+    for i in range(1, 21):
+        sl_imp_dict_zero[f"{i*3}"] = calculate_scores_ce_acne_zero(arr)
+    
 
-fig.update_layout(
-    updatemenus=[dict(
-        type="dropdown",
-        direction="down",
-        x=0.1,
-        y=1.1,
-        showactive=True,
-        buttons=buttons
-    )]
-)
+imp_dict_zero = {
 
-fig.show()
-fig.write_html("/Users/sanyamshah/Simulation_Study/bivariate_analysis/ce_acne_3d.html")
-'''
+}
+
+for arr in inputs[20:24]:
+    if arr[11] == "no":
+        scores_no = calculate_scores_ce_acne_zero(arr)
+        imp_dict_zero["no"] = scores_no
+
+    elif arr[11] == "mild":
+        scores_mild = calculate_scores_ce_acne_zero(arr)
+        imp_dict_zero["mild"] = calculate_scores_ce_acne_zero(arr)
+    
+    elif arr[11] == "moderate":
+        scores_moderate = calculate_scores_ce_acne_zero(arr)
+        imp_dict_zero["moderate"] = calculate_scores_ce_acne_zero(arr)
+    elif arr[11] == "severe":
+        scores_severe = calculate_scores_ce_acne_neg(arr)
+        imp_dict_zero["severe"] = calculate_scores_ce_acne_neg(arr)
+    
+    imp_dict_zero[f"{i*3}"] = calculate_scores_ce_acne_zero(arr)
+ 
+v_imp_dict_zero = {
+
+}
+
+for arr in inputs[24:28]:
+    if arr[11] == "no":
+        scores_no = calculate_scores_ce_acne_zero(arr)
+        v_imp_dict_zero["no"] = scores_no
+
+    elif arr[11] == "mild":
+        scores_mild = calculate_scores_ce_acne_zero(arr)
+        v_imp_dict_zero["mild"] = calculate_scores_ce_acne_zero(arr)
+    
+    elif arr[11] == "moderate":
+        scores_moderate = calculate_scores_ce_acne_zero(arr)
+        v_imp_dict_zero["moderate"] = calculate_scores_ce_acne_zero(arr)
+    elif arr[11] == "severe":
+        scores_severe = calculate_scores_ce_acne_zero(arr)
+        v_imp_dict_zero["severe"] = calculate_scores_ce_acne_zero(arr)
+    
+    v_imp_dict_zero[f"{i*3}"] = calculate_scores_ce_acne_zero(arr)
+
+
+# LATEST
 import numpy as np
 import plotly.graph_objects as go
 
 # Define categorical labels for x-axis
 x_category_labels = ['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp']
 x_values = [-60, -40, -20, 0, 20, 40, 60]
-x_labels = ["-60", "-40", "-20", "0", "20", "40", "60"]  # Display labels
+x_labels = ["-60", "-40", "-20", "0", "20", "40", "60"]
 
-# Define y values and labels
+# Define y values and labels for negative and positive ranges separately
 severity_map = {
     'severe': -50,
     'moderate': -25,
@@ -1177,11 +1038,13 @@ severity_map = {
 }
 
 positive_values = [i * 3 for i in range(1, 21)]  # Positive values from 3 to 60
-y_values = list(severity_map.values()) + positive_values
-y_labels = ["-50", "-25", "-15", "0"] + [str(i) for i in positive_values]
 
-# Create coordinate matrices using actual numerical values
-X, Y = np.meshgrid(x_values, y_values)
+# Create separate y_values arrays for negative and positive methods
+negative_y_values = list(severity_map.values())
+positive_y_values = [0] + positive_values  # Include 0 for continuity
+
+negative_y_labels = ["-50", "-25", "-15", "0"]
+positive_y_labels = ["0"] + [str(i) for i in positive_values]
 
 # Dictionary mapping preference levels to their respective dictionaries
 preference_dicts = {
@@ -1196,17 +1059,13 @@ preference_dicts = {
 
 # Methods classification
 negative_only_methods = [
-    "Condom", "Internal Condom", "Cervical Cap", "FAM", "Copper IUD",
-    "Hormonal IUD", "Patch", "Combination Pill", "Sterilization",
-    "Spermicide Gel", "Withdrawal"
+   
+    "Hormonal IUD", "Patch", "Combination Pill"
 ]
 
-full_range_methods = [
+positive_methods = [
     "Arm Implant", "Mini Pill", "Ring", "Shot"
 ]
-
-# Combined list for color assignment
-all_methods = negative_only_methods + full_range_methods
 
 # Create distinct color scale
 distinct_colors = [
@@ -1217,55 +1076,62 @@ distinct_colors = [
 # Create the 3D visualization
 fig = go.Figure()
 
+# Create coordinate matrices for negative methods
+X_neg, Y_neg = np.meshgrid(x_values, negative_y_values)
+
+# Create coordinate matrices for positive methods
+X_pos, Y_pos = np.meshgrid(x_values, positive_y_values)
+
 # Process negative-only methods
 for method_idx, method in enumerate(negative_only_methods):
-    Z = np.zeros((len(y_values), len(x_values)))
+    Z = np.zeros((len(negative_y_values), len(x_values)))
     
     for x_idx, x_label in enumerate(x_category_labels):
         neg_dict, _ = preference_dicts[x_label]
-
+        
         for severity, y_pos in severity_map.items():
-            y_idx = y_values.index(y_pos)
+            y_idx = negative_y_values.index(y_pos)
             if severity in neg_dict and method in neg_dict[severity]:
                 Z[y_idx, x_idx] = neg_dict[severity][method]
     
     fig.add_trace(go.Surface(
-        x=X, y=Y, z=Z,
+        x=X_neg, y=Y_neg, z=Z,
         name=method, showscale=False,
         colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
         opacity=0.7, showlegend=True, legendgroup=method
     ))
 
-# Process full-range methods
-for method_idx, method in enumerate(full_range_methods, start=len(negative_only_methods)):
-    Z = np.zeros((len(y_values), len(x_values)))
+# Process positive methods
+for method_idx, method in enumerate(positive_methods, start=len(negative_only_methods)):
+    Z = np.zeros((len(positive_y_values), len(x_values)))
     
     for x_idx, x_label in enumerate(x_category_labels):
-        neg_dict, pos_dict = preference_dicts[x_label]
-
-        for severity, y_pos in severity_map.items():
-            y_idx = y_values.index(y_pos)
-            if severity in neg_dict and method in neg_dict[severity]:
-                Z[y_idx, x_idx] = neg_dict[severity][method]
+        _, pos_dict = preference_dicts[x_label]
         
-        for y_value in positive_values:
-            y_idx = y_values.index(y_value)
+        # Handle the 'no' case (y=0)
+        y_idx = 0  # First index in positive_y_values (corresponds to 0)
+        if 'no' in pos_dict and method in pos_dict['no']:
+            Z[y_idx, x_idx] = pos_dict['no'][method]
+        
+        # Handle positive values
+        for i, y_value in enumerate(positive_values, start=1):
             if str(y_value) in pos_dict and method in pos_dict[str(y_value)]:
-                Z[y_idx, x_idx] = pos_dict[str(y_value)][method]
+                Z[i, x_idx] = pos_dict[str(y_value)][method]
 
     fig.add_trace(go.Surface(
-        x=X, y=Y, z=Z,
+        x=X_pos, y=Y_pos, z=Z,
         name=method, showscale=False,
         colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
         opacity=0.7, showlegend=True, legendgroup=method
     ))
 
-# Update layout with modified legend positioning
+# Update layout
 fig.update_layout(
     title='3D Visualization of Contraceptive Scores',
     scene=dict(
         xaxis=dict(title='Preference Level', ticktext=x_labels, tickvals=x_values, range=[-70, 70]),
-        yaxis=dict(title='Acne Severity/Positive Weight', ticktext=y_labels, tickvals=y_values, range=[-60, 60]),
+        yaxis=dict(title='Acne Severity/Positive Weight', ticktext=negative_y_labels + positive_y_labels[1:], 
+                  tickvals=negative_y_values + positive_values, range=[-60, 60]),
         zaxis=dict(title='Score')
     ),
     showlegend=True,
@@ -1280,6 +1146,7 @@ fig.update_layout(
 
 # Add buttons to show/hide individual surfaces
 buttons = []
+all_methods = negative_only_methods + positive_methods
 for method_idx, method in enumerate(all_methods):
     visible = [False] * len(all_methods)
     visible[method_idx] = True
@@ -1306,5 +1173,214 @@ fig.update_layout(
     )]
 )
 
+fig.show()
+
+
+'''
+BUGGY CODE- FIX DROP/INCREASE IN ZERO CORR CONTRACAPTIVES, FULL LENGTH NOT SHOWN
+
+import numpy as np
+import plotly.graph_objects as go
+
+# Define categorical labels for x-axis
+x_category_labels = ['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp']
+x_values = [-60, -40, -20, 0, 20, 40, 60]
+x_labels = ["-60", "-40", "-20", "0", "20", "40", "60"]
+
+# Define y values and labels for negative and positive ranges
+severity_map = {
+    'severe': -50,
+    'moderate': -25,
+    'mild': -15,
+    'no': 0
+}
+
+positive_values = [i * 3 for i in range(1, 21)]  # Positive values from 3 to 60
+
+# Create separate y_values arrays for negative and positive methods
+negative_y_values = list(severity_map.values())
+positive_y_values = [0] + positive_values  # Include 0 for continuity
+
+negative_y_labels = ["-50", "-25", "-15", "0"]
+positive_y_labels = ["0"] + [str(i) for i in positive_values]
+
+# All contraceptive methods
+all_methods = {
+    "negative_only": [
+        "Hormonal IUD", "Patch", "Combination Pill"
+    ],
+    "positive": [
+        "Arm Implant", "Mini Pill", "Ring", "Shot"
+    ],
+    "zero": [
+        "Condoms", "Internal Condoms", "Cervical Cap", "FAM", 
+        "Copper IUD", "Sterilization", "Spermicide", "Withdrawal"
+    ]
+}
+
+# Dictionary mapping preference levels to their respective dictionaries
+preference_dicts = {
+    'v_unp': (v_unp_dict, v_unp_dict_pos, v_unp_dict_zero),
+    'unp': (unp_dict, unp_dict_pos, unp_dict_zero),
+    'sl_unp': (sl_unp_dict, sl_unp_dict_pos, sl_unp_dict_zero),
+    'neutral': (neutral_dict, neutral_dict_pos, neutral_dict_zero),
+    'sl_imp': (sl_imp_dict, sl_imp_dict_pos, sl_imp_dict_zero),
+    'imp': (imp_dict, imp_dict_pos, imp_dict_zero),
+    'v_imp': (v_imp_dict, v_imp_dict_pos, v_imp_dict_zero)
+}
+
+# Create distinct color scale
+distinct_colors = [
+    '#FF0000', '#0000FF', '#FFD700', '#FF1493', '#00FF00', '#8B008B', '#FF8C00',
+    '#00FFFF', '#800000', '#000080', '#808000', '#FF00FF', '#008080', '#FFA500', '#4B0082'
+]
+
+# Create the 3D visualization
+fig = go.Figure()
+
+# Create coordinate matrices for negative methods
+X_neg, Y_neg = np.meshgrid(x_values, negative_y_values)
+
+# Create coordinate matrices for positive methods
+X_pos, Y_pos = np.meshgrid(x_values, positive_y_values)
+
+# Create coordinate matrices for zero methods (using negative y-values for consistency)
+X_zero, Y_zero = np.meshgrid(x_values, negative_y_values)
+
+# Process negative-only methods
+for method_idx, method in enumerate(all_methods["negative_only"]):
+    Z = np.zeros((len(negative_y_values), len(x_values)))
+    
+    for x_idx, x_label in enumerate(x_category_labels):
+        neg_dict, _, _ = preference_dicts[x_label]
+        
+        for severity, y_pos in severity_map.items():
+            y_idx = negative_y_values.index(y_pos)
+            if severity in neg_dict and method in neg_dict[severity]:
+                Z[y_idx, x_idx] = neg_dict[severity][method]
+    
+    fig.add_trace(go.Surface(
+        x=X_neg, y=Y_neg, z=Z,
+        name=method, showscale=False,
+        colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
+        opacity=0.7, showlegend=True, legendgroup=method
+    ))
+
+# Process positive methods
+for method_idx, method in enumerate(all_methods["positive"], start=len(all_methods["negative_only"])):
+    Z = np.zeros((len(positive_y_values), len(x_values)))
+    
+    for x_idx, x_label in enumerate(x_category_labels):
+        _, pos_dict, _ = preference_dicts[x_label]
+        
+        # Handle the 'no' case (y=0)
+        y_idx = 0
+        if 'no' in pos_dict and method in pos_dict['no']:
+            Z[y_idx, x_idx] = pos_dict['no'][method]
+        
+        # Handle positive values
+        for i, y_value in enumerate(positive_values, start=1):
+            if str(y_value) in pos_dict and method in pos_dict[str(y_value)]:
+                Z[i, x_idx] = pos_dict[str(y_value)][method]
+
+    fig.add_trace(go.Surface(
+        x=X_pos, y=Y_pos, z=Z,
+        name=method, showscale=False,
+        colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
+        opacity=0.7, showlegend=True, legendgroup=method
+    ))
+
+# Process zero-effect methods
+for method_idx, method in enumerate(all_methods["zero"], 
+                                  start=len(all_methods["negative_only"]) + len(all_methods["positive"])):
+    Z = np.zeros((len(negative_y_values), len(x_values)))
+    
+    for x_idx, x_label in enumerate(x_category_labels):
+        _, _, zero_dict = preference_dicts[x_label]
+        
+        for severity, y_pos in severity_map.items():
+            y_idx = negative_y_values.index(y_pos)
+            if severity in zero_dict and method in zero_dict[severity]:
+                Z[y_idx, x_idx] = zero_dict[severity][method]
+    
+    fig.add_trace(go.Surface(
+        x=X_zero, y=Y_zero, z=Z,
+        name=method, showscale=False,
+        colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
+        opacity=0.7, showlegend=True, legendgroup=method
+    ))
+
+# Update layout
+fig.update_layout(
+    title='3D Visualization of All Contraceptive Methods',
+    scene=dict(
+        xaxis=dict(title='Preference Level', ticktext=x_labels, tickvals=x_values, range=[-70, 70]),
+        yaxis=dict(title='Acne Effect', ticktext=negative_y_labels + positive_y_labels[1:], 
+                  tickvals=negative_y_values + positive_values, range=[-60, 60]),
+        zaxis=dict(title='Score')
+    ),
+    showlegend=True,
+    legend=dict(
+        x=1.05, y=0.5,
+        bgcolor='rgba(255, 255, 255, 0.8)',
+        bordercolor='rgba(0, 0, 0, 0.2)',
+        borderwidth=1
+    ),
+    width=1200, height=800
+)
+
+# Add buttons to show/hide individual surfaces
+buttons = []
+all_method_names = (all_methods["negative_only"] + 
+                   all_methods["positive"] + 
+                   all_methods["zero"])
+
+for method_idx, method in enumerate(all_method_names):
+    visible = [False] * len(all_method_names)
+    visible[method_idx] = True
+    buttons.append(dict(
+        label=method,
+        method='update',
+        args=[{'visible': visible}]
+    ))
+
+# Add button to show all methods
+buttons.append(dict(
+    label="Show All",
+    method='update',
+    args=[{'visible': [True] * len(all_method_names)}]
+))
+
+# Add category buttons
+for category in ["negative_only", "positive", "zero"]:
+    visible = [False] * len(all_method_names)
+    start_idx = 0
+    if category == "positive":
+        start_idx = len(all_methods["negative_only"])
+    elif category == "zero":
+        start_idx = len(all_methods["negative_only"]) + len(all_methods["positive"])
+    
+    for i in range(len(all_methods[category])):
+        visible[start_idx + i] = True
+        
+    buttons.append(dict(
+        label=f"Show {category.replace('_', ' ').title()} Methods",
+        method='update',
+        args=[{'visible': visible}]
+    ))
+
+fig.update_layout(
+    updatemenus=[dict(
+        type="dropdown",
+        direction="down",
+        x=0.1,
+        y=1.1,
+        showactive=True,
+        buttons=buttons
+    )]
+)
+
 #fig.show()
-#fig.write_html("/Users/sanyamshah/Simulation_Study/bivariate_analysis/ce_acne_3d.html")
+
+
+'''

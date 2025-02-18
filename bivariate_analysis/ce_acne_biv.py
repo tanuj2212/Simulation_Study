@@ -1173,11 +1173,11 @@ fig.update_layout(
     )]
 )
 
-fig.show()
-
+#fig.show()
 
 '''
-BUGGY CODE- FIX DROP/INCREASE IN ZERO CORR CONTRACAPTIVES, FULL LENGTH NOT SHOWN
+
+#BUGGY CODE- FIX DROP/INCREASE IN ZERO CORR CONTRACAPTIVES, FULL LENGTH NOT SHOWN
 
 import numpy as np
 import plotly.graph_objects as go
@@ -1380,7 +1380,214 @@ fig.update_layout(
     )]
 )
 
-#fig.show()
-
-
+fig.show()
 '''
+import numpy as np
+import plotly.graph_objects as go
+
+# Define categorical labels for x-axis
+x_category_labels = ['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp']
+x_values = [-60, -40, -20, 0, 20, 40, 60]
+x_labels = ["-60", "-40", "-20", "0", "20", "40", "60"]
+
+# Define y values and labels for negative and positive ranges
+severity_map = {
+    'severe': -50,
+    'moderate': -25,
+    'mild': -15,
+    'no': 0
+}
+
+positive_values = [i * 3 for i in range(1, 21)]  # Positive values from 3 to 60
+
+# Create separate y_values arrays for negative and positive methods
+negative_y_values = list(severity_map.values())
+positive_y_values = [0] + positive_values  # Include 0 for continuity
+all_y_values = negative_y_values + positive_values[1:]  # Combined y-values for zero correlation methods
+
+negative_y_labels = ["-50", "-25", "-15", "0"]
+positive_y_labels = ["0"] + [str(i) for i in positive_values]
+all_y_labels = negative_y_labels + [str(i) for i in positive_values[1:]]
+
+# Dictionary mapping preference levels to their respective dictionaries
+preference_dicts = {
+    'v_unp': (v_unp_dict, v_unp_dict_pos, v_unp_dict_zero),
+    'unp': (unp_dict, unp_dict_pos, unp_dict_zero),
+    'sl_unp': (sl_unp_dict, sl_unp_dict_pos, sl_unp_dict_zero),
+    'neutral': (neutral_dict, neutral_dict_pos, neutral_dict_zero),
+    'sl_imp': (sl_imp_dict, sl_imp_dict_pos, sl_imp_dict_zero),
+    'imp': (imp_dict, imp_dict_pos, imp_dict_zero),
+    'v_imp': (v_imp_dict, v_imp_dict_pos, v_imp_dict_zero)
+}
+
+# Methods classification
+negative_only_methods = [
+    "Hormonal IUD", "Patch", "Combination Pill"
+]
+
+positive_methods = [
+    "Arm Implant", "Mini Pill", "Ring", "Shot"
+]
+
+zero_correlation_methods = [
+    "Condoms", "Internal Condoms", "Cervical Cap", "FAM", 
+    "Copper IUD", "Sterilization", "Spermicide", "Withdrawal"
+]
+
+# Create distinct color scale
+distinct_colors = [
+    '#FF0000', '#0000FF', '#FFD700', '#FF1493', '#00FF00', '#8B008B', '#FF8C00',
+    '#00FFFF', '#800000', '#000080', '#808000', '#FF00FF', '#008080', '#FFA500', '#4B0082'
+]
+
+# Create the 3D visualization
+fig = go.Figure()
+
+# Create coordinate matrices for negative methods
+X_neg, Y_neg = np.meshgrid(x_values, negative_y_values)
+
+# Create coordinate matrices for positive methods
+X_pos, Y_pos = np.meshgrid(x_values, positive_y_values)
+
+# Create coordinate matrices for zero correlation methods (spanning full range)
+X_zero, Y_zero = np.meshgrid(x_values, all_y_values)
+
+# Process negative-only methods
+for method_idx, method in enumerate(negative_only_methods):
+    Z = np.zeros((len(negative_y_values), len(x_values)))
+    
+    for x_idx, x_label in enumerate(x_category_labels):
+        neg_dict, _, _ = preference_dicts[x_label]
+        
+        for severity, y_pos in severity_map.items():
+            y_idx = negative_y_values.index(y_pos)
+            if severity in neg_dict and method in neg_dict[severity]:
+                Z[y_idx, x_idx] = neg_dict[severity][method]
+    
+    fig.add_trace(go.Surface(
+        x=X_neg, y=Y_neg, z=Z,
+        name=method, showscale=False,
+        colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
+        opacity=0.7, showlegend=True, legendgroup=method
+    ))
+
+# Process positive methods
+for method_idx, method in enumerate(positive_methods, start=len(negative_only_methods)):
+    Z = np.zeros((len(positive_y_values), len(x_values)))
+    
+    for x_idx, x_label in enumerate(x_category_labels):
+        _, pos_dict, _ = preference_dicts[x_label]
+        
+        # Handle the 'no' case (y=0)
+        y_idx = 0  # First index in positive_y_values (corresponds to 0)
+        if 'no' in pos_dict and method in pos_dict['no']:
+            Z[y_idx, x_idx] = pos_dict['no'][method]
+        
+        # Handle positive values
+        for i, y_value in enumerate(positive_values, start=1):
+            if str(y_value) in pos_dict and method in pos_dict[str(y_value)]:
+                Z[i, x_idx] = pos_dict[str(y_value)][method]
+
+    fig.add_trace(go.Surface(
+        x=X_pos, y=Y_pos, z=Z,
+        name=method, showscale=False,
+        colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
+        opacity=0.7, showlegend=True, legendgroup=method
+    ))
+
+# Process zero correlation methods
+for method_idx, method in enumerate(zero_correlation_methods, start=len(negative_only_methods) + len(positive_methods)):
+    Z = np.zeros((len(all_y_values), len(x_values)))
+    
+    for x_idx, x_label in enumerate(x_category_labels):
+        _, _, zero_dict = preference_dicts[x_label]
+        
+        # Handle negative severity values
+        for severity, y_pos in severity_map.items():
+            if y_pos in all_y_values:
+                y_idx = all_y_values.index(y_pos)
+                if severity in zero_dict and method in zero_dict[severity]:
+                    Z[y_idx, x_idx] = zero_dict[severity][method]
+        
+        # Handle positive values
+        for i, y_value in enumerate(positive_values):
+            if y_value in all_y_values:
+                y_idx = all_y_values.index(y_value)
+                if str(y_value) in zero_dict and method in zero_dict[str(y_value)]:
+                    Z[y_idx, x_idx] = zero_dict[str(y_value)][method]
+
+    fig.add_trace(go.Surface(
+        x=X_zero, y=Y_zero, z=Z,
+        name=method, showscale=False,
+        colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
+        opacity=0.7, showlegend=True, legendgroup=method
+    ))
+
+# Update layout
+fig.update_layout(
+    title='3D Visualization of Contraceptive Scores',
+    scene=dict(
+        xaxis=dict(title='Preference Level', ticktext=x_labels, tickvals=x_values, range=[-70, 70]),
+        yaxis=dict(title='Acne Severity/Positive Weight', ticktext=all_y_labels, 
+                  tickvals=all_y_values, range=[-60, 60]),
+        zaxis=dict(title='Score')
+    ),
+    showlegend=True,
+    legend=dict(
+        x=1.05, y=0.5,
+        bgcolor='rgba(255, 255, 255, 0.8)',
+        bordercolor='rgba(0, 0, 0, 0.2)',
+        borderwidth=1
+    ),
+    width=1200, height=800
+)
+
+# Add buttons to show/hide individual surfaces
+buttons = []
+all_methods = negative_only_methods + positive_methods + zero_correlation_methods
+for method_idx, method in enumerate(all_methods):
+    visible = [False] * len(all_methods)
+    visible[method_idx] = True
+    buttons.append(dict(
+        label=method,
+        method='update',
+        args=[{'visible': visible}]
+    ))
+
+# Add category buttons
+buttons.append(dict(
+    label="Show Negative Correlation Methods",
+    method='update',
+    args=[{'visible': [i < len(negative_only_methods) for i in range(len(all_methods))]}]
+))
+
+buttons.append(dict(
+    label="Show Positive Correlation Methods",
+    method='update',
+    args=[{'visible': [(i >= len(negative_only_methods) and i < len(negative_only_methods) + len(positive_methods)) for i in range(len(all_methods))]}]
+))
+
+buttons.append(dict(
+    label="Show Zero Correlation Methods",
+    method='update',
+    args=[{'visible': [i >= len(negative_only_methods) + len(positive_methods) for i in range(len(all_methods))]}]
+))
+
+buttons.append(dict(
+    label="Show All",
+    method='update',
+    args=[{'visible': [True] * len(all_methods)}]
+))
+
+fig.update_layout(
+    updatemenus=[dict(
+        type="dropdown",
+        direction="down",
+        x=0.1,
+        y=1.1,
+        showactive=True,
+        buttons=buttons
+    )]
+)
+
+fig.show()

@@ -22,8 +22,8 @@ original_weight_internal_condoms = [
 original_weight_cervical_cap = [
     [-3, -2, -1, 1, 2, 3],  # Cost Effectiveness (arr[1])
     3,        
-    [-3, -2, -1, 1, 2, 3],  # Vaginal Insertion (arr[3])
     3,            # Maintenance (arr[2])
+    [-3, -2, -1, 1, 2, 3],  # Vaginal Insertion (arr[3])
     [-3, -2, -1, 1, 2, 3],  # Seeking Consultation (arr[4])
     [-15, -25, -50],     # Gender Dysphoria Vaginal Insertion (arr[5])
     [-15, -25, -50]      # Gender Dysphoria Pregnancy (arr[6])
@@ -31,8 +31,8 @@ original_weight_cervical_cap = [
 original_weight_FAM = [
     [-3, -2, -1, 1, 2, 3],  # Cost Effectiveness (arr[1])
     3,
-    3,                    # Maintenance (arr[2])
     [-3, -2, -1, 1, 2, 3],  # Partner Willingness (arr[3])
+    3,                    # Maintenance (arr[2])
     [-15, -25, -50]      # Gender Dysphoria Pregnancy (arr[4])
 ]
 original_weight_arm_implant = [

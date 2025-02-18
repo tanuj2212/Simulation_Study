@@ -2524,6 +2524,7 @@ def change_score_cervical_cap(arr, weights):
     else:
         pass
 
+    print(weights[2])
     if arr[3] == "none":
         score_cervical_cap += weights[2]
 

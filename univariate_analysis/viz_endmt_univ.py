@@ -1,12 +1,14 @@
-from functions_simulation_diff_weight import *
+from functions_simulation_diff_weight_hor import *
 import copy
-from correct_original_weights import *
+from correct_original_weights_hor import *
 
 inputs = [
 
 
-     ['imp', 'neutral', 'sl_imp', 'neutral', 'weekly', 'neutral', 'neutral', 'none', 'neutral', 'neutral', 'neutral', 'no',
-     'moderate', 'moderate', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no', 'yes', 'no', 'no', 'no', 'no', 'no', 'yes'],
+    ['neutral', 'neutral', 'neutral', 'neutral', 'weekly', 'neutral', 'neutral', 'none', 'neutral', 'neutral', 'neutral', 'moderate',
+     'moderate', 'moderate', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no', 'yes', 'no', 'no', 'moderate', 'no', 'no', 'yes'],
+
+
 ]
 
 

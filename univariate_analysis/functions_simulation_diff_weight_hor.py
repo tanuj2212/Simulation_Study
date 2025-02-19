@@ -2526,7 +2526,7 @@ def change_score_cervical_cap(arr, weights):
     else:
         pass
 
-    print(weights[2])
+    #print(weights[2])
     if arr[3] == "none":
         score_cervical_cap += weights[2]
 
@@ -3177,7 +3177,7 @@ def change_copper_iud(arr, weights):
     if arr[9] == 'no':
         pass
     else:
-        copper_iud_score += weights[7]
+        copper_iud_score += weights[8]
     
     return copper_iud_score
 # Sterilization
@@ -3344,25 +3344,25 @@ def change_score_sterilization(arr, weights):
     if arr[6] == 'no':
         pass
     else:
-        sterilization_scores += weights[4]
+        sterilization_scores += weights[5]
     
     # ENDMT
     if arr[7] == 'no':
         pass
     else:
-        sterilization_scores += weights[5]
+        sterilization_scores += weights[6]
     
     # Gender Dypsphoria Period
     if arr[8] == 'no':
         pass
     else:
-        sterilization_scores += weights[6]
+        sterilization_scores += weights[7]
     
     # Gender Dysphoria Pregnancy
     if arr[9] == 'no':
         pass
     else:
-        sterilization_scores += weights[7]
+        sterilization_scores += weights[8]
     
     return sterilization_scores
 

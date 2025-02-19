@@ -5,13 +5,14 @@ from functions_simulation_diff_weight_hor import *
 
 # Define the input data
 inputs = [
-    ['neutral', 'neutral', 'neutral', 'neutral', 'monthly', 'neutral', 'neutral', 'none', 'neutral', 'neutral', 'neutral', 'moderate',
+    ['neutral', 'neutral', 'neutral', 'neutral', 'weekly', 'neutral', 'neutral', 'none', 'neutral', 'neutral', 'neutral', 'moderate',
      'moderate', 'moderate', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'moderate', 'moderate', 'no', 'yes'],
-     
-    ['neutral', 'neutral', 'neutral', 'neutral', 'monthly', 'neutral', 'neutral', 'ep', 'neutral', 'neutral', 'neutral', 'moderate',
+                              
+
+    ['neutral', 'neutral', 'neutral', 'neutral', 'weekly', 'neutral', 'neutral', 'ep', 'neutral', 'neutral', 'neutral', 'moderate',
      'moderate', 'moderate', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'moderate', 'moderate', 'no', 'yes'],
 
-     ['neutral', 'neutral', 'neutral', 'neutral', 'monthly', 'neutral', 'neutral', 'p', 'neutral', 'neutral', 'neutral', 'moderate',
+     ['neutral', 'neutral', 'neutral', 'neutral', 'weekly', 'neutral', 'neutral', 'p', 'neutral', 'neutral', 'neutral', 'moderate',
      'moderate', 'moderate', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'moderate', 'moderate', 'no', 'yes'],
 
      ]

@@ -1,11 +1,10 @@
-from functions_simulation_diff_weight import *
 from matplotlib import pyplot as plt
 import pandas as pd
 import copy
-from correct_original_weights import *
+from correct_original_weights_hor import *
 
 
-from functions_simulation_diff_weight import *
+from functions_simulation_diff_weight_hor import *
 
 # Define the input data
 inputs = [

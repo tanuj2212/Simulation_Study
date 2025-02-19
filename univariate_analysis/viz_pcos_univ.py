@@ -187,6 +187,7 @@ distinct_colors = [
 
 print(neg_scores)
 
+
 def plot_contraceptive_scores(zero_scores, pos_scores):
     # Set up the plot
     plt.figure(figsize=(12, 8))
@@ -263,4 +264,3 @@ plt = plot_contraceptive_scores(zero_scores, pos_scores)
 filename = f'univariate_analysis/visualizations_univariate/medical_conditions/pcos_univ_viz.png'  # or .pdf, .jpg, etc.
 plt.savefig(filename, dpi=300, bbox_inches='tight')
 #plt.show()
-

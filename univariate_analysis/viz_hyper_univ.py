@@ -137,7 +137,7 @@ for i in range(1, 25):
 import matplotlib.pyplot as plt
 import numpy as np
 
-
+'''
 
 def plot_contraceptive_scores(neg_scores, zero_scores):
     plt.figure(figsize=(15, 10))
@@ -145,7 +145,9 @@ def plot_contraceptive_scores(neg_scores, zero_scores):
     # Define two separate sets of weight labels and multipliers
     # First set for negative to zero range
     neg_weight_labels = ['-100', '-50', '0']
+    neg_weight_labels = ['-100', '0']
     neg_weight_multipliers = [-100, -50, 0]
+    neg_weight_multipliers = [-100, 0]
     
     # Second set for positive range
     pos_weight_labels = [str(i*3) for i in range(0, 11)]  # Start from 0 to maintain continuity
@@ -192,6 +194,116 @@ def plot_contraceptive_scores(neg_scores, zero_scores):
     # Add thick axes at y=0 and x=0 BEFORE plotting the data
     plt.axhline(y=0, color='black', linewidth=1.5)  # Thicker horizontal line at y=0
     plt.axvline(x=2, color='black', linewidth=1.5)  # Thicker vertical line at x=2 (corresponding to value 0)
+
+    # Plot each unique score line with combined method names
+    for i, (score_key, scores) in enumerate(all_scores.items()):
+        methods = score_to_methods[score_key]
+        max_methods_per_line = 4
+        if len(methods) > max_methods_per_line:
+            chunks = [methods[i:i + max_methods_per_line] for i in range(0, len(methods), max_methods_per_line)]
+            combined_label = '\n'.join([' + '.join(chunk) for chunk in chunks])
+        else:
+            combined_label = ' + '.join(methods)
+            
+        plt.plot(range(len(x_values)), scores,
+                label=combined_label,
+                marker='o',
+                linewidth=2,
+                markersize=6,
+                color=distinct_colors[i % len(distinct_colors)])
+
+    # Customize the plot
+    plt.xlabel('Weight Values', fontsize=12)
+    plt.ylabel('Contraceptive Score', fontsize=12)
+    plt.title('Contraceptive Method Scores Across Different Weights for Hypertension', fontsize=14, pad=20)
+    
+    # Improve legend
+    plt.legend(bbox_to_anchor=(1.05, 1), 
+              loc='upper left', 
+              fontsize=10,
+              frameon=True,
+              edgecolor='black')
+    
+    # Enhance grid
+    plt.grid(True, color='gray', linestyle='--', linewidth=0.5, alpha=0.3)
+    
+    # Set y-axis limits with some padding
+    plt.ylim(-550, 100)
+    
+    # Set x-axis ticks and labels
+    plt.xticks(range(len(x_values)), 
+               weight_labels,
+               rotation=45,
+               ha='right',
+               fontsize=10)
+    
+    # Add subtle background grid
+    plt.grid(True, which='both', linestyle='--', alpha=0.2)
+    
+    # Adjust layout to prevent label cutoff
+    plt.tight_layout()
+    
+    return plt
+
+#plt = plot_contraceptive_scores(neg_scores, zero_scores)
+filename = f'univariate_analysis/visualizations_univariate/medical_conditions/hyper_univ_viz.png'  # or .pdf, .jpg, etc.
+plt.savefig(filename, dpi=300, bbox_inches='tight')
+#plt.show()
+'''
+
+def plot_contraceptive_scores(neg_scores, zero_scores):
+    plt.figure(figsize=(15, 10))
+    
+    # Define two separate sets of weight labels and multipliers
+    # First set for negative to zero range
+    neg_weight_labels = ['-100', '0']
+    neg_weight_multipliers = [-100, 0]
+    
+    # Second set for positive range
+    pos_weight_labels = [str(i*3) for i in range(0, 11)]  # Start from 0 to maintain continuity
+    pos_weight_multipliers = list(range(0, 11))
+    
+    # Combine both sets
+    weight_labels = neg_weight_labels[:-1] + pos_weight_labels
+    
+    # Create a non-linear mapping for x-axis values
+    x_values = neg_weight_multipliers[:-1] + pos_weight_multipliers
+    
+    # Prepare data and identify overlapping scores
+    all_scores = {}
+    score_to_methods = {}
+    
+    # Process hormone-based methods with negative weights
+    for method in neg_scores['yes'].keys():
+        score = neg_scores['yes'][method]
+        score_key = f"{score}"
+        if score_key in score_to_methods:
+            score_to_methods[score_key].append(method)
+        else:
+            score_to_methods[score_key] = [method]
+            # Calculate scores for all x values
+            all_scores[score_key] = [score] * len(x_values)
+    
+    # Process other methods from zero_scores
+    for method in zero_scores['1'].keys():
+        score = zero_scores['1'][method]
+        score_key = f"{score}"
+        if score_key in score_to_methods:
+            score_to_methods[score_key].append(method)
+        else:
+            score_to_methods[score_key] = [method]
+            all_scores[score_key] = [score] * len(x_values)
+
+    # Define distinct colors with better visibility
+    distinct_colors = [
+        '#FF0000', '#0000FF', '#00FF00', '#FF8C00', '#800080',
+        '#008080', '#FF1493', '#FFD700', '#4B0082', '#00FFFF',
+        '#FF4500', '#32CD32', '#BA55D3', '#20B2AA', '#FF69B4'
+    ]
+
+    # Add thick axes at y=0 and x=0 BEFORE plotting the data
+    plt.axhline(y=0, color='black', linewidth=1.5)  # Thicker horizontal line at y=0
+    plt.axvline(x=1, color='black', linewidth=1.5)  # Thicker vertical line at x=1 (corresponding to value 0)
 
     # Plot each unique score line with combined method names
     for i, (score_key, scores) in enumerate(all_scores.items()):

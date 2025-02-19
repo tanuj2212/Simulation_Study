@@ -62,9 +62,9 @@ def calculate_scores(input_arr, multiplier):
         # Update the cost effectiveness weights
     for method in weights_dict:
             if method == 'condoms':
-                weights_dict[method][1] = current_weights
+                weights_dict[method][1] = [i * 0.5 for i in current_weights]
             elif method == 'internal_condoms':
-                weights_dict[method][1] = current_weights
+                weights_dict[method][1] = [i * 0.5 for i in current_weights]
             elif method == 'arm_implant':
                 weights_dict[method][0] = current_weights
             elif method == 'copper_iud':
@@ -72,15 +72,15 @@ def calculate_scores(input_arr, multiplier):
             elif method == 'hormonal_iud':
                 weights_dict[method][0] = current_weights
             elif method == 'patch':
-                weights_dict[method][1] = current_weights
+                weights_dict[method][1] = [i * 0.5 for i in current_weights]
             elif method == 'combo_pill':
-                weights_dict[method][1] = current_weights
+                weights_dict[method][1] = [i * 0.5 for i in current_weights]
             elif method == 'mini_pill':
-                weights_dict[method][1] = current_weights
+                weights_dict[method][1] = [i * 0.5 for i in current_weights]
             elif method == 'ring':
-                weights_dict[method][1] = current_weights
+                weights_dict[method][1] = [i * 0.5 for i in current_weights]
             elif method == 'shot':
-                weights_dict[method][0] = current_weights
+                weights_dict[method][0] = [i * 0.5 for i in current_weights]
             elif method == 'sterilization':
                 weights_dict[method][0] = current_weights
 

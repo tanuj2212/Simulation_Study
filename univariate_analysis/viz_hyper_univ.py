@@ -256,18 +256,20 @@ def plot_contraceptive_scores(neg_scores, zero_scores):
     
     # Define two separate sets of weight labels and multipliers
     # First set for negative to zero range
-    neg_weight_labels = ['-100', '0']
-    neg_weight_multipliers = [-100, 0]
+    #neg_weight_labels = ['-100', '0']
+    #neg_weight_multipliers = [-100, 0]
     
     # Second set for positive range
-    pos_weight_labels = [str(i*3) for i in range(0, 11)]  # Start from 0 to maintain continuity
-    pos_weight_multipliers = list(range(0, 11))
+    pos_weight_labels = [str(i*3) for i in range(1, 11)]  # Start from 0 to maintain continuity
+    pos_weight_multipliers = list(range(1, 11))
     
     # Combine both sets
-    weight_labels = neg_weight_labels[:-1] + pos_weight_labels
+    #weight_labels = neg_weight_labels[:-1] + pos_weight_labels
+    weight_labels = pos_weight_labels
     
     # Create a non-linear mapping for x-axis values
-    x_values = neg_weight_multipliers[:-1] + pos_weight_multipliers
+    #x_values = neg_weight_multipliers[:-1] + pos_weight_multipliers
+    x_values = pos_weight_multipliers
     
     # Prepare data and identify overlapping scores
     all_scores = {}
@@ -302,8 +304,8 @@ def plot_contraceptive_scores(neg_scores, zero_scores):
     ]
 
     # Add thick axes at y=0 and x=0 BEFORE plotting the data
-    plt.axhline(y=0, color='black', linewidth=1.5)  # Thicker horizontal line at y=0
-    plt.axvline(x=1, color='black', linewidth=1.5)  # Thicker vertical line at x=1 (corresponding to value 0)
+    plt.axhline(y=1, color='black', linewidth=1.5)  # Thicker horizontal line at y=0
+    plt.axvline(x=0, color='black', linewidth=1.5)  # Thicker vertical line at x=1 (corresponding to value 0)
 
     # Plot each unique score line with combined method names
     for i, (score_key, scores) in enumerate(all_scores.items()):

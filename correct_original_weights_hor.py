@@ -31,8 +31,8 @@ original_weight_cervical_cap = [
 original_weight_FAM = [
     [-3, -2, -1, 1, 2, 3],  # Cost Effectiveness (arr[1])
     3,
-    3,                    # Maintenance (arr[2])
     [-3, -2, -1, 1, 2, 3],  # Partner Willingness (arr[3])
+    3,                    # Maintenance (arr[2])
     [-15, -25, -50]      # Gender Dysphoria Pregnancy (arr[4])
 ]
 original_weight_arm_implant = [
@@ -150,7 +150,7 @@ original_weight_ring = [
     # Top Gender Dysphoria (index 19)
     [-15, -25, -50],  # Matches original top gender dysphoria scores
     # Top Surgery (index 20)
-    [-15, -25, -50],  # Matches original top surgery scores
+    -100,  # Matches original top surgery scores
     # BGDP (index 21)
     3,  # BGDP gives +3
     # GDVI (index 22)
@@ -179,7 +179,7 @@ original_weight_patch = [
     3,  # Weight for arr[17]
     3,  # Weight for arr[18]
     [-15, -25, -50],  # Weights for arr[19]
-    [-15, -25, -50],  # Weights for arr[20]
+    -100,  # Weights for arr[20]
     3,  # Weight for arr[21]
     1.5,  # Weight for arr[22]
     -100,  # Weight for arr[23]
@@ -243,7 +243,7 @@ original_weight_shot = [
     [-15, -25, -50],  # corresponding to mild, moderate, severe
     
     # Top Surgery (arr[20])
-    [-15, -25, -50],  # same as top dysphoria
+    -100,  # same as top dysphoria
     
     # BGDP (arr[21])
     3,  # non-"no" adds +3
@@ -275,7 +275,7 @@ original_weight_combo_pill = [
     3,                      # For arr[17]
     3,                      # For arr[18]
     [-15, -25, -50],      # For arr[19] (no, mild, moderate, severe)
-    [-15, -25, -50],      # For arr[20] (no, mild, moderate, severe)
+    -100,      # For arr[20] (no, mild, moderate, severe)
     3,                      # For arr[21]
     1.5,                      # For arr[22]
     -100                   # For arr[23]

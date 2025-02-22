@@ -202,12 +202,8 @@ def ring(arr):
     # Top Surgery
     if arr[21] == 'no':
         pass
-    elif arr[21] == 'mild':
-        ring_score -= 15
-    elif arr[21] == 'moderate':
-        ring_score -= 25
     else:
-        ring_score -= 50
+        ring_score -= 100
 
     # BGDP
     if arr[22] == 'no':
@@ -441,12 +437,8 @@ def score_ring(arr, weights):
     # Top Surgery
     if arr[21] == 'no':
         pass
-    elif arr[21] == 'mild':
-        ring_score += weights[20][0]
-    elif arr[21] == 'moderate':
-        ring_score += weights[20][1]
     else:
-        ring_score += weights[20][2]
+        ring_score += weights[20]
 
     # BGDP
     if arr[22] == 'no':
@@ -645,12 +637,8 @@ def score_shot(arr):
     
     if arr[20] == 'no':
         pass
-    elif arr[20] == 'mild':
-        shot_score -= 15
-    elif arr[20] == 'moderate':
-        shot_score -= 25
     else:
-        shot_score -= 50
+        shot_score -= 100
     
     if arr[21] == 'no':
         pass
@@ -863,12 +851,8 @@ def change_score_shot(arr, weights):
     # Top Surgery
     if arr[20] == 'no':
         pass
-    elif arr[20] == 'mild':
-        shot_score += weights[19][0]
-    elif arr[20] == 'moderate':
-        shot_score += weights[19][1]
     else:
-        shot_score += weights[19][2]
+        shot_score += weights[19]
     
     # BGDP
     if arr[21] == 'no':
@@ -1066,12 +1050,8 @@ def score_combo_pill(arr):
     
     if arr[20] == 'no':
         pass
-    elif arr[20] == 'mild':
-        combo_pill_score -= 15
-    elif arr[20] == 'moderate':
-        combo_pill_score -= 25
     else:
-        combo_pill_score -= 50
+        combo_pill_score -= 100
     
     if arr[21] == 'no':
         pass
@@ -1267,12 +1247,8 @@ def change_score_combo_pill(arr, weights):
     
     if arr[20] == 'no':
         pass
-    elif arr[20] == 'mild':
-        combo_pill_score += weights[19][0]
-    elif arr[20] == 'moderate':
-        combo_pill_score += weights[19][1]
     else:
-        combo_pill_score += weights[19][2]
+        combo_pill_score += weights[19]
     
     if arr[21] == 'no':
         pass
@@ -1467,12 +1443,8 @@ def score_patch(arr):
     
     if arr[20] == 'no':
         pass
-    elif arr[20] == 'mild':
-        patch_score -= 15
-    elif arr[20] == 'moderate':
-        patch_score -= 25
     else:
-        patch_score -= 50
+        patch_score -= -100
     
     if arr[21] == 'no':
         pass
@@ -1667,12 +1639,8 @@ def change_score_patch(arr, weights):
     
     if arr[20] == 'no':
         pass
-    elif arr[20] == 'mild':
-        patch_score += weights[19][0]
-    elif arr[20] == 'moderate':
-        patch_score += weights[19][1]
     else:
-        patch_score += weights[19][2]
+        patch_score += weights[19]
     
     if arr[21] == 'no':
         pass

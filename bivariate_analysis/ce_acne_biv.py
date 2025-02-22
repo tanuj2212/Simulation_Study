@@ -1,369 +1,6 @@
-from functions_simulation_diff_weight import *
+from functions_simulation_diff_weight_hor import *
 import copy
-
-# Define the original weights (replace these with your actual weights)
-original_weight_condoms = [
-    [-3, -2, -1, 1, 2, 3],  # Cost effectiveness
-    [-1.5, -1, -0.5, 0.5, 1, 1.5],  # Pregnancy prevention
-    3,  # Maintenance (daily use)
-    [-3, -2, -1, 1, 2, 3],  # Partner willingness
-    [-3, -2, -1, 1, 2, 3],  # STI prevention
-    1.5  # Gender dysphoria related to pregnancy (no/yes)
-]
-original_weight_internal_condoms = [
-    [-3, -2, -1, 1, 2, 3],  # Cost effectiveness
-    [-1.5, -1, -0.5, 0.5, 1, 1.5],  # Pregnancy prevention
-    3,  # Maintenance (daily use)   
-    [-3, -2, -1, 1, 2, 3],  # Partner willingness
-    [-3, -2, -1, 1, 2, 3],  # STI prevention
-    [-3, -2, -1, 1, 2, 3], # Vaginal Insertion
-    [-15, -25, -50],  # Gender dysphoria related to vaginal insertion
-    1.5 # Gender dysphoria related to pregnancy
-]
-original_weight_cervical_cap = [
-    [-3, -2, -1, 1, 2, 3],  # Cost Effectiveness (arr[1])
-    3,                    # Maintenance (arr[2])
-    [-3, -2, -1, 1, 2, 3],  # Vaginal Insertion (arr[3])
-    [-3, -2, -1, 1, 2, 3],  # Seeking Consultation (arr[4])
-    [-15, -25, -50],     # Gender Dysphoria Vaginal Insertion (arr[5])
-    [-15, -25, -50]      # Gender Dysphoria Pregnancy (arr[6])
-]
-original_weight_FAM = [
-    [-3, -2, -1, 1, 2, 3],  # Cost Effectiveness (arr[1])
-    3,                    # Maintenance (arr[2])
-    [-3, -2, -1, 1, 2, 3],  # Partner Willingness (arr[3])
-    [-15, -25, -50]      # Gender Dysphoria Pregnancy (arr[4])
-]
-original_weight_arm_implant = [
-    [-3, -2, -1, 1, 2, 3],  # Pregnancy Prevention (arr[1])
-    [-3, -2, -1, 1, 2, 3],  # Lessens Periods (arr[2])
-    [3, 2, 1, -1, -2, -3],  # Maintains Weight (arr[3])
-    3,                    # Maintenance (arr[4])
-    [3, 3],                    # Hormones Used (arr[5])
-    [3, 2, 1, -1, -2, -3],  # Seeking consultation (arr[6])
-    [3, 2, 1, -1, -2, -3],  # Medical procedure (arr[7])
-    3,                    # Acne (arr[8])
-    [-7.5, -12.5, -25, -15, -25, -50],  # Anxiety (arr[9])
-    [-7.5, -12.5, -25, -15, -25, -50],  # Depression (arr[10])
-    3,                    # Gender dysphoria period (arr[11])
-    3,                    # Gender dysphoria pregnancy (arr[12])
-]
-original_weight_spermicide = [
-    # Pregnancy Prevention (0-5)
-    [-3, -2, -1, 1, 2, 3],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
-    
-    # Maintainance (Yearly) [single value for yearly]
-    3,
-    
-    # Vaginal Insertion (0-5)
-    [-3, -2, -1, 1, 2, 3],
-    
-    # Seeking Consultation (0-5)
-    [-3, -2, -1, 1, 2, 3],
-
-]
-original_weight_withdrawl = [
-    # Pregnancy Prevention (0-5)
-    [-3, -2, -1, 1, 2, 3],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
-    
-    # Maintainance (Yearly) [single value for yearly]
-    3,
-    
-    # Vaginal Insertion (0-5)
-    [-3, -2, -1, 1, 2, 3],
-    
-    # Gender Pregnancy (mild, moderate, severe)
-    [-15, -25, -50]
-    
-]
-original_weight_sterilization = [
-    # Pregnancy Prevention (0-5)
-    [-3, -2, -1, 1, 2, 3],
-    
-    # Lessens Periods (0-5)
-    [-3, -2, -1, 1, 2, 3],
-    
-    # Seeking Consultation (0-5)
-    [-3, -2, -1, 1, 2, 3],
-    
-    # Medical Procedure (0-5)
-    [-3, -2, -1, 1, 2, 3],
-    
-    # PCOS (0 for 'no', some weight for conditions)
-    3,
-    
-    # ENDMT (0 for 'no', some weight for conditions)
-    3,
-    
-    # Gender Dysphoria Period (0 for 'no', weights for conditions)
-    3,
-    
-    # Gender Dysphoria Pregnancy (0 for 'no', weight for conditions)
-    3
-]
-original_weight_ring = [
-    # Cost Effectiveness (index 0)
-    [-3, -2, -1, 1, 2, 3],  # Matches the original cost-effectiveness scores
-    # Pregnancy Prevention (index 1)
-    [-1.5, -1, -0.5, 0.5, 1, 1.5],  # Matches original pregnancy prevention scores
-    # Management of Periods (index 2)
-    [-3, -2, -1, 1, 2, 3],  # Matches original management of periods scores
-    # Weight Management (index 3)
-    [3, 2, 1, -1, -2, -3],  # Matches original weight management scores
-    # Monthly Maintenance (index 4)
-    3,  # Additional score for monthly
-    # Hormones (index 5)
-    3,  # Hormones (ep score of +3)
-    # Willingness Vagina (index 6)
-    [-3, -2, -1, 1, 2, 3],  # Matches original vaginal willingness scores
-    # Medical Practitioner (index 7)
-    [-3, -2, -1, 1, 2, 3],  # Matches original medical practitioner scores
-    # Acne (index 8)
-    3,  # Acne severity gives +3
-    # Anxiety (index 9)
-    [-7.5, -12.5, -25, -15, -25, -50],  # Matches original anxiety scores
-    # Depression (index 10)
-    [-7.5, -12.5, -25, -15, -25, -50],  # Matches original depression scores
-    # Hyper (index 11)
-    -100,  # Hyper gives -100
-    # Blood Clots (index 12)
-    -100,  # Blood clots give -100
-    # CHF/CAD (index 13)
-    -100,  # CHF/CAD gives -100
-    # Breast Cancer (index 14)
-    -100,  # Breast issues give -100
-    # Smoker (index 15)
-    -100,  # Smoking gives -100
-    # Migraine (index 16)
-    -100,  # Migraines give -100
-    # PCOS (index 17)
-    3,  # PCOS gives +3
-    # Endometriosis (index 18)
-    3,  # Endometriosis gives +3
-    # Top Gender Dysphoria (index 19)
-    [-15, -25, -50],  # Matches original top gender dysphoria scores
-    # Top Surgery (index 20)
-    [-15, -25, -50],  # Matches original top surgery scores
-    # BGDP (index 21)
-    3,  # BGDP gives +3
-    # GDVI (index 22)
-    # GDP (index 23)
-    [-7.5, -12.5, -25],  # Matches original GDP scores
-    # HRT (index 24)
-    -100,  # HRT gives -100
-]
-original_weight_patch = [
-    [-3, -2, -1, 1,2,3],  # Weights for arr[1]: ["v_unp", "unp", "sl_unp", "neutral", "sl_imp", "imp", "other"]
-    [-1.5, -1, -0.5, 0.5, 1,1.5],  # Weights for arr[2]
-    [-3, -2, -1, 1,2,3],  # Weights for arr[3]
-    [3, 2, 1, -1,-2,-3],  # Weights for arr[4]
-    3,  # Weight for arr[5]: "weekly"
-    3,  # Weight for arr[6]: "ep"
-   [-3, -2, -1, 1,2,3],  # Weights for arr[7]
-    [-15, -25, -50],  # Weights for arr[8]
-    [-7.5, -12.5, -25, -15, -25, -50],  # Weights for arr[9]
-    [-7.5, -12.5, -25, -15, -25, -50],  # Weights for arr[10]
-    -100,  # Weight for arr[11]
-    -100,  # Weight for arr[12]
-    -100,  # Weight for arr[13]
-    -100,  # Weight for arr[14]
-    -100,  # Weight for arr[15]
-    -100,  # Weight for arr[16]
-    3,  # Weight for arr[17]
-    3,  # Weight for arr[18]
-    [-15, -25, -50],  # Weights for arr[19]
-    [-15, -25, -50],  # Weights for arr[20]
-    3,  # Weight for arr[21]
-    3,  # Weight for arr[22]
-    -100,  # Weight for arr[23]
-]
-original_weight_shot = [
-    # Pregnancy Prevention (arr[1])
-    [-1.5, -1, -0.5, 0.5, 1, 1.5],  # corresponding to v_unp, unp, sl_unp, sl_imp, imp, very imp
-    
-    # Management of Periods (arr[2])
-    [-3, -2, -1, 1, 2, 3],  # corresponding to v_unp, unp, sl_unp, sl_imp, imp, very imp
-    
-    # Weight Management (arr[3])
-    [3, 2, 1, -1, -2, -3],  # corresponding to v_unp, unp, sl_unp, sl_imp, imp, very imp
-    
-    # Maintenance (arr[4])
-    3,  # "monthly" adds +3
-    
-    # Hormones (arr[5])
-    [3, 3],  # 'p' adds +3, 'ep' and any other have no effect
-    
-    # Consultation (arr[6])
-    [-3, -2, -1, 1, 2, 3],  # corresponding to v_unp, unp, sl_unp, sl_imp, imp, very imp
-    
-    # Medical Procedure (arr[7])
-    [-3, -2, -1, 1, 2, 3],  # corresponding to v_unp, unp, sl_unp, sl_imp, imp, very imp
-    
-    # Acne (arr[8])
-    3,  # non-"no" adds +3
-    
-    # Anxiety (arr[9])
-    [-7.5, -12.5, -25, -15, -25, -50],  # corresponding to mild-moderate-severe with or without acne
-    
-    # Depression (arr[10])
-    [-7.5, -12.5, -25, -15, -25, -50],  # similar to anxiety
-    
-    # Hyper (arr[11])
-    -100,  # any non-"no" adds -100
-    
-    # Blood Clots (arr[12])
-    -100,  # same
-    
-    # CHF/CAD (arr[13])
-    -100,  # same
-    
-    # Breast (arr[14])
-    -100,  # same
-    
-    # Smoker (arr[15])
-    -100,  # same
-    
-    # Migraine (arr[16])
-    -100,  # same
-    
-    # PCOS (arr[17])
-    3,  # non-"no" adds +3
-    
-    # Endometriosis (arr[18])
-    3,  # non-"no" adds +3
-    
-    # Top Gender Dysphoria (arr[19])
-    [-15, -25, -50],  # corresponding to mild, moderate, severe
-    
-    # Top Surgery (arr[20])
-    [-15, -25, -50],  # same as top dysphoria
-    
-    # BGDP (arr[21])
-    3,  # non-"no" adds +3
-    
-    # Gender Dysphoria Pregnancy (arr[22])
-    1.5,  # non-"no" adds +1.5
-    
-    # HRT (arr[23])
-    -100  # non-"no" adds -100
-]
-
-original_weight_combo_pill = [
-    [-3, -2, -1, 1, 2, 3],   # For arr[1] (v_unp, unp, sl_unp, neutral, sl_imp, imp)
-    [-1.5, -1, -0.5, 0.5, 1, 1.5],   # For arr[2]
-    [-3, -2, -1, 1, 2, 3],   # For arr[3]
-    [3, 2, 1, -1, -2, -3],    # For arr[4] (reverse signs compared to previous)
-    3,                      # For arr[5] (daily adds +3)
-    3,                      # For arr[6] (ep adds +3)
-    [-3, -2, -1, 1, 2, 3],   # For arr[7]
-    [-15, -25, -50],      # For arr[8] (no, mild, moderate, severe)
-    [-7.5, -12.5, -25, -15, -25, -50],  # For arr[9] with combinations of arr[8]
-    [-7.5, -12.5, -25, -15, -25, -50],  # For arr[10] with combinations of arr[9]
-    -100,                  # For arr[11]
-    -100,                  # For arr[12]
-    -100,                  # For arr[13]
-    -100,                  # For arr[14]
-    -100,                  # For arr[15]
-    -100,                  # For arr[16]
-    3,                      # For arr[17]
-    3,                      # For arr[18]
-    [-15, -25, -50],      # For arr[19] (no, mild, moderate, severe)
-    [-15, -25, -50],      # For arr[20] (no, mild, moderate, severe)
-    3,                      # For arr[21]
-    3,                      # For arr[22]
-    -100                   # For arr[23]
-]
-
-original_weight_mini_pill = [
-    # Cost Effectiveness
-    [-3, -2, -1, 1, 2, 3],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
-    
-    # Pregnancy Prevention
-    [-1.5, -1, -0.5, 0.5, 1, 1.5],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
-    
-    # Management of Periods 
-    [-3, -2, -1, 1, 2, 3],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
-    
-    # Weight Management
-    [3, 2, 1, -1, -2, -3],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
-    
-    # Maintainance (Daily) 
-    3,  # daily
-    
-    # Hormones (p, ep)
-    [3, 3],  # [p, ep]
-    
-    # Seeking consultations
-    [-3, -2, -1, 1, 2, 3],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
-    
-    # Acne (yes/no)
-    3,  # no
-    
-    # Anxiety (no, mild, moderate, severe)
-    [-7.5, -12.5, -25, -15, -25, -50],  # [no, mild, moderate, severe]
-    
-    # Depression (no, mild, moderate, severe)
-    [-7.5, -12.5, -25, -15, -25, -50],  # [no, mild, moderate, severe]
-    
-    # Breast (yes/no)
-    -100,  # no
-    
-    # PCOS (yes/no)
-    3,  # no
-    
-    # ENDMT (yes/no)
-    3,  # no
-    
-    # Gender Dysphoria Period (yes/no)
-    3,  # no
-    
-    # Gender Dysphoria Pregnancy (yes/no)
-    1.5   # no
-]
-original_weight_copper_IUD = [
-    # Pregnancy Prevention (0-5)
-    [-3, -2, -1, 1, 2, 3],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
-    
-    # Maintainance (Yearly) [single value for yearly]
-    3,
-    
-    # Vaginal Insertion (0-5)
-    [-3, -2, -1, 1, 2, 3],
-    
-    # Seeking Consultation (0-5)
-    [-3, -2, -1, 1, 2, 3],
-    
-    # Medical Procedure (0-5)
-    [-3, -2, -1, 1, 2, 3],
-    
-    # Gender Dysphoria (mild, moderate, severe)
-    [-15, -25, -50],
-    
-    # Gender Dysphoria Vaginal Insertion (mild, moderate, severe)
-    [-15, -25, -50],
-    
-    # Gender Dysphoria Pregnancy
-    3
-]
-original_weight_hormonal_IUD = [
-    [-3, -2, -1, 1, 2, 3],  # weights for arr[1] values: ["v_unp", "unp", "sl_unp", "neutral", "sl_imp", "imp"]
-    [-3, -2, -1, 1, 2, 3],  # weights for arr[2]
-    [3, 2, 1, 0, -1, -2, -3],  # weights for arr[3]
-    3,  # weight for arr[4] == "yearly"
-    [3, 0],  # weights for arr[5]: ["p", "ep"]
-    [-3, -2, -1, 1, 2, 3],  # weights for arr[6]
-    [-3, -2, -1, 1, 2, 3],  # weights for arr[7]
-    [-3, -2, -1, 1, 2, 3],  # weights for arr[8]
-    [-15, -25, -50],  # weights for arr[9]: ["mild", "moderate", "severe"]
-    [-7.5, -12.5, -25, -15, -25, -50],  # weights for arr[10] based on arr[9]
-    [-7.5, -12.5, -25, -15, -25, -50],  # weights for arr[11] based on arr[10]
-    -100,  # weight for arr[12] != "no"
-    3,  # weight for arr[13] != "no"
-    3,  # weight for arr[14] != "no"
-    3,  # weight for arr[15] != "no"
-    [-15, -25, -50],  # weights for arr[16]: ["mild", "moderate", "severe"]
-    3  # weight for arr[17] != "no"
-]
+from correct_original_weights_hor import *
 
 inputs = [
     ['v_unp', 'neutral', 'neutral', 'neutral', 'weekly', 'neutral', 'neutral', 'none', 'neutral', 'neutral', 'neutral', 'no',
@@ -602,14 +239,23 @@ def calculate_scores_ce_acne_zero(input_arr):
             weights_dict[method][0] = weights
 
         # Calculate scores
-        condom_arr = ["condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[26]]
-        internal_condom_arr = ["int_condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[8], input_arr[25], input_arr[26]]
-        cervical_cap_arr = ["cervical_cap", input_arr[0], input_arr[4], input_arr[8], input_arr[9], input_arr[25], input_arr[26]]
-        fam_arr = ["fam", input_arr[0], input_arr[4], input_arr[5], input_arr[26]]
-        copper_iud_arr = ["copper_iud", input_arr[1], input_arr[4], input_arr[8], input_arr[9], input_arr[10], input_arr[24], input_arr[25], input_arr[26]]
-        sterilization_arr = ["sterilization", input_arr[1], input_arr[2], input_arr[9], input_arr[10], input_arr[20], input_arr[21], input_arr[24], input_arr[26]]
-        gel_arr = ["gel", input_arr[0], input_arr[4], input_arr[5], input_arr[8]]
-        withdrawal_arr = ["withdrawal", input_arr[0], input_arr[4], input_arr[5], input_arr[26]]
+        #condom_arr = ["condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[26]]
+        #internal_condom_arr = ["int_condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[8], input_arr[25], input_arr[26]]
+        #cervical_cap_arr = ["cervical_cap", input_arr[0], input_arr[4], input_arr[8], input_arr[9], input_arr[25], input_arr[26]]
+        #fam_arr = ["fam", input_arr[0], input_arr[4], input_arr[5], input_arr[26]]
+        #copper_iud_arr = ["copper_iud", input_arr[1], input_arr[4], input_arr[8], input_arr[9], input_arr[10], input_arr[24], input_arr[25], input_arr[26]]
+        #sterilization_arr = ["sterilization", input_arr[1], input_arr[2], input_arr[9], input_arr[10], input_arr[20], input_arr[21], input_arr[24], input_arr[26]]
+        #gel_arr = ["gel", input_arr[0], input_arr[4], input_arr[5], input_arr[8]]
+        #withdrawal_arr = ["withdrawal", input_arr[0], input_arr[4], input_arr[5], input_arr[26]]
+        condom_arr = ["condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[7], input_arr[26]]
+        internal_condom_arr = ["int_condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[7], input_arr[8], input_arr[25], input_arr[26]]
+        cervical_cap_arr = ["cervical_cap", input_arr[0], input_arr[4], input_arr[7], input_arr[8], input_arr[9], input_arr[25], input_arr[26]]
+        fam_arr = ["fam", input_arr[0], input_arr[4], input_arr[5], input_arr[7], input_arr[26]]
+        copper_iud_arr = ["copper_iud", input_arr[1], input_arr[4], input_arr[7], input_arr[8], input_arr[9], input_arr[10], input_arr[24], input_arr[25], input_arr[26]]
+        sterilization_arr = ["sterilization", input_arr[1], input_arr[2], input_arr[7], input_arr[9], input_arr[10], input_arr[20], input_arr[21], input_arr[24], input_arr[26]]
+        gel_arr = ["gel", input_arr[0], input_arr[4], input_arr[5], input_arr[7], input_arr[8]]
+        withdrawal_arr = ["withdrawal", input_arr[0], input_arr[4], input_arr[5], input_arr[7], input_arr[26]]
+    
         # Calculate scores using the updated weights
         condom_score = change_score_condoms(condom_arr, weights_dict['condoms'])
         internal_condom_score = change_internal_condoms(internal_condom_arr, weights_dict['internal_condoms'])
@@ -993,9 +639,10 @@ for arr in inputs[20:24]:
         imp_dict_zero["moderate"] = calculate_scores_ce_acne_zero(arr)
     elif arr[11] == "severe":
         scores_severe = calculate_scores_ce_acne_neg(arr)
-        imp_dict_zero["severe"] = calculate_scores_ce_acne_neg(arr)
+        imp_dict_zero["severe"] = calculate_scores_ce_acne_zero(arr)
     
-    imp_dict_zero[f"{i*3}"] = calculate_scores_ce_acne_zero(arr)
+    for i in range(1, 21):
+        imp_dict_zero[f"{i*3}"] = calculate_scores_ce_acne_zero(arr)
  
 v_imp_dict_zero = {
 
@@ -1017,7 +664,8 @@ for arr in inputs[24:28]:
         scores_severe = calculate_scores_ce_acne_zero(arr)
         v_imp_dict_zero["severe"] = calculate_scores_ce_acne_zero(arr)
     
-    v_imp_dict_zero[f"{i*3}"] = calculate_scores_ce_acne_zero(arr)
+    for i in range(1, 21):
+        v_imp_dict_zero[f"{i*3}"] = calculate_scores_ce_acne_zero(arr)
 
 
 # LATEST
@@ -1382,6 +1030,8 @@ fig.update_layout(
 
 fig.show()
 '''
+
+# Working code, but no checkboxes. Shows everything
 import numpy as np
 import plotly.graph_objects as go
 
@@ -1590,4 +1240,171 @@ fig.update_layout(
     )]
 )
 
-fig.show()
+#fig.show()
+# Save the figure as an HTML file
+#fig.write_html("ce_acne_3d.html")
+
+import numpy as np
+import vtk
+
+import vtk
+import numpy as np
+
+# Create renderer and window
+renderer = vtk.vtkRenderer()
+renderer.SetBackground(1.0, 1.0, 1.0)  # White background
+
+render_window = vtk.vtkRenderWindow()
+render_window.AddRenderer(renderer)
+render_window.SetSize(1250, 800)
+
+interactor = vtk.vtkRenderWindowInteractor()
+interactor.SetRenderWindow(render_window)
+
+# Create axes
+axes = vtk.vtkAxesActor()
+axes.SetTotalLength(140, 140, 140)
+axes.SetXAxisLabelText("Preference Level")
+axes.SetYAxisLabelText("Acne Severity/Positive Weight")
+axes.SetZAxisLabelText("Score")
+
+# Create distinct colors for methods
+distinct_colors = [
+    (1.0, 0.0, 0.0), (0.0, 0.0, 1.0), (1.0, 0.84, 0.0),
+    (1.0, 0.08, 0.58), (0.0, 1.0, 0.0), (0.55, 0.0, 0.55),
+    (1.0, 0.55, 0.0), (0.0, 1.0, 1.0), (0.5, 0.0, 0.0),
+    (0.0, 0.0, 0.5), (0.5, 0.5, 0.0), (1.0, 0.0, 1.0),
+    (0.0, 0.5, 0.5), (1.0, 0.65, 0.0), (0.29, 0.0, 0.51)
+]
+
+def create_surface(x_values, y_values, z_values, color):
+    # Create points
+    points = vtk.vtkPoints()
+    nx, ny = len(x_values), len(y_values)
+    
+    # Create cells
+    polygons = vtk.vtkCellArray()
+    
+    # Create scalars for coloring
+    scalars = vtk.vtkFloatArray()
+    
+    # Fill points and scalars
+    for j in range(ny):
+        for i in range(nx):
+            points.InsertNextPoint(x_values[i], y_values[j], z_values[j][i])
+            scalars.InsertNextValue(z_values[j][i])
+    
+    # Create polygons
+    for j in range(ny-1):
+        for i in range(nx-1):
+            polygon = vtk.vtkPolygon()
+            polygon.GetPointIds().SetNumberOfIds(4)
+            
+            polygon.GetPointIds().SetId(0, i + j*nx)
+            polygon.GetPointIds().SetId(1, (i+1) + j*nx)
+            polygon.GetPointIds().SetId(2, (i+1) + (j+1)*nx)
+            polygon.GetPointIds().SetId(3, i + (j+1)*nx)
+            
+            polygons.InsertNextCell(polygon)
+    
+    # Create polydata
+    polydata = vtk.vtkPolyData()
+    polydata.SetPoints(points)
+    polydata.SetPolys(polygons)
+    polydata.GetPointData().SetScalars(scalars)
+    
+    # Create mapper and actor
+    mapper = vtk.vtkPolyDataMapper()
+    mapper.SetInputData(polydata)
+    
+    actor = vtk.vtkActor()
+    actor.SetMapper(mapper)
+    actor.GetProperty().SetColor(color)
+    actor.GetProperty().SetOpacity(0.7)
+    
+    return actor
+
+# Process negative-only methods
+for method_idx, method in enumerate(negative_only_methods):
+    Z = np.zeros((len(negative_y_values), len(x_values)))
+    
+    for x_idx, x_label in enumerate(x_category_labels):
+        neg_dict, _, _ = preference_dicts[x_label]
+        
+        for severity, y_pos in severity_map.items():
+            y_idx = negative_y_values.index(y_pos)
+            if severity in neg_dict and method in neg_dict[severity]:
+                Z[y_idx, x_idx] = neg_dict[severity][method]
+    
+    actor = create_surface(x_values, negative_y_values, Z, distinct_colors[method_idx])
+    renderer.AddActor(actor)
+
+# Process positive methods
+for method_idx, method in enumerate(positive_methods, start=len(negative_only_methods)):
+    Z = np.zeros((len(positive_y_values), len(x_values)))
+    
+    for x_idx, x_label in enumerate(x_category_labels):
+        _, pos_dict, _ = preference_dicts[x_label]
+        
+        # Handle the 'no' case (y=0)
+        y_idx = 0
+        if 'no' in pos_dict and method in pos_dict['no']:
+            Z[y_idx, x_idx] = pos_dict['no'][method]
+        
+        # Handle positive values
+        for i, y_value in enumerate(positive_values, start=1):
+            if str(y_value) in pos_dict and method in pos_dict[str(y_value)]:
+                Z[i, x_idx] = pos_dict[str(y_value)][method]
+    
+    actor = create_surface(x_values, positive_y_values, Z, distinct_colors[method_idx])
+    renderer.AddActor(actor)
+
+# Process zero correlation methods
+for method_idx, method in enumerate(zero_correlation_methods, start=len(negative_only_methods) + len(positive_methods)):
+    Z = np.zeros((len(all_y_values), len(x_values)))
+    
+    for x_idx, x_label in enumerate(x_category_labels):
+        _, _, zero_dict = preference_dicts[x_label]
+        
+        # Handle negative severity values
+        for severity, y_pos in severity_map.items():
+            if y_pos in all_y_values:
+                y_idx = all_y_values.index(y_pos)
+                if severity in zero_dict and method in zero_dict[severity]:
+                    Z[y_idx, x_idx] = zero_dict[severity][method]
+        
+        # Handle positive values
+        for i, y_value in enumerate(positive_values):
+            if y_value in all_y_values:
+                y_idx = all_y_values.index(y_value)
+                if str(y_value) in zero_dict and method in zero_dict[str(y_value)]:
+                    Z[y_idx, x_idx] = zero_dict[str(y_value)][method]
+    
+    actor = create_surface(x_values, all_y_values, Z, distinct_colors[method_idx])
+    renderer.AddActor(actor)
+
+# Add axes to renderer
+renderer.AddActor(axes)
+
+# Set up camera
+camera = renderer.GetActiveCamera()
+camera.SetPosition(200, 200, 200)
+camera.SetFocalPoint(0, 0, 0)
+camera.SetViewUp(0, 0, 1)
+
+# Add text labels for methods
+legend_actors = []
+y_offset = 20
+for idx, method in enumerate(negative_only_methods + positive_methods + zero_correlation_methods):
+    text_actor = vtk.vtkTextActor()
+    text_actor.SetInput(method)
+    text_actor.GetTextProperty().SetColor(distinct_colors[idx])
+    text_actor.SetPosition(10, 800 - y_offset)
+    renderer.AddActor2D(text_actor)
+    legend_actors.append(text_actor)
+    y_offset += 20
+
+# Initialize and start interaction
+interactor.Initialize()
+render_window.Render()
+interactor.Start()

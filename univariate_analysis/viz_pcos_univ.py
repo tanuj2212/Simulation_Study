@@ -251,9 +251,68 @@ def plot_contraceptive_scores(zero_scores, pos_scores):
     plt.xticks(weight_multipliers, rotation=45)
 
     # Add axes at y=0 and x=0
-    plt.axhline(0, color='black', linewidth=1)
+    plt.axhline(1, color='black', linewidth=1)
     plt.axvline(0, color='black', linewidth=1)
 
+    # Adjust layout
+    plt.tight_layout()
+    
+    return plt
+
+def plot_contraceptive_scores(zero_scores, pos_scores):
+    # Set up the plot
+    plt.figure(figsize=(12, 8))
+    
+    # Define weight labels and multipliers
+    weight_multipliers = list(range(3, 63, 3))
+    
+    # Prepare data for each contraceptive type
+    all_scores = {}
+    # Process positive scores
+    for method in pos_scores['3'].keys():
+        method_scores = [pos_scores[str(weight)][method] for weight in range(3, 63, 3)]
+        all_scores[method] = method_scores
+    
+    # Process zero scores (constant across the range)
+    for method in zero_scores['1'].keys():
+        scores = [zero_scores['1'][method]] * len(weight_multipliers)
+        all_scores[method] = scores
+
+    # Group methods with identical score patterns
+    grouped_methods = {}
+    for method, scores in all_scores.items():
+        scores_tuple = tuple(scores)  # Convert scores list to tuple for hashing
+        if scores_tuple in grouped_methods:
+            grouped_methods[scores_tuple].append(method)
+        else:
+            grouped_methods[scores_tuple] = [method]
+            
+    # Plot each unique score pattern
+    for i, (scores_tuple, methods) in enumerate(grouped_methods.items()):
+        combined_label = ' + '.join(methods)
+        max_methods_per_line = 4  # Number of methods per line
+        if len(methods) > max_methods_per_line:
+            # Split the methods into chunks of 4 and join with a newline
+            chunks = [methods[i:i + max_methods_per_line] for i in range(0, len(methods), max_methods_per_line)]
+            combined_label = '\n'.join([' + '.join(chunk) for chunk in chunks])
+            
+        plt.plot(weight_multipliers, scores_tuple, 
+                 label=combined_label, 
+                 marker='o',
+                 color=distinct_colors[i % len(distinct_colors)])
+    
+    # Customize the plot
+    plt.xlabel('Weight Categories')
+    plt.ylabel('Contraceptive Score')
+    plt.title('Contraceptive Scores across weights for PCOS')
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.grid(True, color='gray', linestyle='--', linewidth=0.5)
+    plt.ylim(-550, 100)
+    # Set x-ticks
+    plt.xticks(weight_multipliers, rotation=45)
+    # Add axes at y=0
+    plt.axhline(1, color='black', linewidth=1)
+    plt.axvline(weight_multipliers[0], color='black', linewidth=1)
     # Adjust layout
     plt.tight_layout()
     
@@ -264,3 +323,4 @@ plt = plot_contraceptive_scores(zero_scores, pos_scores)
 filename = f'univariate_analysis/visualizations_univariate/medical_conditions/pcos_univ_viz.png'  # or .pdf, .jpg, etc.
 plt.savefig(filename, dpi=300, bbox_inches='tight')
 #plt.show()
+# Example usage:

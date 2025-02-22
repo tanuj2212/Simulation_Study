@@ -232,7 +232,7 @@ def plot_contraceptive_scores(neg_scores, zero_scores):
     # Customize the plot
     plt.xlabel('Weight Values', fontsize=12)
     plt.ylabel('Contraceptive Score', fontsize=12)
-    plt.title('Contraceptive Method Scores Across Different Weights for TGD', fontsize=14, pad=20)
+    plt.title('Contraceptive Method Scores Across Different Weights for Top surgery', fontsize=14, pad=20)
     
     # Improve legend
     plt.legend(bbox_to_anchor=(1.05, 1), 
@@ -263,7 +263,7 @@ def plot_contraceptive_scores(neg_scores, zero_scores):
     return plt
 
 plt = plot_contraceptive_scores(neg_scores, zero_scores)
-filename = f'univariate_analysis/visualizations_univariate/medical_conditions/tgd_fixed_univ_viz.png'  # or .pdf, .jpg, etc.
+filename = f'univariate_analysis/visualizations_univariate/medical_conditions/ts_univ_viz.png'  # or .pdf, .jpg, etc.
 plt.savefig(filename, dpi=300, bbox_inches='tight')
 #plt.show()
 

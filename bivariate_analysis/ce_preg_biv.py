@@ -520,14 +520,14 @@ fig.update_layout(
     title='3D Visualization of Contraceptive Scores',
     scene=dict(
         xaxis=dict(
-            title='First Preference Level',
+            title='Cost Effectiveness',
             #ticktext=['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp'],
             ticktext=['-60', '-40', '-20', '0', '20', '40', '60'],
             tickvals=[-60, -40, -20, 0, 20, 40, 60],
             range=[-70, 70]
         ),
         yaxis=dict(
-            title='Second Preference Level',
+            title='Pregnancy Prevention',
             #ticktext=['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp'],
             ticktext=['-60', '-40', '-20', '0', '20', '40', '60'],
             tickvals=[-60, -40, -20, 0, 20, 40, 60],
@@ -577,5 +577,5 @@ fig.update_layout(
 )
 
 # Show the figure
-fig.show()
-#fig.write_html("bivariate_analysis/ce_preg_3d.html")
+#fig.show()
+fig.write_html("bivariate_analysis/ce_preg_3d.html")

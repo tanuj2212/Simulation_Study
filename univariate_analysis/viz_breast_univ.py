@@ -258,8 +258,8 @@ def plot_contraceptive_scores(neg_scores, zero_scores):
     #neg_weight_multipliers = [-100, 0]
     
     # Second set for positive range
-    pos_weight_labels = [str(i*3) for i in range(1, 11)]  # Start from 0 to maintain continuity
-    pos_weight_multipliers = list(range(1, 11))
+    pos_weight_labels = [str(i*3) for i in range(1, 21)]  # Start from 0 to maintain continuity
+    pos_weight_multipliers = list(range(1, 21))
     
     # Combine both sets
     #weight_labels = neg_weight_labels[:-1] + pos_weight_labels
@@ -325,7 +325,7 @@ def plot_contraceptive_scores(neg_scores, zero_scores):
     # Customize the plot
     plt.xlabel('Weight Values', fontsize=12)
     plt.ylabel('Contraceptive Score', fontsize=12)
-    plt.title('Contraceptive Method Scores Across Different Weights for Blood Clots', fontsize=14, pad=20)
+    plt.title('Contraceptive Method Scores Across Different Weights for Breast Cancer', fontsize=14, pad=20)
     
     # Improve legend
     plt.legend(bbox_to_anchor=(1.05, 1), 

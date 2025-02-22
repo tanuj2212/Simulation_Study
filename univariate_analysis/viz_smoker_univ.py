@@ -258,8 +258,8 @@ def plot_contraceptive_scores(neg_scores, zero_scores):
     #neg_weight_multipliers = [-100, 0]
     
     # Second set for positive range
-    pos_weight_labels = [str(i*3) for i in range(1, 11)]  # Start from 0 to maintain continuity
-    pos_weight_multipliers = list(range(1, 11))
+    pos_weight_labels = [str(i*3) for i in range(1, 21)]  # Start from 0 to maintain continuity
+    pos_weight_multipliers = list(range(1, 21))
     
     # Combine both sets
     #weight_labels = neg_weight_labels[:-1] + pos_weight_labels

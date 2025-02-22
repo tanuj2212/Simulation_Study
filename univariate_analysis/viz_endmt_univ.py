@@ -6,7 +6,7 @@ inputs = [
 
 
     ['neutral', 'neutral', 'neutral', 'neutral', 'weekly', 'neutral', 'neutral', 'none', 'neutral', 'neutral', 'neutral', 'moderate',
-     'moderate', 'moderate', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no', 'yes', 'no', 'no', 'moderate', 'no', 'no', 'yes'],
+     'moderate', 'moderate', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no', 'yes', 'no', 'no', 'moderate', 'moderate', 'no', 'yes'],
 
 
 ]

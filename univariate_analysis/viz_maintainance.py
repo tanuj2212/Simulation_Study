@@ -267,7 +267,7 @@ for input_arr, input_label in zip(inputs, input_labels):
     grouped_scores = group_overlapping_scores(scores_over_weights)
 
     # Create x-axis labels showing the actual weight ranges
-    x_labels = [f"({3*m})" for m in weight_multipliers]
+    x_labels = [f"{3*m}" for m in weight_multipliers]
 
     # Plot each group of overlapping scores with manually chosen distinct colors
     for (scores, methods), color in zip(grouped_scores.items(), distinct_colors):

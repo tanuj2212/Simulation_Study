@@ -3,10 +3,11 @@ import copy
 from correct_original_weights_hor import *
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
+import plotly.graph_objects as go
 
 inputs = [
     ['neutral', 'neutral', 'neutral', 'neutral', 'weekly', 'neutral', 'neutral', 'none', 'neutral', 'neutral', 'neutral', 'moderate',
-     'moderate', 'moderate', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'moderate', 'no', 'yes'],
+     'moderate', 'moderate', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'moderate', 'no', 'yes'],
 
      ['neutral', 'neutral', 'neutral', 'neutral', 'weekly', 'neutral', 'neutral', 'none', 'neutral', 'neutral', 'neutral', 'moderate',
      'moderate', 'moderate', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'no', 'moderate', 'mild', 'yes'],
@@ -665,3 +666,193 @@ for arr in inputs[0:4]:
             ring_no["severe"].append(pos_pos(arr, 0, i*3)["Ring"])
             shot_no["severe"].append(pos_pos(arr, 0, i*3)["Shot"])
             sterilization_no["severe"].append(pos_pos(arr, 0, i*3)["Sterilization"])
+
+def create_3d_visualization():
+    import numpy as np
+    import plotly.graph_objects as go
+
+    # Define axes values for both medical conditions (-50 to +60)
+    x_values = list(range(-50, 61, 5))  # Creates values from -50 to 60 in steps of 5
+    y_values = list(range(-50, 61, 5))  # Creates values from -50 to 60 in steps of 5
+    
+    # Create coordinate matrices
+    X, Y = np.meshgrid(x_values, y_values)
+
+    # Categorize methods with their corresponding dictionaries
+    method_categories = {
+        'negative': {
+            "Hormonal IUD": hormonal_iud_no,
+            "Patch": patch_no,
+            "Combination Pill": combo_pill_no
+        },
+        'positive': {
+            "Arm Implant": arm_no,
+            "Mini Pill": mini_pill_no,
+            "Ring": ring_no,
+            "Shot": shot_no
+        },
+        'zero': {
+            "Condoms": condom_no,
+            "Internal Condoms": int_condom_no,
+            "Cervical Cap": cervical_cap_no,
+            "FAM": fam_no,
+            "Copper IUD": copper_iud_no,
+            "Sterilization": sterilization_no,
+            "Spermicide": gel_scores_no,
+            "Withdrawal": withdrawal_no
+        }
+    }
+
+    # Create distinct colors for each method
+    distinct_colors = [
+        '#FF0000', '#0000FF', '#FFD700', '#FF1493', '#00FF00', '#8B008B', '#FF8C00',
+        '#00FFFF', '#800000', '#000080', '#808000', '#FF00FF', '#008080', '#FFA500', '#4B0082'
+    ]
+
+    # Create figure
+    fig = go.Figure()
+
+    # Process each method category
+    method_idx = 0
+    for category, methods in method_categories.items():
+        for method_name, method_dict in methods.items():
+            # Create surface for each method
+            Z = np.zeros((len(y_values), len(x_values)))
+            
+            # Fill Z matrix based on severity levels and positive values
+            for i, x in enumerate(x_values):
+                for j, y in enumerate(y_values):
+                    # Handle negative values (severity levels)
+                    if x <= 0 and y <= 0:
+                        if x <= -50:
+                            severity_x = "severe"
+                        elif x <= -25:
+                            severity_x = "moderate"
+                        elif x <= -15:
+                            severity_x = "mild"
+                        else:
+                            severity_x = "no"
+                            
+                        if y <= -50:
+                            severity_y = "severe"
+                        elif y <= -25:
+                            severity_y = "moderate"
+                        elif y <= -15:
+                            severity_y = "mild"
+                        else:
+                            severity_y = "no"
+                            
+                        if severity_y in method_dict:
+                            # If the value is a list, take the first element
+                            value = method_dict[severity_y]
+                            if isinstance(value, list):
+                                if len(value) > 0:
+                                    Z[j,i] = value[0]
+                            else:
+                                Z[j,i] = value
+                    
+                    # Handle positive values
+                    elif x > 0 and y > 0:
+                        x_idx = (x // 3) - 1  # Convert x value to array index
+                        y_idx = (y // 3) - 1  # Convert y value to array index
+                        
+                        if severity_x in method_dict and isinstance(method_dict[severity_x], list):
+                            if 0 <= x_idx < len(method_dict[severity_x]):
+                                Z[j,i] = method_dict[severity_x][int(x_idx)]
+            
+            # Add the surface to the figure
+            fig.add_trace(go.Surface(
+                x=X,
+                y=Y,
+                z=Z,
+                name=method_name,
+                showscale=False,
+                colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
+                opacity=0.7
+            ))
+            method_idx += 1
+
+    # Update layout
+    fig.update_layout(
+        title='3D Visualization of Contraceptive Methods',
+        scene=dict(
+            xaxis=dict(
+                title='Medical Condition 1',
+                ticktext=[str(x) for x in x_values],
+                tickvals=x_values,
+                range=[-55, 65]
+            ),
+            yaxis=dict(
+                title='Medical Condition 2',
+                ticktext=[str(y) for y in y_values],
+                tickvals=y_values,
+                range=[-55, 65]
+            ),
+            zaxis=dict(title='Score')
+        ),
+        showlegend=True,
+        legend=dict(
+            x=1.05,
+            y=0.5,
+            bgcolor='rgba(255, 255, 255, 0.8)',
+            bordercolor='rgba(0, 0, 0, 0.2)',
+            borderwidth=1
+        ),
+        width=1200,
+        height=800
+    )
+
+    # Add method selection dropdown
+    buttons = []
+    all_methods = []
+    for methods in method_categories.values():
+        all_methods.extend(methods.keys())
+
+    # Add individual method buttons
+    for i, method in enumerate(all_methods):
+        visible = [False] * len(all_methods)
+        visible[i] = True
+        buttons.append(dict(
+            label=method,
+            method='update',
+            args=[{'visible': visible}]
+        ))
+
+    # Add category buttons
+    start_idx = 0
+    for category, methods in method_categories.items():
+        visible = [False] * len(all_methods)
+        for i in range(len(methods)):
+            visible[start_idx + i] = True
+        
+        buttons.append(dict(
+            label=f"Show {category.title()} Methods",
+            method='update',
+            args=[{'visible': visible}]
+        ))
+        start_idx += len(methods)
+
+    # Add show all button
+    buttons.append(dict(
+        label="Show All",
+        method='update',
+        args=[{'visible': [True] * len(all_methods)}]
+    ))
+
+    fig.update_layout(
+        updatemenus=[dict(
+            type="dropdown",
+            direction="down",
+            x=0.1,
+            y=1.1,
+            showactive=True,
+            buttons=buttons
+        )]
+    )
+
+    return fig
+
+# Create and show the visualization
+fig = create_3d_visualization()
+fig.show()
+

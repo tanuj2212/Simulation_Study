@@ -702,14 +702,26 @@ arr_arm = inputs[5]
 arm_implant_3["3"] = pos_zero(arr_arm, 3)["Arm Implant"]
 arm_implant_3["6"] = pos_zero(arr_arm, 3)["Arm Implant"]
 arm_implant_3["9"] = pos_zero(arr_arm, 3)["Arm Implant"]
+arm_implant_3["no"] = pos_zero(arr_arm, 3)["Arm Implant"]
+arm_implant_3["mild"] = pos_zero(arr_arm, 3)["Arm Implant"]
+arm_implant_3["moderate"] = pos_zero(arr_arm, 3)["Arm Implant"]
+arm_implant_3["severe"] = pos_zero(arr_arm, 3)["Arm Implant"]
 
 arm_implant_6["3"] = pos_zero(arr_arm, 6)["Arm Implant"]
 arm_implant_6["6"] = pos_zero(arr_arm, 6)["Arm Implant"]
 arm_implant_6["9"] = pos_zero(arr_arm, 6)["Arm Implant"]
+arm_implant_6["no"] = pos_zero(arr_arm, 6)["Arm Implant"]
+arm_implant_6["mild"] = pos_zero(arr_arm, 6)["Arm Implant"]
+arm_implant_6["moderate"] = pos_zero(arr_arm, 6)["Arm Implant"]
+arm_implant_6["severe"] = pos_zero(arr_arm, 6)["Arm Implant"]
 
 arm_implant_9["3"] = pos_zero(arr_arm, 9)["Arm Implant"]
 arm_implant_9["6"] = pos_zero(arr_arm, 9)["Arm Implant"]
 arm_implant_9["9"] = pos_zero(arr_arm, 9)["Arm Implant"]
+arm_implant_9["no"] = pos_zero(arr_arm, 9)["Arm Implant"]
+arm_implant_9["mild"] = pos_zero(arr_arm, 9)["Arm Implant"]
+arm_implant_9["moderate"] = pos_zero(arr_arm, 9)["Arm Implant"]
+arm_implant_9["severe"] = pos_zero(arr_arm, 9)["Arm Implant"]
     
 # Mini Pill
 
@@ -721,14 +733,25 @@ arr_mini = inputs[6]
 mini_pill_3["3"] = pos_zero(arr_mini, 3)["Mini Pill"]
 mini_pill_3["6"] = pos_zero(arr_mini, 3)["Mini Pill"]
 mini_pill_3["9"] = pos_zero(arr_mini, 3)["Mini Pill"]
+mini_pill_3["no"] = pos_zero(arr_mini, 3)["Mini Pill"]
+mini_pill_3["mild"] = pos_zero(arr_mini, 3)["Mini Pill"]
+mini_pill_3["moderate"] = pos_zero(arr_mini, 3)["Mini Pill"]
+mini_pill_3["severe"] = pos_zero(arr_mini, 3)["Mini Pill"]
 
 mini_pill_6["3"] = pos_zero(arr_mini, 6)["Mini Pill"]
 mini_pill_6["6"] = pos_zero(arr_mini, 6)["Mini Pill"]
 mini_pill_6["9"] = pos_zero(arr_mini, 6)["Mini Pill"]
-
+mini_pill_6["no"] = pos_zero(arr_mini, 6)["Mini Pill"]
+mini_pill_6["mild"] = pos_zero(arr_mini, 6)["Mini Pill"]
+mini_pill_6["moderate"] = pos_zero(arr_mini, 6)["Mini Pill"]
+mini_pill_6["severe"] = pos_zero(arr_mini, 6)["Mini Pill"]
 mini_pill_9["3"] = pos_zero(arr_mini, 9)["Mini Pill"]
 mini_pill_9["6"] = pos_zero(arr_mini, 9)["Mini Pill"]
 mini_pill_9["9"] = pos_zero(arr_mini, 9)["Mini Pill"]
+mini_pill_9["no"] = pos_zero(arr_mini, 9)["Mini Pill"]
+mini_pill_9["mild"] = pos_zero(arr_mini, 9)["Mini Pill"]
+mini_pill_9["moderate"] = pos_zero(arr_mini, 9)["Mini Pill"]
+mini_pill_9["severe"] = pos_zero(arr_mini, 9)["Mini Pill"]
 
 # Hormonal IUD
 hormonal_iud_no = {}
@@ -963,12 +986,20 @@ x_full = ['no', 'mild', 'moderate', 'severe', '3', '6', '9']
 y_full = ['no', 'mild', 'moderate', 'severe', '3', '6', '9']
 
 # Create partial matrix for arm implant (only 3,6,9 values)
-x_partial = ['3', '6', '9']
+x_partial = ['3', '6', '9', 'no', 'mild', 'moderate', 'severe']
 y_partial = ['3', '6', '9']
 z_arm_implant = np.array([
-    [arm_implant_3['3'], arm_implant_3['6'], arm_implant_3['9']],
-    [arm_implant_6['3'], arm_implant_6['6'], arm_implant_6['9']],
-    [arm_implant_9['3'], arm_implant_9['6'], arm_implant_9['9']]
+    [arm_implant_3['3'], arm_implant_3['6'], arm_implant_3['9'], arm_implant_3['no'], arm_implant_3['mild'], arm_implant_3['moderate'], arm_implant_3['severe']],
+    [arm_implant_6['3'], arm_implant_6['6'], arm_implant_6['9'], arm_implant_6['no'], arm_implant_6['mild'], arm_implant_6['moderate'], arm_implant_6['severe']],
+    [arm_implant_9['3'], arm_implant_9['6'], arm_implant_9['9'], arm_implant_9['no'], arm_implant_9['mild'], arm_implant_9['moderate'], arm_implant_9['severe']],
+])
+
+x_partial_mini = ['3', '6', '9', 'no', 'mild', 'moderate', 'severe']
+y_partial_mini = ['3', '6', '9']
+z_mini = np.array([
+    [mini_pill_3['3'], mini_pill_3['6'], mini_pill_3['9'], mini_pill_3['no'], mini_pill_3['mild'], mini_pill_3['moderate'], mini_pill_3['severe']],
+    [mini_pill_6['3'], mini_pill_6['6'], mini_pill_6['9'], mini_pill_6['no'], mini_pill_6['mild'], mini_pill_6['moderate'], mini_pill_6['severe']],
+    [mini_pill_9['3'], mini_pill_9['6'], mini_pill_9['9'], mini_pill_9['no'], mini_pill_9['mild'], mini_pill_9['moderate'], mini_pill_9['severe']],
 ])
 
 # Create hormonal IUD matrix (4x7 matrix)
@@ -1110,6 +1141,23 @@ fig.add_trace(go.Surface(
     hoverinfo='name+z'
 ))
 
+# Add mini pill surface
+fig.add_trace(go.Surface(
+    x=x_partial_mini,
+    y=y_partial_mini,
+    z=z_mini,
+    name='Mini Pill',
+    colorscale=[[0, distinct_colors[9]], [1, distinct_colors[9]]],
+    showscale=False,
+    opacity=0.7,
+    showlegend=True,
+    legendgroup='Mini Pill',
+    hoverinfo='name+z'
+))
+
+# Add hormonal IUD surface
+
+
 # Add all other surfaces with different colors and opacity
 surfaces = [
     ('Condoms', z_condoms, x_full, y_full),
@@ -1120,7 +1168,8 @@ surfaces = [
     ('Sterilization', z_sterilization, x_full, y_full),
     ('Spermicide', z_spermicide, x_full, y_full),
     ('Withdrawal', z_withdrawal, x_full, y_full),
-    ('Arm Implant', z_arm_implant, x_partial, y_partial)
+    ('Arm Implant', z_arm_implant, x_partial, y_partial),
+  
 ]
 
 for i, (name, z, x, y) in enumerate(surfaces):
@@ -1141,8 +1190,8 @@ for i, (name, z, x, y) in enumerate(surfaces):
 fig.update_layout(
     title='Contraceptive Methods Scores - 3D Surface Plot',
     scene=dict(
-        xaxis_title='Severity Level/Time Period',
-        yaxis_title='Severity Level/Time Period',
+        xaxis_title='TGD',
+        yaxis_title='Acne',
         zaxis_title='Score',
         camera=dict(
             eye=dict(x=1.5, y=1.5, z=1.2)
@@ -1176,8 +1225,10 @@ fig.update_layout(
     )
 )
 
-#fig.show()
+fig.show()
+
+
 
 # Save the figure as an HTML file
-fig.write_html("bivariate_analysis/acne_tgd_3d.html")
+#fig.write_html("bivariate_analysis/acne_tgd_3d.html")
 

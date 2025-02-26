@@ -2342,7 +2342,7 @@ for arr in inputs[8:12]:
         copper_iud_moderate["no"] = zero_zero(arr)["Copper IUD"]
     elif arr[-6] == "mild":
         copper_iud_moderate["mild"] = zero_zero(arr)["Copper IUD"]
-    elif arr[-6] == "moderate": 
+    elif arr[-6] == "moderate":
         copper_iud_moderate["moderate"] = zero_zero(arr)["Copper IUD"]
     elif arr[-6] == "severe":
         copper_iud_moderate["severe"] = zero_zero(arr)["Copper IUD"]
@@ -5836,151 +5836,81 @@ import numpy as np
 
 # Create matrices from the actual dictionaries
 def create_full_matrix(method_dicts):
-    no_dict, mild_dict, mod_dict, sev_dict, t3_dict, t6_dict, t9_dict, t12_dict, t15_dict, t18_dict, t21_dict, t24_dict, t27_dict, t30_dict, t33_dict, t36_dict, t39_dict, t42_dict, t45_dict, t48_dict, t51_dict, t54_dict, t57_dict, t60_dict = method_dicts
+    no_dict, mild_dict, mod_dict, sev_dict, t3_dict, t21_dict, t42_dict, t60_dict = method_dicts
+    
+    # Define the labels we want to use
+    severity = ['no', 'mild', 'moderate', 'severe']
+    times = ['3', '21', '42', '60']
+    
     return np.array([
-        [no_dict['no'], no_dict['mild'], no_dict['moderate'], no_dict['severe'], t3_dict['3'], t3_dict['6'], t3_dict['9'], t3_dict['12'], t3_dict['15'], t3_dict['18'], t3_dict['21'], t3_dict['24'], t3_dict['27'], t3_dict['30'], t3_dict['33'], t3_dict['36'], t3_dict['39'], t3_dict['42'], t3_dict['45'], t3_dict['48'], t3_dict['51'], t3_dict['54'], t3_dict['57'], t3_dict['60']],
-        [mild_dict['no'], mild_dict['mild'], mild_dict['moderate'], mild_dict['severe'], t3_dict['3'], t3_dict['6'], t3_dict['9'], t3_dict['12'], t3_dict['15'], t3_dict['18'], t3_dict['21'], t3_dict['24'], t3_dict['27'], t3_dict['30'], t3_dict['33'], t3_dict['36'], t3_dict['39'], t3_dict['42'], t3_dict['45'], t3_dict['48'], t3_dict['51'], t3_dict['54'], t3_dict['57'], t3_dict['60']],
-        [mod_dict['no'], mod_dict['mild'], mod_dict['moderate'], mod_dict['severe'], t3_dict['3'], t3_dict['6'], t3_dict['9'], t3_dict['12'], t3_dict['15'], t3_dict['18'], t3_dict['21'], t3_dict['24'], t3_dict['27'], t3_dict['30'], t3_dict['33'], t3_dict['36'], t3_dict['39'], t3_dict['42'], t3_dict['45'], t3_dict['48'], t3_dict['51'], t3_dict['54'], t3_dict['57'], t3_dict['60']],
-        [sev_dict['no'], sev_dict['mild'], sev_dict['moderate'], sev_dict['severe'], t3_dict['3'], t3_dict['6'], t3_dict['9'], t3_dict['12'], t3_dict['15'], t3_dict['18'], t3_dict['21'], t3_dict['24'], t3_dict['27'], t3_dict['30'], t3_dict['33'], t3_dict['36'], t3_dict['39'], t3_dict['42'], t3_dict['45'], t3_dict['48'], t3_dict['51'], t3_dict['54'], t3_dict['57'], t3_dict['60']],
-        [t3_dict['3'], t3_dict['3'], t3_dict['3'], t3_dict['3'], t3_dict['3'], t3_dict['6'], t3_dict['9'], t3_dict['12'], t3_dict['15'], t3_dict['18'], t3_dict['21'], t3_dict['24'], t3_dict['27'], t3_dict['30'], t3_dict['33'], t3_dict['36'], t3_dict['39'], t3_dict['42'], t3_dict['45'], t3_dict['48'], t3_dict['51'], t3_dict['54'], t3_dict['57'], t3_dict['60']],
-        [t6_dict['3'], t6_dict['3'], t6_dict['3'], t6_dict['3'], t6_dict['3'], t6_dict['6'], t6_dict['9'], t6_dict['12'], t6_dict['15'], t6_dict['18'], t6_dict['21'], t6_dict['24'], t6_dict['27'], t6_dict['30'], t6_dict['33'], t6_dict['36'], t6_dict['39'], t6_dict['42'], t6_dict['45'], t6_dict['48'], t6_dict['51'], t6_dict['54'], t6_dict['57'], t6_dict['60']],
-        [t9_dict['3'], t9_dict['3'], t9_dict['3'], t9_dict['3'], t9_dict['3'], t9_dict['6'], t9_dict['9'], t9_dict['12'], t9_dict['15'], t9_dict['18'], t9_dict['21'], t9_dict['24'], t9_dict['27'], t9_dict['30'], t9_dict['33'], t9_dict['36'], t9_dict['39'], t9_dict['42'], t9_dict['45'], t9_dict['48'], t9_dict['51'], t9_dict['54'], t9_dict['57'], t9_dict['60']],
-        [t12_dict['3'], t12_dict['3'], t12_dict['3'], t12_dict['3'], t12_dict['3'], t12_dict['6'], t12_dict['9'], t12_dict['12'], t12_dict['15'], t12_dict['18'], t12_dict['21'], t12_dict['24'], t12_dict['27'], t12_dict['30'], t12_dict['33'], t12_dict['36'], t12_dict['39'], t12_dict['42'], t12_dict['45'], t12_dict['48'], t12_dict['51'], t12_dict['54'], t12_dict['57'], t12_dict['60']],
-        [t15_dict['3'], t15_dict['3'], t15_dict['3'], t15_dict['3'], t15_dict['3'], t15_dict['6'], t15_dict['9'], t15_dict['12'], t15_dict['15'], t15_dict['18'], t15_dict['21'], t15_dict['24'], t15_dict['27'], t15_dict['30'], t15_dict['33'], t15_dict['36'], t15_dict['39'], t15_dict['42'], t15_dict['45'], t15_dict['48'], t15_dict['51'], t15_dict['54'], t15_dict['57'], t15_dict['60']],
-        [t18_dict['3'], t18_dict['3'], t18_dict['3'], t18_dict['3'], t18_dict['3'], t18_dict['6'], t18_dict['9'], t18_dict['12'], t18_dict['15'], t18_dict['18'], t18_dict['21'], t18_dict['24'], t18_dict['27'], t18_dict['30'], t18_dict['33'], t18_dict['36'], t18_dict['39'], t18_dict['42'], t18_dict['45'], t18_dict['48'], t18_dict['51'], t18_dict['54'], t18_dict['57'], t18_dict['60']],
-        [t21_dict['3'], t21_dict['3'], t21_dict['3'], t21_dict['3'], t21_dict['3'], t21_dict['6'], t21_dict['9'], t21_dict['12'], t21_dict['15'], t21_dict['18'], t21_dict['21'], t21_dict['24'], t21_dict['27'], t21_dict['30'], t21_dict['33'], t21_dict['36'], t21_dict['39'], t21_dict['42'], t21_dict['45'], t21_dict['48'], t21_dict['51'], t21_dict['54'], t21_dict['57'], t21_dict['60']],
-        [t24_dict['3'], t24_dict['3'], t24_dict['3'], t24_dict['3'], t24_dict['3'], t24_dict['6'], t24_dict['9'], t24_dict['12'], t24_dict['15'], t24_dict['18'], t24_dict['21'], t24_dict['24'], t24_dict['27'], t24_dict['30'], t24_dict['33'], t24_dict['36'], t24_dict['39'], t24_dict['42'], t24_dict['45'], t24_dict['48'], t24_dict['51'], t24_dict['54'], t24_dict['57'], t24_dict['60']],
-        [t27_dict['3'], t27_dict['3'], t27_dict['3'], t27_dict['3'], t27_dict['3'], t27_dict['6'], t27_dict['9'], t27_dict['12'], t27_dict['15'], t27_dict['18'], t27_dict['21'], t27_dict['24'], t27_dict['27'], t27_dict['30'], t27_dict['33'], t27_dict['36'], t27_dict['39'], t27_dict['42'], t27_dict['45'], t27_dict['48'], t27_dict['51'], t27_dict['54'], t27_dict['57'], t27_dict['60']],
-        [t30_dict['3'], t30_dict['3'], t30_dict['3'], t30_dict['3'], t30_dict['3'], t30_dict['6'], t30_dict['9'], t30_dict['12'], t30_dict['15'], t30_dict['18'], t30_dict['21'], t30_dict['24'], t30_dict['27'], t30_dict['30'], t30_dict['33'], t30_dict['36'], t30_dict['39'], t30_dict['42'], t30_dict['45'], t30_dict['48'], t30_dict['51'], t30_dict['54'], t30_dict['57'], t30_dict['60']],
-        [t33_dict['3'], t33_dict['3'], t33_dict['3'], t33_dict['3'], t33_dict['3'], t33_dict['6'], t33_dict['9'], t33_dict['12'], t33_dict['15'], t33_dict['18'], t33_dict['21'], t33_dict['24'], t33_dict['27'], t33_dict['30'], t33_dict['33'], t33_dict['36'], t33_dict['39'], t33_dict['42'], t33_dict['45'], t33_dict['48'], t33_dict['51'], t33_dict['54'], t33_dict['57'], t33_dict['60']],
-        [t36_dict['3'], t36_dict['3'], t36_dict['3'], t36_dict['3'], t36_dict['3'], t36_dict['6'], t36_dict['9'], t36_dict['12'], t36_dict['15'], t36_dict['18'], t36_dict['21'], t36_dict['24'], t36_dict['27'], t36_dict['30'], t36_dict['33'], t36_dict['36'], t36_dict['39'], t36_dict['42'], t36_dict['45'], t36_dict['48'], t36_dict['51'], t36_dict['54'], t36_dict['57'], t36_dict['60']],
-        [t39_dict['3'], t39_dict['3'], t39_dict['3'], t39_dict['3'], t39_dict['3'], t39_dict['6'], t39_dict['9'], t39_dict['12'], t39_dict['15'], t39_dict['18'], t39_dict['21'], t39_dict['24'], t39_dict['27'], t39_dict['30'], t39_dict['33'], t39_dict['36'], t39_dict['39'], t39_dict['42'], t39_dict['45'], t39_dict['48'], t39_dict['51'], t39_dict['54'], t39_dict['57'], t39_dict['60']],
-        [t42_dict['3'], t42_dict['3'], t42_dict['3'], t42_dict['3'], t42_dict['3'], t42_dict['6'], t42_dict['9'], t42_dict['12'], t42_dict['15'], t42_dict['18'], t42_dict['21'], t42_dict['24'], t42_dict['27'], t42_dict['30'], t42_dict['33'], t42_dict['36'], t42_dict['39'], t42_dict['42'], t42_dict['45'], t42_dict['48'], t42_dict['51'], t42_dict['54'], t42_dict['57'], t42_dict['60']],
-        [t45_dict['3'], t45_dict['3'], t45_dict['3'], t45_dict['3'], t45_dict['3'], t45_dict['6'], t45_dict['9'], t45_dict['12'], t45_dict['15'], t45_dict['18'], t45_dict['21'], t45_dict['24'], t45_dict['27'], t45_dict['30'], t45_dict['33'], t45_dict['36'], t45_dict['39'], t45_dict['42'], t45_dict['45'], t45_dict['48'], t45_dict['51'], t45_dict['54'], t45_dict['57'], t45_dict['60']],
-        [t48_dict['3'], t48_dict['3'], t48_dict['3'], t48_dict['3'], t48_dict['3'], t48_dict['6'], t48_dict['9'], t48_dict['12'], t48_dict['15'], t48_dict['18'], t48_dict['21'], t48_dict['24'], t48_dict['27'], t48_dict['30'], t48_dict['33'], t48_dict['36'], t48_dict['39'], t48_dict['42'], t48_dict['45'], t48_dict['48'], t48_dict['51'], t48_dict['54'], t48_dict['57'], t48_dict['60']],
-        [t51_dict['3'], t51_dict['3'], t51_dict['3'], t51_dict['3'], t51_dict['3'], t51_dict['6'], t51_dict['9'], t51_dict['12'], t51_dict['15'], t51_dict['18'], t51_dict['21'], t51_dict['24'], t51_dict['27'], t51_dict['30'], t51_dict['33'], t51_dict['36'], t51_dict['39'], t51_dict['42'], t51_dict['45'], t51_dict['48'], t51_dict['51'], t51_dict['54'], t51_dict['57'], t51_dict['60']],
-        [t54_dict['3'], t54_dict['3'], t54_dict['3'], t54_dict['3'], t54_dict['3'], t54_dict['6'], t54_dict['9'], t54_dict['12'], t54_dict['15'], t54_dict['18'], t54_dict['21'], t54_dict['24'], t54_dict['27'], t54_dict['30'], t54_dict['33'], t54_dict['36'], t54_dict['39'], t54_dict['42'], t54_dict['45'], t54_dict['48'], t54_dict['51'], t54_dict['54'], t54_dict['57'], t54_dict['60']],
-        [t57_dict['3'], t57_dict['3'], t57_dict['3'], t57_dict['3'], t57_dict['3'], t57_dict['6'], t57_dict['9'], t57_dict['12'], t57_dict['15'], t57_dict['18'], t57_dict['21'], t57_dict['24'], t57_dict['27'], t57_dict['30'], t57_dict['33'], t57_dict['36'], t57_dict['39'], t57_dict['42'], t57_dict['45'], t57_dict['48'], t57_dict['51'], t57_dict['54'], t57_dict['57'], t57_dict['60']],
-        [t60_dict['3'], t60_dict['3'], t60_dict['3'], t60_dict['3'], t60_dict['3'], t60_dict['6'], t60_dict['9'], t60_dict['12'], t60_dict['15'], t60_dict['18'], t60_dict['21'], t60_dict['24'], t60_dict['27'], t60_dict['30'], t60_dict['33'], t60_dict['36'], t60_dict['39'], t60_dict['42'], t60_dict['45'], t60_dict['48'], t60_dict['51'], t60_dict['54'], t60_dict['57'], t60_dict['60']]
+        # Severity rows
+        [no_dict['no'], no_dict['mild'], no_dict['moderate'], no_dict['severe'], t3_dict['3'], t21_dict['21'], t42_dict['42'], t60_dict['60']],
+        [mild_dict['no'], mild_dict['mild'], mild_dict['moderate'], mild_dict['severe'], t3_dict['3'], t21_dict['21'], t42_dict['42'], t60_dict['60']],
+        [mod_dict['no'], mod_dict['mild'], mod_dict['moderate'], mod_dict['severe'], t3_dict['3'], t21_dict['21'], t42_dict['42'], t60_dict['60']],
+        [sev_dict['no'], sev_dict['mild'], sev_dict['moderate'], sev_dict['severe'], t3_dict['3'], t21_dict['21'], t42_dict['42'], t60_dict['60']],
+        # Time rows
+        [t3_dict['3'], t3_dict['3'], t3_dict['3'], t3_dict['3'], t3_dict['3'], t21_dict['21'], t42_dict['42'], t60_dict['60']],
+        [t21_dict['21'], t21_dict['21'], t21_dict['21'], t21_dict['21'], t3_dict['3'], t21_dict['21'], t42_dict['42'], t60_dict['60']],
+        [t42_dict['42'], t42_dict['42'], t42_dict['42'], t42_dict['42'], t3_dict['3'], t21_dict['21'], t42_dict['42'], t60_dict['60']],
+        [t60_dict['60'], t60_dict['60'], t60_dict['60'], t60_dict['60'], t3_dict['3'], t21_dict['21'], t42_dict['42'], t60_dict['60']]
     ])
 
 # Create all matrices
-z_condoms = create_full_matrix([condom_no, condoms_mild, condoms_moderate, condoms_severe, condoms_3, condoms_6, condoms_9, condoms_12, condoms_15, condoms_18, condoms_21, condoms_24, condoms_27, condoms_30, condoms_33, condoms_36, condoms_39, condoms_42, condoms_45, condoms_48, condoms_51, condoms_54, condoms_57, condoms_60])
-z_internal_condoms = create_full_matrix([internal_condom_no, internal_condom_mild, internal_condom_moderate, internal_condom_severe, internal_condom_3, internal_condom_6, internal_condom_9, internal_condom_12, internal_condom_15, internal_condom_18, internal_condom_21, internal_condom_24, internal_condom_27, internal_condom_30, internal_condom_33, internal_condom_36, internal_condom_39, internal_condom_42, internal_condom_45, internal_condom_48, internal_condom_51, internal_condom_54, internal_condom_57, internal_condom_60])
-z_cervical_cap = create_full_matrix([cervical_cap_no, cervical_cap_mild, cervical_cap_moderate, cervical_cap_severe, cervical_cap_3, cervical_cap_6, cervical_cap_9, cervical_cap_12, cervical_cap_15, cervical_cap_18, cervical_cap_21, cervical_cap_24, cervical_cap_27, cervical_cap_30, cervical_cap_33, cervical_cap_36, cervical_cap_39, cervical_cap_42, cervical_cap_45, cervical_cap_48, cervical_cap_51, cervical_cap_54, cervical_cap_57, cervical_cap_60])
-z_fam = create_full_matrix([fam_no, fam_mild, fam_moderate, fam_severe, fam_3, fam_6, fam_9, fam_12, fam_15, fam_18, fam_21, fam_24, fam_27, fam_30, fam_33, fam_36, fam_39, fam_42, fam_45, fam_48, fam_51, fam_54, fam_57, fam_60])
-z_copper_iud = create_full_matrix([copper_iud_no, copper_iud_mild, copper_iud_moderate, copper_iud_severe, copper_iud_3, copper_iud_6, copper_iud_9, copper_iud_12, copper_iud_15, copper_iud_18, copper_iud_21, copper_iud_24, copper_iud_27, copper_iud_30, copper_iud_33, copper_iud_36, copper_iud_39, copper_iud_42, copper_iud_45, copper_iud_48, copper_iud_51, copper_iud_54, copper_iud_57, copper_iud_60])
-z_sterilization = create_full_matrix([sterilization_no, sterilization_mild, sterilization_moderate, sterilization_severe, sterilization_3, sterilization_6, sterilization_9, sterilization_12, sterilization_15, sterilization_18, sterilization_21, sterilization_24, sterilization_27, sterilization_30, sterilization_33, sterilization_36, sterilization_39, sterilization_42, sterilization_45, sterilization_48, sterilization_51, sterilization_54, sterilization_57, sterilization_60])
-z_spermicide = create_full_matrix([spermicide_no, spermicide_mild, spermicide_moderate, spermicide_severe, spermicide_3, spermicide_6, spermicide_9, spermicide_12, spermicide_15, spermicide_18, spermicide_21, spermicide_24, spermicide_27, spermicide_30, spermicide_33, spermicide_36, spermicide_39, spermicide_42, spermicide_45, spermicide_48, spermicide_51, spermicide_54, spermicide_57, spermicide_60])
-z_withdrawal = create_full_matrix([withdrawal_no, withdrawal_mild, withdrawal_moderate, withdrawal_severe, withdrawal_3, withdrawal_6, withdrawal_9, withdrawal_12, withdrawal_15, withdrawal_18, withdrawal_21, withdrawal_24, withdrawal_27, withdrawal_30, withdrawal_33, withdrawal_36, withdrawal_39, withdrawal_42, withdrawal_45, withdrawal_48, withdrawal_51, withdrawal_54, withdrawal_57, withdrawal_60])
+z_condoms = create_full_matrix([condom_no, condoms_mild, condoms_moderate, condoms_severe, condoms_3, condoms_21, condoms_42, condoms_60])
+z_internal_condoms = create_full_matrix([internal_condom_no, internal_condom_mild, internal_condom_moderate, internal_condom_severe, internal_condom_3, internal_condom_21, internal_condom_42, internal_condom_60])
+z_cervical_cap = create_full_matrix([cervical_cap_no, cervical_cap_mild, cervical_cap_moderate, cervical_cap_severe, cervical_cap_3, cervical_cap_21, cervical_cap_42, cervical_cap_60])
+z_fam = create_full_matrix([fam_no, fam_mild, fam_moderate, fam_severe, fam_3, fam_21, fam_42, fam_60])
+z_copper_iud = create_full_matrix([copper_iud_no, copper_iud_mild, copper_iud_moderate, copper_iud_severe, copper_iud_3, copper_iud_21, copper_iud_42, copper_iud_60])
+z_sterilization = create_full_matrix([sterilization_no, sterilization_mild, sterilization_moderate, sterilization_severe, sterilization_3, sterilization_21, sterilization_42, sterilization_60])
+z_spermicide = create_full_matrix([spermicide_no, spermicide_mild, spermicide_moderate, spermicide_severe, spermicide_3, spermicide_21, spermicide_42, spermicide_60])
+z_withdrawal = create_full_matrix([withdrawal_no, withdrawal_mild, withdrawal_moderate, withdrawal_severe, withdrawal_3, withdrawal_21, withdrawal_42, withdrawal_60])
 
-x_full = ['no', 'mild', 'moderate', 'severe', '3', '6', '9', '12', '15', '18', '21', '24', '27', '30', '33', '36', '39', '42', '45', '48', '51', '54', '57', '60']
-y_full = ['no', 'mild', 'moderate', 'severe', '3', '6', '9', '12', '15', '18', '21', '24', '27', '30', '33', '36', '39', '42', '45', '48', '51', '54', '57', '60']
+x_full = ['no', 'mild', 'moderate', 'severe', '3', '21', '42', '60']
+y_full = ['no', 'mild', 'moderate', 'severe', '3', '21', '42', '60']
 
 # Create partial matrix for arm implant (only 3,6,9 values)
-x_partial = ['3', '6', '9', '12', '15', '18', '21', '24', '27', '30', '33', '36', '39', '42', '45', '48', '51', '54', '57', '60', 'no', 'mild', 'moderate', 'severe']
-y_partial = ['3', '6', '9', '12', '15', '18', '21', '24', '27', '30', '33', '36', '39', '42', '45', '48', '51', '54', '57', '60']
+x_partial = ['3', '21', '42', '60', 'no', 'mild', 'moderate', 'severe']
+y_partial = ['3', '21', '42', '60', 'no', 'mild', 'moderate', 'severe']
 z_arm_implant = np.array([
-    [arm_implant_3['3'], arm_implant_3['6'], arm_implant_3['9'], arm_implant_3['12'], arm_implant_3['15'], arm_implant_3['18'], arm_implant_3['21'], arm_implant_3['24'], arm_implant_3['27'], arm_implant_3['30'], arm_implant_3['33'], arm_implant_3['36'], arm_implant_3['39'], arm_implant_3['42'], arm_implant_3['45'], arm_implant_3['48'], arm_implant_3['51'], arm_implant_3['54'], arm_implant_3['57'], arm_implant_3['60'], arm_implant_3['no'], arm_implant_3['mild'], arm_implant_3['moderate'], arm_implant_3['severe']],
-    [arm_implant_6['3'], arm_implant_6['6'], arm_implant_6['9'], arm_implant_6['12'], arm_implant_6['15'], arm_implant_6['18'], arm_implant_6['21'], arm_implant_6['24'], arm_implant_6['27'], arm_implant_6['30'], arm_implant_6['33'], arm_implant_6['36'], arm_implant_6['39'], arm_implant_6['42'], arm_implant_6['45'], arm_implant_6['48'], arm_implant_6['51'], arm_implant_6['54'], arm_implant_6['57'], arm_implant_6['60'], arm_implant_6['no'], arm_implant_6['mild'], arm_implant_6['moderate'], arm_implant_6['severe']],
-    [arm_implant_9['3'], arm_implant_9['6'], arm_implant_9['9'], arm_implant_9['12'], arm_implant_9['15'], arm_implant_9['18'], arm_implant_9['21'], arm_implant_9['24'], arm_implant_9['27'], arm_implant_9['30'], arm_implant_9['33'], arm_implant_9['36'], arm_implant_9['39'], arm_implant_9['42'], arm_implant_9['45'], arm_implant_9['48'], arm_implant_9['51'], arm_implant_9['54'], arm_implant_9['57'], arm_implant_9['60'], arm_implant_9['no'], arm_implant_9['mild'], arm_implant_9['moderate'], arm_implant_9['severe']],
-    [arm_implant_12['3'], arm_implant_12['6'], arm_implant_12['9'], arm_implant_12['12'], arm_implant_12['15'], arm_implant_12['18'], arm_implant_12['21'], arm_implant_12['24'], arm_implant_12['27'], arm_implant_12['30'], arm_implant_12['33'], arm_implant_12['36'], arm_implant_12['39'], arm_implant_12['42'], arm_implant_12['45'], arm_implant_12['48'], arm_implant_12['51'], arm_implant_12['54'], arm_implant_12['57'], arm_implant_12['60'], arm_implant_12['no'], arm_implant_12['mild'], arm_implant_12['moderate'], arm_implant_12['severe']],
-    [arm_implant_15['3'], arm_implant_15['6'], arm_implant_15['9'], arm_implant_15['12'], arm_implant_15['15'], arm_implant_15['18'], arm_implant_15['21'], arm_implant_15['24'], arm_implant_15['27'], arm_implant_15['30'], arm_implant_15['33'], arm_implant_15['36'], arm_implant_15['39'], arm_implant_15['42'], arm_implant_15['45'], arm_implant_15['48'], arm_implant_15['51'], arm_implant_15['54'], arm_implant_15['57'], arm_implant_15['60'], arm_implant_15['no'], arm_implant_15['mild'], arm_implant_15['moderate'], arm_implant_15['severe']],
-    [arm_implant_18['3'], arm_implant_18['6'], arm_implant_18['9'], arm_implant_18['12'], arm_implant_18['15'], arm_implant_18['18'], arm_implant_18['21'], arm_implant_18['24'], arm_implant_18['27'], arm_implant_18['30'], arm_implant_18['33'], arm_implant_18['36'], arm_implant_18['39'], arm_implant_18['42'], arm_implant_18['45'], arm_implant_18['48'], arm_implant_18['51'], arm_implant_18['54'], arm_implant_18['57'], arm_implant_18['60'], arm_implant_18['no'], arm_implant_18['mild'], arm_implant_18['moderate'], arm_implant_18['severe']],
-    [arm_implant_21['3'], arm_implant_21['6'], arm_implant_21['9'], arm_implant_21['12'], arm_implant_21['15'], arm_implant_21['18'], arm_implant_21['21'], arm_implant_21['24'], arm_implant_21['27'], arm_implant_21['30'], arm_implant_21['33'], arm_implant_21['36'], arm_implant_21['39'], arm_implant_21['42'], arm_implant_21['45'], arm_implant_21['48'], arm_implant_21['51'], arm_implant_21['54'], arm_implant_21['57'], arm_implant_21['60'], arm_implant_21['no'], arm_implant_21['mild'], arm_implant_21['moderate'], arm_implant_21['severe']],
-    [arm_implant_24['3'], arm_implant_24['6'], arm_implant_24['9'], arm_implant_24['12'], arm_implant_24['15'], arm_implant_24['18'], arm_implant_24['21'], arm_implant_24['24'], arm_implant_24['27'], arm_implant_24['30'], arm_implant_24['33'], arm_implant_24['36'], arm_implant_24['39'], arm_implant_24['42'], arm_implant_24['45'], arm_implant_24['48'], arm_implant_24['51'], arm_implant_24['54'], arm_implant_24['57'], arm_implant_24['60'], arm_implant_24['no'], arm_implant_24['mild'], arm_implant_24['moderate'], arm_implant_24['severe']],
-    [arm_implant_27['3'], arm_implant_27['6'], arm_implant_27['9'], arm_implant_27['12'], arm_implant_27['15'], arm_implant_27['18'], arm_implant_27['21'], arm_implant_27['24'], arm_implant_27['27'], arm_implant_27['30'], arm_implant_27['33'], arm_implant_27['36'], arm_implant_27['39'], arm_implant_27['42'], arm_implant_27['45'], arm_implant_27['48'], arm_implant_27['51'], arm_implant_27['54'], arm_implant_27['57'], arm_implant_27['60'], arm_implant_27['no'], arm_implant_27['mild'], arm_implant_27['moderate'], arm_implant_27['severe']],
-    [arm_implant_30['3'], arm_implant_30['6'], arm_implant_30['9'], arm_implant_30['12'], arm_implant_30['15'], arm_implant_30['18'], arm_implant_30['21'], arm_implant_30['24'], arm_implant_30['27'], arm_implant_30['30'], arm_implant_30['33'], arm_implant_30['36'], arm_implant_30['39'], arm_implant_30['42'], arm_implant_30['45'], arm_implant_30['48'], arm_implant_30['51'], arm_implant_30['54'], arm_implant_30['57'], arm_implant_30['60'], arm_implant_30['no'], arm_implant_30['mild'], arm_implant_30['moderate'], arm_implant_30['severe']],
-    [arm_implant_33['3'], arm_implant_33['6'], arm_implant_33['9'], arm_implant_33['12'], arm_implant_33['15'], arm_implant_33['18'], arm_implant_33['21'], arm_implant_33['24'], arm_implant_33['27'], arm_implant_33['30'], arm_implant_33['33'], arm_implant_33['36'], arm_implant_33['39'], arm_implant_33['42'], arm_implant_33['45'], arm_implant_33['48'], arm_implant_33['51'], arm_implant_33['54'], arm_implant_33['57'], arm_implant_33['60'], arm_implant_33['no'], arm_implant_33['mild'], arm_implant_33['moderate'], arm_implant_33['severe']],
-    [arm_implant_36['3'], arm_implant_36['6'], arm_implant_36['9'], arm_implant_36['12'], arm_implant_36['15'], arm_implant_36['18'], arm_implant_36['21'], arm_implant_36['24'], arm_implant_36['27'], arm_implant_36['30'], arm_implant_36['33'], arm_implant_36['36'], arm_implant_36['39'], arm_implant_36['42'], arm_implant_36['45'], arm_implant_36['48'], arm_implant_36['51'], arm_implant_36['54'], arm_implant_36['57'], arm_implant_36['60'], arm_implant_36['no'], arm_implant_36['mild'], arm_implant_36['moderate'], arm_implant_36['severe']],
-    [arm_implant_39['3'], arm_implant_39['6'], arm_implant_39['9'], arm_implant_39['12'], arm_implant_39['15'], arm_implant_39['18'], arm_implant_39['21'], arm_implant_39['24'], arm_implant_39['27'], arm_implant_39['30'], arm_implant_39['33'], arm_implant_39['36'], arm_implant_39['39'], arm_implant_39['42'], arm_implant_39['45'], arm_implant_39['48'], arm_implant_39['51'], arm_implant_39['54'], arm_implant_39['57'], arm_implant_39['60'], arm_implant_39['no'], arm_implant_39['mild'], arm_implant_39['moderate'], arm_implant_39['severe']],
-    [arm_implant_42['3'], arm_implant_42['6'], arm_implant_42['9'], arm_implant_42['12'], arm_implant_42['15'], arm_implant_42['18'], arm_implant_42['21'], arm_implant_42['24'], arm_implant_42['27'], arm_implant_42['30'], arm_implant_42['33'], arm_implant_42['36'], arm_implant_42['39'], arm_implant_42['42'], arm_implant_42['45'], arm_implant_42['48'], arm_implant_42['51'], arm_implant_42['54'], arm_implant_42['57'], arm_implant_42['60'], arm_implant_42['no'], arm_implant_42['mild'], arm_implant_42['moderate'], arm_implant_42['severe']],
-    [arm_implant_45['3'], arm_implant_45['6'], arm_implant_45['9'], arm_implant_45['12'], arm_implant_45['15'], arm_implant_45['18'], arm_implant_45['21'], arm_implant_45['24'], arm_implant_45['27'], arm_implant_45['30'], arm_implant_45['33'], arm_implant_45['36'], arm_implant_45['39'], arm_implant_45['42'], arm_implant_45['45'], arm_implant_45['48'], arm_implant_45['51'], arm_implant_45['54'], arm_implant_45['57'], arm_implant_45['60'], arm_implant_45['no'], arm_implant_45['mild'], arm_implant_45['moderate'], arm_implant_45['severe']],
-    [arm_implant_48['3'], arm_implant_48['6'], arm_implant_48['9'], arm_implant_48['12'], arm_implant_48['15'], arm_implant_48['18'], arm_implant_48['21'], arm_implant_48['24'], arm_implant_48['27'], arm_implant_48['30'], arm_implant_48['33'], arm_implant_48['36'], arm_implant_48['39'], arm_implant_48['42'], arm_implant_48['45'], arm_implant_48['48'], arm_implant_48['51'], arm_implant_48['54'], arm_implant_48['57'], arm_implant_48['60'], arm_implant_48['no'], arm_implant_48['mild'], arm_implant_48['moderate'], arm_implant_48['severe']],
-    [arm_implant_51['3'], arm_implant_51['6'], arm_implant_51['9'], arm_implant_51['12'], arm_implant_51['15'], arm_implant_51['18'], arm_implant_51['21'], arm_implant_51['24'], arm_implant_51['27'], arm_implant_51['30'], arm_implant_51['33'], arm_implant_51['36'], arm_implant_51['39'], arm_implant_51['42'], arm_implant_51['45'], arm_implant_51['48'], arm_implant_51['51'], arm_implant_51['54'], arm_implant_51['57'], arm_implant_51['60'], arm_implant_51['no'], arm_implant_51['mild'], arm_implant_51['moderate'], arm_implant_51['severe']],
-    [arm_implant_54['3'], arm_implant_54['6'], arm_implant_54['9'], arm_implant_54['12'], arm_implant_54['15'], arm_implant_54['18'], arm_implant_54['21'], arm_implant_54['24'], arm_implant_54['27'], arm_implant_54['30'], arm_implant_54['33'], arm_implant_54['36'], arm_implant_54['39'], arm_implant_54['42'], arm_implant_54['45'], arm_implant_54['48'], arm_implant_54['51'], arm_implant_54['54'], arm_implant_54['57'], arm_implant_54['60'], arm_implant_54['no'], arm_implant_54['mild'], arm_implant_54['moderate'], arm_implant_54['severe']],
-    [arm_implant_57['3'], arm_implant_57['6'], arm_implant_57['9'], arm_implant_57['12'], arm_implant_57['15'], arm_implant_57['18'], arm_implant_57['21'], arm_implant_57['24'], arm_implant_57['27'], arm_implant_57['30'], arm_implant_57['33'], arm_implant_57['36'], arm_implant_57['39'], arm_implant_57['42'], arm_implant_57['45'], arm_implant_57['48'], arm_implant_57['51'], arm_implant_57['54'], arm_implant_57['57'], arm_implant_57['60'], arm_implant_57['no'], arm_implant_57['mild'], arm_implant_57['moderate'], arm_implant_57['severe']],
-    [arm_implant_60['3'], arm_implant_60['6'], arm_implant_60['9'], arm_implant_60['12'], arm_implant_60['15'], arm_implant_60['18'], arm_implant_60['21'], arm_implant_60['24'], arm_implant_60['27'], arm_implant_60['30'], arm_implant_60['33'], arm_implant_60['36'], arm_implant_60['39'], arm_implant_60['42'], arm_implant_60['45'], arm_implant_60['48'], arm_implant_60['51'], arm_implant_60['54'], arm_implant_60['57'], arm_implant_60['60'], arm_implant_60['no'], arm_implant_60['mild'], arm_implant_60['moderate'], arm_implant_60['severe']]
+    [arm_implant_3['3'], arm_implant_3['21'], arm_implant_3['42'],  arm_implant_3['60'], arm_implant_3['no'], arm_implant_3['mild'], arm_implant_3['moderate'], arm_implant_3['severe']],
+    [arm_implant_21['3'], arm_implant_21['21'], arm_implant_21['42'],  arm_implant_21['60'], arm_implant_21['no'], arm_implant_21['mild'], arm_implant_21['moderate'], arm_implant_21['severe']],
+    [arm_implant_42['3'], arm_implant_42['21'], arm_implant_42['42'],  arm_implant_42['60'], arm_implant_42['no'], arm_implant_42['mild'], arm_implant_42['moderate'], arm_implant_42['severe']],
+    [arm_implant_60['3'], arm_implant_60['21'], arm_implant_60['42'],  arm_implant_60['60'], arm_implant_60['no'], arm_implant_60['mild'], arm_implant_60['moderate'], arm_implant_60['severe']]
 ])
 
-x_partial_mini = ['3', '6', '9', '12', '15', '18', '21', '24', '27', '30', '33', '36', '39', '42', '45', '48', '51', '54', '57', '60', 'no', 'mild', 'moderate', 'severe']
-y_partial_mini = ['3', '6', '9', '12', '15', '18', '21', '24', '27', '30', '33', '36', '39', '42', '45', '48', '51', '54', '57', '60']
+x_partial_mini = ['3', '21', '42', '60', 'no', 'mild', 'moderate', 'severe']
+y_partial_mini = ['3', '21', '42', '60']
 z_mini = np.array([
-    [mini_pill_3['3'], mini_pill_3['6'], mini_pill_3['9'], mini_pill_3['12'], mini_pill_3['15'], mini_pill_3['18'], mini_pill_3['21'], mini_pill_3['24'], mini_pill_3['27'], mini_pill_3['30'], mini_pill_3['33'], mini_pill_3['36'], mini_pill_3['39'], mini_pill_3['42'], mini_pill_3['45'], mini_pill_3['48'], mini_pill_3['51'], mini_pill_3['54'], mini_pill_3['57'], mini_pill_3['60'], mini_pill_3['no'], mini_pill_3['mild'], mini_pill_3['moderate'], mini_pill_3['severe']],
-    [mini_pill_6['3'], mini_pill_6['6'], mini_pill_6['9'], mini_pill_6['12'], mini_pill_6['15'], mini_pill_6['18'], mini_pill_6['21'], mini_pill_6['24'], mini_pill_6['27'], mini_pill_6['30'], mini_pill_6['33'], mini_pill_6['36'], mini_pill_6['39'], mini_pill_6['42'], mini_pill_6['45'], mini_pill_6['48'], mini_pill_6['51'], mini_pill_6['54'], mini_pill_6['57'], mini_pill_6['60'], mini_pill_6['no'], mini_pill_6['mild'], mini_pill_6['moderate'], mini_pill_6['severe']],
-    [mini_pill_9['3'], mini_pill_9['6'], mini_pill_9['9'], mini_pill_9['12'], mini_pill_9['15'], mini_pill_9['18'], mini_pill_9['21'], mini_pill_9['24'], mini_pill_9['27'], mini_pill_9['30'], mini_pill_9['33'], mini_pill_9['36'], mini_pill_9['39'], mini_pill_9['42'], mini_pill_9['45'], mini_pill_9['48'], mini_pill_9['51'], mini_pill_9['54'], mini_pill_9['57'], mini_pill_9['60'], mini_pill_9['no'], mini_pill_9['mild'], mini_pill_9['moderate'], mini_pill_9['severe']],
-    [mini_pill_12['3'], mini_pill_12['6'], mini_pill_12['9'], mini_pill_12['12'], mini_pill_12['15'], mini_pill_12['18'], mini_pill_12['21'], mini_pill_12['24'], mini_pill_12['27'], mini_pill_12['30'], mini_pill_12['33'], mini_pill_12['36'], mini_pill_12['39'], mini_pill_12['42'], mini_pill_12['45'], mini_pill_12['48'], mini_pill_12['51'], mini_pill_12['54'], mini_pill_12['57'], mini_pill_12['60'], mini_pill_12['no'], mini_pill_12['mild'], mini_pill_12['moderate'], mini_pill_12['severe']],
-    [mini_pill_15['3'], mini_pill_15['6'], mini_pill_15['9'], mini_pill_15['12'], mini_pill_15['15'], mini_pill_15['18'], mini_pill_15['21'], mini_pill_15['24'], mini_pill_15['27'], mini_pill_15['30'], mini_pill_15['33'], mini_pill_15['36'], mini_pill_15['39'], mini_pill_15['42'], mini_pill_15['45'], mini_pill_15['48'], mini_pill_15['51'], mini_pill_15['54'], mini_pill_15['57'], mini_pill_15['60'], mini_pill_15['no'], mini_pill_15['mild'], mini_pill_15['moderate'], mini_pill_15['severe']],
-    [mini_pill_18['3'], mini_pill_18['6'], mini_pill_18['9'], mini_pill_18['12'], mini_pill_18['15'], mini_pill_18['18'], mini_pill_18['21'], mini_pill_18['24'], mini_pill_18['27'], mini_pill_18['30'], mini_pill_18['33'], mini_pill_18['36'], mini_pill_18['39'], mini_pill_18['42'], mini_pill_18['45'], mini_pill_18['48'], mini_pill_18['51'], mini_pill_18['54'], mini_pill_18['57'], mini_pill_18['60'], mini_pill_18['no'], mini_pill_18['mild'], mini_pill_18['moderate'], mini_pill_18['severe']],
-    [mini_pill_21['3'], mini_pill_21['6'], mini_pill_21['9'], mini_pill_21['12'], mini_pill_21['15'], mini_pill_21['18'], mini_pill_21['21'], mini_pill_21['24'], mini_pill_21['27'], mini_pill_21['30'], mini_pill_21['33'], mini_pill_21['36'], mini_pill_21['39'], mini_pill_21['42'], mini_pill_21['45'], mini_pill_21['48'], mini_pill_21['51'], mini_pill_21['54'], mini_pill_21['57'], mini_pill_21['60'], mini_pill_21['no'], mini_pill_21['mild'], mini_pill_21['moderate'], mini_pill_21['severe']],
-    [mini_pill_24['3'], mini_pill_24['6'], mini_pill_24['9'], mini_pill_24['12'], mini_pill_24['15'], mini_pill_24['18'], mini_pill_24['21'], mini_pill_24['24'], mini_pill_24['27'], mini_pill_24['30'], mini_pill_24['33'], mini_pill_24['36'], mini_pill_24['39'], mini_pill_24['42'], mini_pill_24['45'], mini_pill_24['48'], mini_pill_24['51'], mini_pill_24['54'], mini_pill_24['57'], mini_pill_24['60'], mini_pill_24['no'], mini_pill_24['mild'], mini_pill_24['moderate'], mini_pill_24['severe']],
-    [mini_pill_27['3'], mini_pill_27['6'], mini_pill_27['9'], mini_pill_27['12'], mini_pill_27['15'], mini_pill_27['18'], mini_pill_27['21'], mini_pill_27['24'], mini_pill_27['27'], mini_pill_27['30'], mini_pill_27['33'], mini_pill_27['36'], mini_pill_27['39'], mini_pill_27['42'], mini_pill_27['45'], mini_pill_27['48'], mini_pill_27['51'], mini_pill_27['54'], mini_pill_27['57'], mini_pill_27['60'], mini_pill_27['no'], mini_pill_27['mild'], mini_pill_27['moderate'], mini_pill_27['severe']],
-    [mini_pill_30['3'], mini_pill_30['6'], mini_pill_30['9'], mini_pill_30['12'], mini_pill_30['15'], mini_pill_30['18'], mini_pill_30['21'], mini_pill_30['24'], mini_pill_30['27'], mini_pill_30['30'], mini_pill_30['33'], mini_pill_30['36'], mini_pill_30['39'], mini_pill_30['42'], mini_pill_30['45'], mini_pill_30['48'], mini_pill_30['51'], mini_pill_30['54'], mini_pill_30['57'], mini_pill_30['60'], mini_pill_30['no'], mini_pill_30['mild'], mini_pill_30['moderate'], mini_pill_30['severe']],
-    [mini_pill_33['3'], mini_pill_33['6'], mini_pill_33['9'], mini_pill_33['12'], mini_pill_33['15'], mini_pill_33['18'], mini_pill_33['21'], mini_pill_33['24'], mini_pill_33['27'], mini_pill_33['30'], mini_pill_33['33'], mini_pill_33['36'], mini_pill_33['39'], mini_pill_33['42'], mini_pill_33['45'], mini_pill_33['48'], mini_pill_33['51'], mini_pill_33['54'], mini_pill_33['57'], mini_pill_33['60'], mini_pill_33['no'], mini_pill_33['mild'], mini_pill_33['moderate'], mini_pill_33['severe']],
-    [mini_pill_36['3'], mini_pill_36['6'], mini_pill_36['9'], mini_pill_36['12'], mini_pill_36['15'], mini_pill_36['18'], mini_pill_36['21'], mini_pill_36['24'], mini_pill_36['27'], mini_pill_36['30'], mini_pill_36['33'], mini_pill_36['36'], mini_pill_36['39'], mini_pill_36['42'], mini_pill_36['45'], mini_pill_36['48'], mini_pill_36['51'], mini_pill_36['54'], mini_pill_36['57'], mini_pill_36['60'], mini_pill_36['no'], mini_pill_36['mild'], mini_pill_36['moderate'], mini_pill_36['severe']],
-    [mini_pill_39['3'], mini_pill_39['6'], mini_pill_39['9'], mini_pill_39['12'], mini_pill_39['15'], mini_pill_39['18'], mini_pill_39['21'], mini_pill_39['24'], mini_pill_39['27'], mini_pill_39['30'], mini_pill_39['33'], mini_pill_39['36'], mini_pill_39['39'], mini_pill_39['42'], mini_pill_39['45'], mini_pill_39['48'], mini_pill_39['51'], mini_pill_39['54'], mini_pill_39['57'], mini_pill_39['60'], mini_pill_39['no'], mini_pill_39['mild'], mini_pill_39['moderate'], mini_pill_39['severe']],
-    [mini_pill_42['3'], mini_pill_42['6'], mini_pill_42['9'], mini_pill_42['12'], mini_pill_42['15'], mini_pill_42['18'], mini_pill_42['21'], mini_pill_42['24'], mini_pill_42['27'], mini_pill_42['30'], mini_pill_42['33'], mini_pill_42['36'], mini_pill_42['39'], mini_pill_42['42'], mini_pill_42['45'], mini_pill_42['48'], mini_pill_42['51'], mini_pill_42['54'], mini_pill_42['57'], mini_pill_42['60'], mini_pill_42['no'], mini_pill_42['mild'], mini_pill_42['moderate'], mini_pill_42['severe']],
-    [mini_pill_45['3'], mini_pill_45['6'], mini_pill_45['9'], mini_pill_45['12'], mini_pill_45['15'], mini_pill_45['18'], mini_pill_45['21'], mini_pill_45['24'], mini_pill_45['27'], mini_pill_45['30'], mini_pill_45['33'], mini_pill_45['36'], mini_pill_45['39'], mini_pill_45['42'], mini_pill_45['45'], mini_pill_45['48'], mini_pill_45['51'], mini_pill_45['54'], mini_pill_45['57'], mini_pill_45['60'], mini_pill_45['no'], mini_pill_45['mild'], mini_pill_45['moderate'], mini_pill_45['severe']],
-    [mini_pill_48['3'], mini_pill_48['6'], mini_pill_48['9'], mini_pill_48['12'], mini_pill_48['15'], mini_pill_48['18'], mini_pill_48['21'], mini_pill_48['24'], mini_pill_48['27'], mini_pill_48['30'], mini_pill_48['33'], mini_pill_48['36'], mini_pill_48['39'], mini_pill_48['42'], mini_pill_48['45'], mini_pill_48['48'], mini_pill_48['51'], mini_pill_48['54'], mini_pill_48['57'], mini_pill_48['60'], mini_pill_48['no'], mini_pill_48['mild'], mini_pill_48['moderate'], mini_pill_48['severe']],
-    [mini_pill_51['3'], mini_pill_51['6'], mini_pill_51['9'], mini_pill_51['12'], mini_pill_51['15'], mini_pill_51['18'], mini_pill_51['21'], mini_pill_51['24'], mini_pill_51['27'], mini_pill_51['30'], mini_pill_51['33'], mini_pill_51['36'], mini_pill_51['39'], mini_pill_51['42'], mini_pill_51['45'], mini_pill_51['48'], mini_pill_51['51'], mini_pill_51['54'], mini_pill_51['57'], mini_pill_51['60'], mini_pill_51['no'], mini_pill_51['mild'], mini_pill_51['moderate'], mini_pill_51['severe']],
-    [mini_pill_54['3'], mini_pill_54['6'], mini_pill_54['9'], mini_pill_54['12'], mini_pill_54['15'], mini_pill_54['18'], mini_pill_54['21'], mini_pill_54['24'], mini_pill_54['27'], mini_pill_54['30'], mini_pill_54['33'], mini_pill_54['36'], mini_pill_54['39'], mini_pill_54['42'], mini_pill_54['45'], mini_pill_54['48'], mini_pill_54['51'], mini_pill_54['54'], mini_pill_54['57'], mini_pill_54['60'], mini_pill_54['no'], mini_pill_54['mild'], mini_pill_54['moderate'], mini_pill_54['severe']],
-    [mini_pill_57['3'], mini_pill_57['6'], mini_pill_57['9'], mini_pill_57['12'], mini_pill_57['15'], mini_pill_57['18'], mini_pill_57['21'], mini_pill_57['24'], mini_pill_57['27'], mini_pill_57['30'], mini_pill_57['33'], mini_pill_57['36'], mini_pill_57['39'], mini_pill_57['42'], mini_pill_57['45'], mini_pill_57['48'], mini_pill_57['51'], mini_pill_57['54'], mini_pill_57['57'], mini_pill_57['60'], mini_pill_57['no'], mini_pill_57['mild'], mini_pill_57['moderate'], mini_pill_57['severe']],
-    [mini_pill_60['3'], mini_pill_60['6'], mini_pill_60['9'], mini_pill_60['12'], mini_pill_60['15'], mini_pill_60['18'], mini_pill_60['21'], mini_pill_60['24'], mini_pill_60['27'], mini_pill_60['30'], mini_pill_60['33'], mini_pill_60['36'], mini_pill_60['39'], mini_pill_60['42'], mini_pill_60['45'], mini_pill_60['48'], mini_pill_60['51'], mini_pill_60['54'], mini_pill_60['57'], mini_pill_60['60'], mini_pill_60['no'], mini_pill_60['mild'], mini_pill_60['moderate'], mini_pill_60['severe']],
+    [mini_pill_3['3'], mini_pill_3['21'], mini_pill_3['42'], mini_pill_3['60'], mini_pill_3['no'], mini_pill_3['mild'], mini_pill_3['moderate'], mini_pill_3['severe']],
+    [mini_pill_21['3'], mini_pill_21['21'], mini_pill_21['42'], mini_pill_21['60'], mini_pill_21['no'], mini_pill_21['mild'], mini_pill_21['moderate'], mini_pill_21['severe']],
+    [mini_pill_42['3'], mini_pill_42['21'], mini_pill_42['42'], mini_pill_42['60'], mini_pill_42['no'], mini_pill_42['mild'], mini_pill_42['moderate'], mini_pill_42['severe']],
+    [mini_pill_60['3'], mini_pill_60['21'], mini_pill_60['42'], mini_pill_60['60'], mini_pill_60['no'], mini_pill_60['mild'], mini_pill_60['moderate'], mini_pill_60['severe']],
 ])
 
 # Create hormonal IUD matrix (4x7 matrix)
 z_hormonal_iud = np.array([
-    [hormonal_iud_no['no'], hormonal_iud_no['mild'], hormonal_iud_no['moderate'], hormonal_iud_no['severe'], hormonal_iud_no['3'], hormonal_iud_no['6'], hormonal_iud_no['9'], hormonal_iud_no['12'], hormonal_iud_no['15'], hormonal_iud_no['18'], hormonal_iud_no['21'], hormonal_iud_no['24'], hormonal_iud_no['27'], hormonal_iud_no['30'], hormonal_iud_no['33'], hormonal_iud_no['36'], hormonal_iud_no['39'], hormonal_iud_no['42'], hormonal_iud_no['45'], hormonal_iud_no['48'], hormonal_iud_no['51'], hormonal_iud_no['54'], hormonal_iud_no['57'], hormonal_iud_no['60']],
-    [hormonal_iud_mild['no'], hormonal_iud_mild['mild'], hormonal_iud_mild['moderate'], hormonal_iud_mild['severe'], hormonal_iud_mild['3'], hormonal_iud_mild['6'], hormonal_iud_mild['9'], hormonal_iud_mild['12'], hormonal_iud_mild['15'], hormonal_iud_mild['18'], hormonal_iud_mild['21'], hormonal_iud_mild['24'], hormonal_iud_mild['27'], hormonal_iud_mild['30'], hormonal_iud_mild['33'], hormonal_iud_mild['36'], hormonal_iud_mild['39'], hormonal_iud_mild['42'], hormonal_iud_mild['45'], hormonal_iud_mild['48'], hormonal_iud_mild['51'], hormonal_iud_mild['54'], hormonal_iud_mild['57'], hormonal_iud_mild['60']],
-    [hormonal_iud_moderate['no'], hormonal_iud_moderate['mild'], hormonal_iud_moderate['moderate'], hormonal_iud_moderate['severe'], hormonal_iud_moderate['3'], hormonal_iud_moderate['6'], hormonal_iud_moderate['9'], hormonal_iud_moderate['12'], hormonal_iud_moderate['15'], hormonal_iud_moderate['18'], hormonal_iud_moderate['21'], hormonal_iud_moderate['24'], hormonal_iud_moderate['27'], hormonal_iud_moderate['30'], hormonal_iud_moderate['33'], hormonal_iud_moderate['36'], hormonal_iud_moderate['39'], hormonal_iud_moderate['42'], hormonal_iud_moderate['45'], hormonal_iud_moderate['48'], hormonal_iud_moderate['51'], hormonal_iud_moderate['54'], hormonal_iud_moderate['57'], hormonal_iud_moderate['60']],
-    [hormonal_iud_severe['no'], hormonal_iud_severe['mild'], hormonal_iud_severe['moderate'], hormonal_iud_severe['severe'], hormonal_iud_severe['3'], hormonal_iud_severe['6'], hormonal_iud_severe['9'], hormonal_iud_severe['12'], hormonal_iud_severe['15'], hormonal_iud_severe['18'], hormonal_iud_severe['21'], hormonal_iud_severe['24'], hormonal_iud_severe['27'], hormonal_iud_severe['30'], hormonal_iud_severe['33'], hormonal_iud_severe['36'], hormonal_iud_severe['39'], hormonal_iud_severe['42'], hormonal_iud_severe['45'], hormonal_iud_severe['48'], hormonal_iud_severe['51'], hormonal_iud_severe['54'], hormonal_iud_severe['57'], hormonal_iud_severe['60']],
+    [hormonal_iud_no['no'], hormonal_iud_no['mild'], hormonal_iud_no['moderate'], hormonal_iud_no['severe'], hormonal_iud_no['3'], hormonal_iud_no['21'],  hormonal_iud_no['42'],  hormonal_iud_no['60']],
+    [hormonal_iud_mild['no'], hormonal_iud_mild['mild'], hormonal_iud_mild['moderate'], hormonal_iud_mild['severe'], hormonal_iud_mild['3'],  hormonal_iud_mild['21'],hormonal_iud_mild['42'],  hormonal_iud_mild['60']],
+    [hormonal_iud_moderate['no'], hormonal_iud_moderate['mild'], hormonal_iud_moderate['moderate'], hormonal_iud_moderate['severe'], hormonal_iud_moderate['3'],  hormonal_iud_moderate['21'],  hormonal_iud_moderate['42'], hormonal_iud_moderate['60']],
+    [hormonal_iud_severe['no'], hormonal_iud_severe['mild'], hormonal_iud_severe['moderate'], hormonal_iud_severe['severe'], hormonal_iud_severe['3'], hormonal_iud_severe['21'], hormonal_iud_severe['42'], hormonal_iud_severe['60']],
 ])
 
 # Create ring matrix (4x3 matrix)
 z_ring = np.array([
     [ring_3['no'], ring_3['mild'], ring_3['moderate'], ring_3['severe']],
-    [ring_6['no'], ring_6['mild'], ring_6['moderate'], ring_6['severe']],
-    [ring_9['no'], ring_9['mild'], ring_9['moderate'], ring_9['severe']],
-    [ring_12['no'], ring_12['mild'], ring_12['moderate'], ring_12['severe']],
-    [ring_15['no'], ring_15['mild'], ring_15['moderate'], ring_15['severe']],
-    [ring_18['no'], ring_18['mild'], ring_18['moderate'], ring_18['severe']],
+
     [ring_21['no'], ring_21['mild'], ring_21['moderate'], ring_21['severe']],
-    [ring_24['no'], ring_24['mild'], ring_24['moderate'], ring_24['severe']],
-    [ring_27['no'], ring_27['mild'], ring_27['moderate'], ring_27['severe']],
-    [ring_30['no'], ring_30['mild'], ring_30['moderate'], ring_30['severe']],
-    [ring_33['no'], ring_33['mild'], ring_33['moderate'], ring_33['severe']],
-    [ring_36['no'], ring_36['mild'], ring_36['moderate'], ring_36['severe']],
-    [ring_39['no'], ring_39['mild'], ring_39['moderate'], ring_39['severe']],
+
     [ring_42['no'], ring_42['mild'], ring_42['moderate'], ring_42['severe']],
-    [ring_45['no'], ring_45['mild'], ring_45['moderate'], ring_45['severe']],
-    [ring_48['no'], ring_48['mild'], ring_48['moderate'], ring_48['severe']],
-    [ring_51['no'], ring_51['mild'], ring_51['moderate'], ring_51['severe']],
-    [ring_54['no'], ring_54['mild'], ring_54['moderate'], ring_54['severe']],
-    [ring_57['no'], ring_57['mild'], ring_57['moderate'], ring_57['severe']],
+
     [ring_60['no'], ring_60['mild'], ring_60['moderate'], ring_60['severe']]
 ])
 
 # Create shot matrix (4x3 matrix)
 z_shot = np.array([
     [shot_3['no'], shot_3['mild'], shot_3['moderate'], shot_3['severe']],
-    [shot_6['no'], shot_6['mild'], shot_6['moderate'], shot_6['severe']],
-    [shot_9['no'], shot_9['mild'], shot_9['moderate'], shot_9['severe']],
-    [shot_12['no'], shot_12['mild'], shot_12['moderate'], shot_12['severe']],
-    [shot_15['no'], shot_15['mild'], shot_15['moderate'], shot_15['severe']],
-    [shot_18['no'], shot_18['mild'], shot_18['moderate'], shot_18['severe']],
     [shot_21['no'], shot_21['mild'], shot_21['moderate'], shot_21['severe']],
-    [shot_24['no'], shot_24['mild'], shot_24['moderate'], shot_24['severe']],
-    [shot_27['no'], shot_27['mild'], shot_27['moderate'], shot_27['severe']],
-    [shot_30['no'], shot_30['mild'], shot_30['moderate'], shot_30['severe']],
-    [shot_33['no'], shot_33['mild'], shot_33['moderate'], shot_33['severe']],
-    [shot_36['no'], shot_36['mild'], shot_36['moderate'], shot_36['severe']],
-    [shot_39['no'], shot_39['mild'], shot_39['moderate'], shot_39['severe']],
     [shot_42['no'], shot_42['mild'], shot_42['moderate'], shot_42['severe']],
-    [shot_45['no'], shot_45['mild'], shot_45['moderate'], shot_45['severe']],
-    [shot_48['no'], shot_48['mild'], shot_48['moderate'], shot_48['severe']],
-    [shot_51['no'], shot_51['mild'], shot_51['moderate'], shot_51['severe']],
-    [shot_54['no'], shot_54['mild'], shot_54['moderate'], shot_54['severe']],
-    [shot_57['no'], shot_57['mild'], shot_57['moderate'], shot_57['severe']],
     [shot_60['no'], shot_60['mild'], shot_60['moderate'], shot_60['severe']]
 ])
 
@@ -5990,6 +5920,7 @@ z_patch = np.array([
     [patch_mild['no'], patch_mild['mild'], patch_mild['moderate'], patch_mild['severe']],
     [patch_moderate['no'], patch_moderate['mild'], patch_moderate['moderate'], patch_moderate['severe']],
     [patch_severe['no'], patch_severe['mild'], patch_severe['moderate'], patch_severe['severe']]
+    
 ])
 
 # Create combo pill matrix (4x4 matrix)
@@ -6055,7 +5986,7 @@ fig.add_trace(go.Surface(
 
 # Add ring surface with its specific axes
 x_ring_shot = ['no', 'mild', 'moderate', 'severe']
-y_ring_shot = ['3', '6', '9', '12', '15', '18', '21', '24', '27', '30', '33', '36', '39', '42', '45', '48', '51', '54', '57', '60']
+y_ring_shot = ['3', '20', '40', '60']
 
 fig.add_trace(go.Surface(
     x=x_ring_shot,
@@ -6086,7 +6017,7 @@ fig.add_trace(go.Surface(
 
 # Add hormonal IUD surface with its specific axes
 y_hormonal = ['no', 'mild', 'moderate', 'severe']
-x_hormonal = ['no', 'mild', 'moderate', 'severe', '3', '6', '9', '12', '15', '18', '21', '24', '27', '30', '33', '36', '39', '42', '45', '48', '51', '54', '57', '60']
+x_hormonal = ['no', 'mild', 'moderate', 'severe', '3', '20', '40', '60']
 
 fig.add_trace(go.Surface(
     x=x_hormonal,
@@ -6200,8 +6131,8 @@ fig.update_layout(
     scene=dict(
         xaxis=dict(
             title='TGD',
-            ticktext=['no', 'mild', 'moderate', 'severe', '3', '20', '40', '60'],
-            tickvals= [1, 2, 3, 6, 8, 10, 14, 20],  # 8 values total
+            ticktext=['no', 'mild', 'moderate', 'severe', '3', '21', '42', '60'],
+            tickvals= [1, 2, 3, 5, 6, 7, 8, 9],  # 8 values total
             tickangle=45,
             tickmode='array',
             titlefont=dict(size=12),
@@ -6210,8 +6141,8 @@ fig.update_layout(
         ),
         yaxis=dict(
             title='Acne',
-            ticktext=['no', 'mild', 'moderate', 'severe', '3', '20', '40', '60'],
-            tickvals=[1, 2, 3, 6, 8, 10, 14, 20],  # 8 values total
+            ticktext=['no', 'mild', 'moderate', 'severe', '3', '21', '42', '60'],
+            tickvals=[1, 2, 3, 5, 6, 7, 8, 9],  # 8 values total
             tickangle=45,
             tickmode='array',
             titlefont=dict(size=12),
@@ -6267,3 +6198,169 @@ for trace in fig.data:
     )
 
 fig.show()
+
+
+# tickvals= [1, 2, 3, 7, 8, 10, 14, 20],
+
+'''
+fig.update_layout(
+    title=dict(
+        text='Contraceptive Methods Scores - 3D Surface Plot',
+        x=0.5,
+        xanchor='center',
+        y=0.95
+    ),
+    scene=dict(
+        xaxis=dict(
+            title='TGD',
+            ticktext=['no', 'mild', 'moderate', 'severe', '3', '20', '40', '60'],
+            tickvals=[1, 2, 3, 7, 8, 10, 14, 20],  # 8 values total
+            tickangle=45,
+            tickmode='array',
+            titlefont=dict(size=12),
+            tickfont=dict(size=10),
+            showticklabels=True
+        ),
+        yaxis=dict(
+            title='Acne',
+            ticktext=['no', 'mild', 'moderate', 'severe', '3', '20', '40', '60'],
+            tickvals=[1, 2, 3, 7, 8, 10, 14, 20],  # 8 values total
+            tickangle=45,
+            tickmode='array',
+            titlefont=dict(size=12),
+            tickfont=dict(size=10),
+            showticklabels=True
+        ),
+        zaxis=dict(
+            title='Score',
+            titlefont=dict(size=12),
+            tickfont=dict(size=10)
+        ),
+        camera=dict(
+            eye=dict(x=2, y=2, z=1.5)
+        )
+    ),
+    width=1500,
+    height=1200,
+    autosize=False,
+    showlegend=True,
+    legend=dict(
+        yanchor="top",
+        y=0.99,
+        xanchor="right",
+        x=0.99,
+        bgcolor='rgba(255, 255, 255, 0.9)',
+        bordercolor='rgba(0, 0, 0, 0.5)',
+        borderwidth=2,
+        font=dict(size=14, color='black'),
+        itemsizing='constant',
+        itemwidth=30,
+        orientation="v",
+        title=dict(
+            text="Contraceptive Methods",
+            font=dict(size=16, color='black')
+        )
+    ),
+    margin=dict(
+        l=50, r=50, t=100, b=50,
+        pad=4
+    )
+)
+
+# Update hover template
+for trace in fig.data:
+    trace.update(
+        hovertemplate=(
+            "<b>%{fullData.name}</b><br>" +
+            "TGD: %{x}<br>" +
+            "Acne: %{y}<br>" +
+            "Score: %{z}<br>" +
+            "<extra></extra>"
+        )
+    )
+
+#fig.show()
+
+fig.update_layout(
+    title=dict(
+        text='Contraceptive Methods Scores - 3D Surface Plot',
+        x=0.5,
+        xanchor='center',
+        y=0.95
+    ),
+    scene=dict(
+        xaxis=dict(
+            title='TGD',
+            ticktext=['no', 'mild', 'moderate', 'severe', '3', '20', '40', '60'],
+            tickvals=list(range(len(['no', 'mild', 'moderate', 'severe', '3', '20', '40', '60']))),
+            tickangle=45,
+            tickmode='array',
+            titlefont=dict(size=12),
+            tickfont=dict(size=10),
+            showticklabels=True
+        ),
+        yaxis=dict(
+            title='Acne',
+            ticktext=['no', 'mild', 'moderate', 'severe', '3', '20', '40', '60'],
+            tickvals=list(range(len(['no', 'mild', 'moderate', 'severe', '3', '20', '40', '60']))),
+            tickangle=45,
+            tickmode='array',
+            titlefont=dict(size=12),
+            tickfont=dict(size=10),
+            showticklabels=True
+        ),
+        zaxis=dict(
+            title='Score',
+            titlefont=dict(size=12),
+            tickfont=dict(size=10)
+        ),
+        camera=dict(
+            eye=dict(x=2, y=2, z=1.5)
+        )
+    ),
+    width=1500,
+    height=1200,
+    autosize=False,
+    showlegend=True,
+    legend=dict(
+        yanchor="top",
+        y=0.99,
+        xanchor="right",
+        x=0.99,
+        bgcolor='rgba(255, 255, 255, 0.9)',
+        bordercolor='rgba(0, 0, 0, 0.5)',
+        borderwidth=2,
+        font=dict(size=14, color='black'),
+        itemsizing='constant',
+        itemwidth=30,
+        orientation="v",
+        title=dict(
+            text="Contraceptive Methods",
+            font=dict(size=16, color='black')
+        )
+    ),
+    margin=dict(
+        l=50, r=50, t=100, b=50,
+        pad=4
+    )
+)
+# Update hover template
+for trace in fig.data:
+    trace.update(
+        hovertemplate=(
+            "<b>%{fullData.name}</b><br>" +
+            "TGD: %{x}<br>" +
+            "Acne: %{y}<br>" +
+            "Score: %{z}<br>" +
+            "<extra></extra>"
+        )
+    )
+
+fig.show()
+
+
+
+
+
+
+'''

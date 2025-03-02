@@ -1392,10 +1392,5 @@ fig.update_layout(
 
 fig.show()
 
-# Save the figure as an HTML file
-#fig.write_html("bivariate_analysis/acne_tgd_4_3d.html")
 
-# Save the figure as an HTML file
-#fig.write_html("bivariate_analysis/acne_tgd_4_3d.html")
-# Save the figure as an HTML file
-#fig.write_html("bivariate_analysis/acne_tgd_4_3d.html")
+

@@ -1303,60 +1303,53 @@ fig.add_trace(go.Surface(
 
 # Define consistent axis labels
 # Update the surfaces list to use consistent axis definitions
-surfaces = [
-    ('Condoms', z_condoms, x_full, y_full),
-    ('Internal Condoms', z_internal_condoms, x_full, y_full),
-    ('Cervical Cap', z_cervical_cap, x_full, y_full),
-    ('FAM', z_fam, x_full, y_full),
-    ('Copper IUD', z_copper_iud, x_full, y_full),
-    ('Sterilization', z_sterilization, x_full, y_full),
-    ('Spermicide', z_spermicide, x_full, y_full),
-    ('Withdrawal', z_withdrawal, x_full, y_full),
-    ('Arm Implant', z_arm_implant, x_partial, y_partial),
-    ('Mini Pill', z_mini, x_partial_mini, y_partial_mini),
-    ('Hormonal IUD', z_hormonal_iud, x_hormonal, y_hormonal),
-    ('Ring', z_ring, x_ring_shot, y_ring_shot),
-    ('Shot', z_shot, x_ring_shot, y_ring_shot),
-    ('Patch', z_patch, x_patch_combo, y_patch_combo),
-    ('Combo Pill', z_combo_pill, x_patch_combo, y_patch_combo),
-]
-import numpy as np
-import plotly.graph_objects as go
-import numpy as np
-import plotly.graph_objects as go
 
+import numpy as np
+import plotly.graph_objects as go
+import numpy as np
+import plotly.graph_objects as go
+'''
 # Define the actual numeric values for the axes
 # Note: For TGD, we're keeping the same numeric values but will reverse the display order
-x_values_actual = [-50, -25, -15, 0, 3, 21, 42, 60]  # TGD axis actual values
-y_values_actual = [-50, -25, -15, 0, 3, 21, 42, 60]  # Acne axis values
+import plotly.graph_objects as go
+import numpy as np
+
+# Define the numerical values for the labels
+#x_values = [-50, -25, -15, 0, 3, 21, 42, 60]  # Reverse the order
+x_values = [60, 42, 21, 3, 0, -15, -25, -50]  # Reverse the order
+#x_labels = ['-50', '-25', '-15', '0', '3', '21', '42', '60']
+x_labels = ['60', '42', '21', '3', '0', '-15', '-25', '-50']
+y_values = [-50, -25, -15, 0, 3, 21, 42, 60]
+y_labels = ['-50', '-25', '-15', '0', '3', '21', '42', '60']
+
+# Update the surfaces list to use numerical values for x and y
+surfaces = [
+    ('Condoms', z_condoms, x_values, y_values),
+    ('Internal Condoms', z_internal_condoms, x_values, y_values),
+    ('Cervical Cap', z_cervical_cap, x_values, y_values),
+    ('FAM', z_fam, x_values, y_values),
+    ('Copper IUD', z_copper_iud, x_values, y_values),
+    ('Sterilization', z_sterilization, x_values, y_values),
+    ('Spermicide', z_spermicide, x_values, y_values),
+    ('Withdrawal', z_withdrawal, x_values, y_values),
+    ('Arm Implant', z_arm_implant, x_values, y_values),
+    ('Mini Pill', z_mini, x_values, y_values),
+    ('Hormonal IUD', z_hormonal_iud, x_values, y_values),
+    ('Ring', z_ring, x_values, y_values),
+    ('Shot', z_shot, x_values, y_values),
+    ('Patch', z_patch, x_values, y_values),
+    ('Combo Pill', z_combo_pill, x_values, y_values),
+]
 
 # Create figure
 fig = go.Figure()
 
-# For each surface, we need to properly transpose and remap the data
-for i, (name, z_matrix, x_labels, y_labels) in enumerate(surfaces):
-    # Map the string labels to actual numeric values
-    x_numeric = [float(x.replace('-', '-')) if x.startswith('-') else float(x) for x in x_labels]
-    y_numeric = [float(y.replace('-', '-')) if y.startswith('-') else float(y) for y in y_labels]
-    
-    # Find the indices in the full axis arrays
-    x_indices = [x_values_actual.index(x) for x in x_numeric]
-    y_indices = [y_values_actual.index(y) for y in y_numeric]
-    
-    # Create a properly sized matrix filled with NaN
-    full_z = np.full((len(x_values_actual), len(y_values_actual)), np.nan)
-    
-    # Fill in the values we have
-    for i_src, i_dest in enumerate(x_indices):
-        for j_src, j_dest in enumerate(y_indices):
-            if i_src < z_matrix.shape[0] and j_src < z_matrix.shape[1]:
-                full_z[i_dest, j_dest] = z_matrix[i_src, j_src]
-    
-    # Add the surface with correct coordinate mapping
+# Add all surfaces with consistent axis definitions
+for i, (name, z, x, y) in enumerate(surfaces):
     fig.add_trace(go.Surface(
-        x=np.array([x_values_actual] * len(y_values_actual)),
-        y=np.array([y_values_actual] * len(x_values_actual)).T,
-        z=full_z,
+        x=x,
+        y=y,
+        z=z,
         name=name,
         colorscale=[[0, distinct_colors[i]], [1, distinct_colors[i]]],
         showscale=False,
@@ -1366,26 +1359,133 @@ for i, (name, z_matrix, x_labels, y_labels) in enumerate(surfaces):
         hoverinfo='name+z'
     ))
 
-# Update layout with reversed TGD axis labels
+# Update layout with improved legend and accurate axis labels
 fig.update_layout(
     title='Contraceptive Methods Scores - 3D Surface Plot',
     scene=dict(
         xaxis=dict(
             title='TGD',
-            # The key change: reverse the order of ticktext but keep tickvals in original order
-            ticktext=[str(x) for x in reversed(x_values_actual)],  # Reversed for display
-            tickvals=x_values_actual,  # Keep actual positions
+            ticktext=x_labels,
+            tickvals=x_values,
             tickangle=45,
             tickmode='array',
             titlefont=dict(size=12),
             tickfont=dict(size=10),
-            showticklabels=True,
-            # Add autorange="reversed" to flip the axis direction
+            showticklabels=True
         ),
         yaxis=dict(
             title='Acne',
-            ticktext=[str(y) for y in y_values_actual],
-            tickvals=y_values_actual,
+            ticktext=y_labels,
+            tickvals=y_values,
+            tickangle=45,
+            tickmode='array',
+            titlefont=dict(size=12),
+            tickfont=dict(size=10),
+            showticklabels=True
+        ),
+        zaxis_title='Score',
+        camera=dict(
+            eye=dict(x=1.5, y=1.5, z=1.2)
+        )
+    ),
+    width=1200,
+    height=1000,
+    showlegend=True,
+    legend=dict(
+        yanchor="top",
+        y=0.99,
+        xanchor="right",
+        x=0.99,
+        bgcolor='rgba(255, 255, 255, 0.9)',
+        bordercolor='rgba(0, 0, 0, 0.5)',
+        borderwidth=2,
+        font=dict(
+            size=14,
+            color='black'
+        ),
+        itemsizing='constant',
+        itemwidth=30,
+        orientation="v",
+        title=dict(
+            text="Contraceptive Methods",
+            font=dict(
+                size=16,
+                color='black'
+            )
+        )
+    )
+)
+'''
+#fig.show()
+
+# Save the figure as an HTML file
+# fig.write_html("bivariate_analysis/acne_tgd_4_3d.html")
+
+# Define the numerical values for the labels (in ascending order)
+x_values = [50, 25, 15, 0, -3, -21, -42, -60]  # Ascending order
+#x_labels = [60, 42, 21, 3, 0, -15, -25, -50]  # Reverse order for display
+x_labels = [-50, -25, -15, 0, 3, 21, 42, 60]  # Correct order for display
+y_values = [-50, -25, -15, 0, 3, 21, 42, 60]  # Ascending order
+y_labels = [-50, -25, -15, 0, 3, 21, 42, 60]  # Correct order for display
+# Define the numerical values for the labels (in ascending order)
+ # Correct order for display
+
+# Update the surfaces list to use numerical values for x and y
+surfaces = [
+    ('Condoms', z_condoms, x_values, y_values),
+    ('Internal Condoms', z_internal_condoms, x_values, y_values),
+    ('Cervical Cap', z_cervical_cap, x_values, y_values),
+    ('FAM', z_fam, x_values, y_values),
+    ('Copper IUD', z_copper_iud, x_values, y_values),
+    ('Sterilization', z_sterilization, x_values, y_values),
+    ('Spermicide', z_spermicide, x_values, y_values),
+    ('Withdrawal', z_withdrawal, x_values, y_values),
+    ('Arm Implant', z_arm_implant, x_values, y_values),
+    ('Mini Pill', z_mini, x_values, y_values),
+    ('Hormonal IUD', z_hormonal_iud, x_values, y_values),
+    ('Ring', z_ring, x_values, y_values),
+    ('Shot', z_shot, x_values, y_values),
+    ('Patch', z_patch, x_values, y_values),
+    ('Combo Pill', z_combo_pill, x_values, y_values),
+]
+
+
+# Create figure
+fig = go.Figure()
+
+# Add all surfaces with consistent axis definitions
+for i, (name, z, x, y) in enumerate(surfaces):
+    fig.add_trace(go.Surface(
+        x=x,  # Use ascending numerical values for spacing
+        y=y,  # Use ascending numerical values for spacing
+        z=z,
+        name=name,
+        colorscale=[[0, distinct_colors[i]], [1, distinct_colors[i]]],
+        showscale=False,
+        opacity=0.7,
+        showlegend=True,
+        legendgroup=name,
+        hoverinfo='name+z'
+    ))
+
+# Update layout with improved legend and accurate axis labels
+fig.update_layout(
+    title='Contraceptive Methods Scores - 3D Surface Plot',
+    scene=dict(
+        xaxis=dict(
+            title='TGD',
+            ticktext=x_labels,  # Labels in reverse order
+            tickvals=x_values,  # Numerical values in ascending order
+            tickangle=45,
+            tickmode='array',
+            titlefont=dict(size=12),
+            tickfont=dict(size=10),
+            showticklabels=True
+        ),
+        yaxis=dict(
+            title='Acne',
+            ticktext=y_labels,  # Labels in correct order
+            tickvals=y_values,  # Numerical values in ascending order
             tickangle=45,
             tickmode='array',
             titlefont=dict(size=12),
@@ -1425,12 +1525,7 @@ fig.update_layout(
     )
 )
 
-fig.update_layout(
-    scene=dict(
-        zaxis=dict(
-            range=[-500, 100]
-        )
-    )
-)
-
 fig.show()
+
+# Save the figure as an HTML file
+# fig.write_html("bivariate_analysis/acne_tgd_4_3d.html")

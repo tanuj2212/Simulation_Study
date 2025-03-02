@@ -792,6 +792,7 @@ fig.update_layout(
     width=1200, height=800
 )
 
+'''
 # Add buttons to show/hide individual surfaces
 buttons = []
 all_methods = negative_only_methods + positive_methods
@@ -1408,3 +1409,4 @@ for idx, method in enumerate(negative_only_methods + positive_methods + zero_cor
 interactor.Initialize()
 render_window.Render()
 interactor.Start()
+'''

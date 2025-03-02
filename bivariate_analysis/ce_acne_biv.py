@@ -1029,8 +1029,7 @@ fig.update_layout(
     )]
 )
 
-fig.show()
-'''
+#fig.show()
 
 # Working code, but no checkboxes. Shows everything
 import numpy as np
@@ -1241,7 +1240,8 @@ fig.update_layout(
     )]
 )
 
-#fig.show()
+fig.show()
+'''
 # Save the figure as an HTML file
 #fig.write_html("ce_acne_3d.html")
 

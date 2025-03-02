@@ -1,7 +1,6 @@
 from functions_simulation_diff_weight_hor import *
 import copy
 
-
 original_weight_condoms = [
     [-3, -2, -1, 1, 2, 3],  # Cost effectiveness
     [-1.5, -1, -0.5, 0.5, 1, 1.5],  # Pregnancy prevention
@@ -19,7 +18,7 @@ original_weight_internal_condoms = [
     [-3, -2, -1, 1, 2, 3],  # STI prevention
     3,
     [-3, -2, -1, 1, 2, 3], # Vaginal Insertion
-    [-15, -25, -60],  # Gender dysphoria related to vaginal insertion
+    [-15, -25, -50],  # Gender dysphoria related to vaginal insertion
     1.5 # Gender dysphoria related to pregnancy
 ]
 original_weight_cervical_cap = [
@@ -28,15 +27,15 @@ original_weight_cervical_cap = [
     3,            # Maintenance (arr[2])
     [-3, -2, -1, 1, 2, 3],  # Vaginal Insertion (arr[3])
     [-3, -2, -1, 1, 2, 3],  # Seeking Consultation (arr[4])
-    [-15, -25, -60],     # Gender Dysphoria Vaginal Insertion (arr[5])
-    [-15, -25, -60]      # Gender Dysphoria Pregnancy (arr[6])
+    [-15, -25, -50],     # Gender Dysphoria Vaginal Insertion (arr[5])
+    [-15, -25, -50]      # Gender Dysphoria Pregnancy (arr[6])
 ]
 original_weight_FAM = [
     [-3, -2, -1, 1, 2, 3],  # Cost Effectiveness (arr[1])
     3,
     [-3, -2, -1, 1, 2, 3],  # Partner Willingness (arr[3])
     3,                    # Maintenance (arr[2])
-    [-15, -25, -60]      # Gender Dysphoria Pregnancy (arr[4])
+    [-15, -25, -50]      # Gender Dysphoria Pregnancy (arr[4])
 ]
 original_weight_arm_implant = [
     [-3, -2, -1, 1, 2, 3],  # Pregnancy Prevention (arr[1])
@@ -47,8 +46,8 @@ original_weight_arm_implant = [
     [-3, -2, -1, 1, 2, 3],  # Seeking consultation (arr[6])
     [-3, -2, -1, 1, 2, 3],  # Medical procedure (arr[7])
     3,                    # Acne (arr[8])
-    [-7.5, -12.5, -30, -15, -25, -60],  # Anxiety (arr[9])
-    [-7.5, -12.5, -30, -15, -25, -60],  # Depression (arr[10])
+    [-7.5, -12.5, -25, -15, -25, -50],  # Anxiety (arr[9])
+    [-7.5, -12.5, -25, -15, -25, -50],  # Depression (arr[10])
     3,                    # Gender dysphoria period (arr[11])
     3,                    # Gender dysphoria pregnancy (arr[12])
 ]
@@ -81,7 +80,7 @@ original_weight_withdrawl = [
     3,
     
     # Gender Pregnancy (mild, moderate, severe)
-    [-15, -25, -60]
+    [-15, -25, -50]
     
 ]
 original_weight_sterilization = [
@@ -131,9 +130,9 @@ original_weight_ring = [
     # Acne (index 8)
     3,  # Acne severity gives +3
     # Anxiety (index 9)
-    [-7.5, -12.5, -30, -15, -25, -60],  # Matches original anxiety scores
+    [-7.5, -12.5, -25, -15, -25, -50],  # Matches original anxiety scores
     # Depression (index 10)
-    [-7.5, -12.5, -30, -15, -25, -60],  # Matches original depression scores
+    [-7.5, -12.5, -25, -15, -25, -50],  # Matches original depression scores
     # Hyper (index 11)
     -100,  # Hyper gives -100
     # Blood Clots (index 12)
@@ -151,7 +150,7 @@ original_weight_ring = [
     # Endometriosis (index 18)
     3,  # Endometriosis gives +3
     # Top Gender Dysphoria (index 19)
-    [-15, -25, -60],  # Matches original top gender dysphoria scores
+    [-15, -25, -50],  # Matches original top gender dysphoria scores
     # Top Surgery (index 20)
     -100,  # Matches original top surgery scores
     # BGDP (index 21)
@@ -171,8 +170,8 @@ original_weight_patch = [
     3,  # Weight for arr[6]: "ep"
    [-3, -2, -1, 1,2,3],  # Weights for arr[7]
     [-15, -25, -60],  # Weights for arr[8]
-    [-7.5, -12.5, -30, -15, -25, -60],  # Weights for arr[9]
-    [-7.5, -12.5, -30, -15, -25, -60],  # Weights for arr[10]
+    [-7.5, -12.5, -25, -15, -25, -50],  # Weights for arr[9]
+    [-7.5, -12.5, -25, -15, -25, -50],  # Weights for arr[10]
     -100,  # Weight for arr[11]
     -100,  # Weight for arr[12]
     -100,  # Weight for arr[13]
@@ -181,7 +180,7 @@ original_weight_patch = [
     -100,  # Weight for arr[16]
     3,  # Weight for arr[17]
     3,  # Weight for arr[18]
-    [-15, -25, -60],  # Weights for arr[19]
+    [-15, -25, -50],  # Weights for arr[19]
     -100,  # Weights for arr[20]
     3,  # Weight for arr[21]
     1.5,  # Weight for arr[22]
@@ -213,10 +212,10 @@ original_weight_shot = [
     3,  # non-"no" adds +3
     
     # Anxiety (arr[9])
-    [-7.5, -12.5, -30, -15, -25, -60],  # corresponding to mild-moderate-severe with or without acne
+    [-7.5, -12.5, -25, -15, -25, -50],  # corresponding to mild-moderate-severe with or without acne
     
     # Depression (arr[10])
-    [-7.5, -12.5, -30, -15, -25, -60],  # similar to anxiety
+    [-7.5, -12.5, -25, -15, -25, -50],  # similar to anxiety
     
     # Hyper (arr[11])
     -100,  # any non-"no" adds -100
@@ -243,7 +242,7 @@ original_weight_shot = [
     3,  # non-"no" adds +3
     
     # Top Gender Dysphoria (arr[19])
-    [-15, -25, -60],  # corresponding to mild, moderate, severe
+    [-15, -25, -50],  # corresponding to mild, moderate, severe
     
     # Top Surgery (arr[20])
     -100,  # same as top dysphoria
@@ -267,8 +266,8 @@ original_weight_combo_pill = [
     3,                      # For arr[6] (ep adds +3)
     [-3, -2, -1, 1, 2, 3],   # For arr[7]
     [-15, -25, -60],      # For arr[8] (no, mild, moderate, severe)
-    [-7.5, -12.5, -30, -15, -25, -60],  # For arr[9] with combinations of arr[8]
-    [-7.5, -12.5, -30, -15, -25, -60],  # For arr[10] with combinations of arr[9]
+    [-7.5, -12.5, -25, -15, -25, -50],  # For arr[9] with combinations of arr[8]
+    [-7.5, -12.5, -25, -15, -25, -50],  # For arr[10] with combinations of arr[9]
     -100,                  # For arr[11]
     -100,                  # For arr[12]
     -100,                  # For arr[13]
@@ -277,7 +276,7 @@ original_weight_combo_pill = [
     -100,                  # For arr[16]
     3,                      # For arr[17]
     3,                      # For arr[18]
-    [-15, -25, -60],      # For arr[19] (no, mild, moderate, severe)
+    [-15, -25, -50],      # For arr[19] (no, mild, moderate, severe)
     -100,      # For arr[20] (no, mild, moderate, severe)
     3,                      # For arr[21]
     1.5,                      # For arr[22]
@@ -310,10 +309,10 @@ original_weight_mini_pill = [
     3,  # no
     
     # Anxiety (no, mild, moderate, severe)
-    [-7.5, -12.5, -30, -15, -25, -60],  # [no, mild, moderate, severe]
+    [-7.5, -12.5, -25, -15, -25, -50],  # [no, mild, moderate, severe]
     
     # Depression (no, mild, moderate, severe)
-    [-7.5, -12.5, -30, -15, -25, -60],  # [no, mild, moderate, severe]
+    [-7.5, -12.5, -25, -15, -25, -60],  # [no, mild, moderate, severe]
     
     # Breast (yes/no)
     -100,  # no
@@ -348,10 +347,10 @@ original_weight_copper_IUD = [
     [-3, -2, -1, 1, 2, 3],
     
     # Gender Dysphoria (mild, moderate, severe)
-    [-15, -25, -60],
+    [-15, -25, -50],
     
     # Gender Dysphoria Vaginal Insertion (mild, moderate, severe)
-    [-15, -25, -60],
+    [-15, -25, -50],
     
     # Gender Dysphoria Pregnancy
     3
@@ -366,13 +365,13 @@ original_weight_hormonal_IUD = [
     [-3, -2, -1, 1, 2, 3],  # weights for arr[7]
     [-3, -2, -1, 1, 2, 3],  # weights for arr[8]
     [-15, -25, -60],  # weights for arr[9]: ["mild", "moderate", "severe"]
-    [-7.5, -12.5, -30, -15, -25, -60],  # weights for arr[10] based on arr[9]
-    [-7.5, -12.5, -30, -15, -25, -60],  # weights for arr[11] based on arr[10]
+    [-7.5, -12.5, -25, -15, -25, -50],  # weights for arr[10] based on arr[9]
+    [-7.5, -12.5, -25, -15, -25, -50],  # weights for arr[11] based on arr[10]
     -100,  # weight for arr[12] != "no"
     3,  # weight for arr[13] != "no"
     3,  # weight for arr[14] != "no"
     3,  # weight for arr[15] != "no"
-    [-15, -25, -60],  # weights for arr[16]: ["mild", "moderate", "severe"]
+    [-15, -25, -50],  # weights for arr[16]: ["mild", "moderate", "severe"]
     3  # weight for arr[17] != "no"
 ]
 inputs = [
@@ -1206,8 +1205,10 @@ import plotly.graph_objects as go
 
 # Define categorical labels for x-axis
 x_category_labels = ['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp']
-x_values = [-60, -40, -20, 0, 20, 40, 60]
-x_labels = ["-60", "-40", "-20", "0", "20", "40", "60"]
+#x_values = [-60, -40, -20, 0, 20, 40, 60]
+x_values = [60, 40, 20, 0, -20, -40, -60]
+#x_labels = ["-60", "-40", "-20", "0", "20", "40", "60"]
+x_labels = ["60", "40", "20", "0", "-20", "-40", "-60"]
 
 # Define y values and labels for negative and positive ranges
 severity_map = {
@@ -1225,7 +1226,18 @@ positive_y_values = [0] + positive_values  # Include 0 for continuity
 
 negative_y_labels = ["-60", "-25", "-15", "0"]
 positive_y_labels = ["0"] + [str(i) for i in positive_values]
+negative_only_methods = [
+    "Hormonal IUD", "Patch", "Combination Pill"
+]
 
+positive_methods = [
+    "Arm Implant", "Mini Pill", "Ring", "Shot"
+]
+
+zero_correlation_methods = [
+    "Condoms", "Internal Condoms", "Cervical Cap", "FAM", 
+    "Copper IUD", "Sterilization", "Spermicide", "Withdrawal"
+]
 # All contraceptive methods
 all_methods = {
     "negative_only": [
@@ -1259,15 +1271,16 @@ distinct_colors = [
 
 # Create the 3D visualization
 fig = go.Figure()
-
+all_y_values = negative_y_values + positive_values[1:]
 # Create coordinate matrices for negative methods
 X_neg, Y_neg = np.meshgrid(x_values, negative_y_values)
 
+all_y_labels = negative_y_labels + [str(i) for i in positive_values[1:]]
 # Create coordinate matrices for positive methods
 X_pos, Y_pos = np.meshgrid(x_values, positive_y_values)
 
 # Create coordinate matrices for zero methods (using negative y-values for consistency)
-X_zero, Y_zero = np.meshgrid(x_values, negative_y_values)
+X_zero, Y_zero = np.meshgrid(x_values, all_y_values)
 
 # Process negative-only methods
 for method_idx, method in enumerate(all_methods["negative_only"]):
@@ -1313,32 +1326,39 @@ for method_idx, method in enumerate(all_methods["positive"], start=len(all_metho
     ))
 
 # Process zero-effect methods
-for method_idx, method in enumerate(all_methods["zero"], 
-                                  start=len(all_methods["negative_only"]) + len(all_methods["positive"])):
-    Z = np.zeros((len(negative_y_values), len(x_values)))
+for method_idx, method in enumerate(zero_correlation_methods, start=len(negative_only_methods) + len(positive_methods)):
+    Z = np.zeros((len(all_y_values), len(x_values)))
     
     for x_idx, x_label in enumerate(x_category_labels):
         _, _, zero_dict = preference_dicts[x_label]
         
+        # Handle negative severity values
         for severity, y_pos in severity_map.items():
-            y_idx = negative_y_values.index(y_pos)
-            if severity in zero_dict and method in zero_dict[severity]:
-                Z[y_idx, x_idx] = zero_dict[severity][method]
-    
+            if y_pos in all_y_values:
+                y_idx = all_y_values.index(y_pos)
+                if severity in zero_dict and method in zero_dict[severity]:
+                    Z[y_idx, x_idx] = zero_dict[severity][method]
+        
+        # Handle positive values
+        for i, y_value in enumerate(positive_values):
+            if y_value in all_y_values:
+                y_idx = all_y_values.index(y_value)
+                if str(y_value) in zero_dict and method in zero_dict[str(y_value)]:
+                    Z[y_idx, x_idx] = zero_dict[str(y_value)][method]
+
     fig.add_trace(go.Surface(
         x=X_zero, y=Y_zero, z=Z,
         name=method, showscale=False,
         colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
         opacity=0.7, showlegend=True, legendgroup=method
     ))
-
 # Update layout
 fig.update_layout(
     title='3D Visualization of All Contraceptive Methods',
     scene=dict(
-        xaxis=dict(title='Preference Level', ticktext=x_labels, tickvals=x_values, range=[-70, 70]),
-        yaxis=dict(title='Acne Effect', ticktext=negative_y_labels + positive_y_labels[1:], 
-                  tickvals=negative_y_values + positive_values, range=[-60, 60]),
+        xaxis=dict(title='Cost Effectiveness weights', ticktext=x_labels[::-1], tickvals=x_values, range=[-70, 70]),
+        yaxis=dict(title='Acne weights', ticktext=all_y_labels, 
+                  tickvals=all_y_values, range=[-60, 60]),
         zaxis=dict(title='Score')
     ),
     showlegend=True,

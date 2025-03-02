@@ -21,7 +21,7 @@ original_weight_internal_condoms = [
     [-3, -2, -1, 1, 2, 3],  # STI prevention
     3,
     [-3, -2, -1, 1, 2, 3], # Vaginal Insertion
-    [-15, -25, -60],  # Gender dysphoria related to vaginal insertion
+    [-15, -25, -50],  # Gender dysphoria related to vaginal insertion
     1.5 # Gender dysphoria related to pregnancy
 ]
 original_weight_cervical_cap = [
@@ -30,15 +30,15 @@ original_weight_cervical_cap = [
     3,            # Maintenance (arr[2])
     [-3, -2, -1, 1, 2, 3],  # Vaginal Insertion (arr[3])
     [-3, -2, -1, 1, 2, 3],  # Seeking Consultation (arr[4])
-    [-15, -25, -60],     # Gender Dysphoria Vaginal Insertion (arr[5])
-    [-15, -25, -60]      # Gender Dysphoria Pregnancy (arr[6])
+    [-15, -25, -50],     # Gender Dysphoria Vaginal Insertion (arr[5])
+    [-15, -25, -50]      # Gender Dysphoria Pregnancy (arr[6])
 ]
 original_weight_FAM = [
     [-3, -2, -1, 1, 2, 3],  # Cost Effectiveness (arr[1])
     3,
     [-3, -2, -1, 1, 2, 3],  # Partner Willingness (arr[3])
     3,                    # Maintenance (arr[2])
-    [-15, -25, -60]      # Gender Dysphoria Pregnancy (arr[4])
+    [-15, -25, -50]      # Gender Dysphoria Pregnancy (arr[4])
 ]
 original_weight_arm_implant = [
     [-3, -2, -1, 1, 2, 3],  # Pregnancy Prevention (arr[1])
@@ -49,8 +49,8 @@ original_weight_arm_implant = [
     [-3, -2, -1, 1, 2, 3],  # Seeking consultation (arr[6])
     [-3, -2, -1, 1, 2, 3],  # Medical procedure (arr[7])
     3,                    # Acne (arr[8])
-    [-7.5, -12.5, -30, -15, -25, -60],  # Anxiety (arr[9])
-    [-7.5, -12.5, -30, -15, -25, -60],  # Depression (arr[10])
+    [-7.5, -12.5, -25, -15, -25, -50],  # Anxiety (arr[9])
+    [-7.5, -12.5, -25, -15, -25, -50],  # Depression (arr[10])
     3,                    # Gender dysphoria period (arr[11])
     3,                    # Gender dysphoria pregnancy (arr[12])
 ]
@@ -83,7 +83,7 @@ original_weight_withdrawl = [
     3,
     
     # Gender Pregnancy (mild, moderate, severe)
-    [-15, -25, -60]
+    [-15, -25, -50]
     
 ]
 original_weight_sterilization = [
@@ -133,9 +133,9 @@ original_weight_ring = [
     # Acne (index 8)
     3,  # Acne severity gives +3
     # Anxiety (index 9)
-    [-7.5, -12.5, -30, -15, -25, -60],  # Matches original anxiety scores
+    [-7.5, -12.5, -25, -15, -25, -50],  # Matches original anxiety scores
     # Depression (index 10)
-    [-7.5, -12.5, -30, -15, -25, -60],  # Matches original depression scores
+    [-7.5, -12.5, -25, -15, -25, -50],  # Matches original depression scores
     # Hyper (index 11)
     -100,  # Hyper gives -100
     # Blood Clots (index 12)
@@ -173,8 +173,8 @@ original_weight_patch = [
     3,  # Weight for arr[6]: "ep"
    [-3, -2, -1, 1,2,3],  # Weights for arr[7]
     [-15, -25, -60],  # Weights for arr[8]
-    [-7.5, -12.5, -30, -15, -25, -60],  # Weights for arr[9]
-    [-7.5, -12.5, -30, -15, -25, -60],  # Weights for arr[10]
+    [-7.5, -12.5, -25, -15, -25, -50],  # Weights for arr[9]
+    [-7.5, -12.5, -25, -15, -25, -50],  # Weights for arr[10]
     -100,  # Weight for arr[11]
     -100,  # Weight for arr[12]
     -100,  # Weight for arr[13]
@@ -215,10 +215,10 @@ original_weight_shot = [
     3,  # non-"no" adds +3
     
     # Anxiety (arr[9])
-    [-7.5, -12.5, -30, -15, -25, -60],  # corresponding to mild-moderate-severe with or without acne
+    [-7.5, -12.5, -25, -15, -25, -50],  # corresponding to mild-moderate-severe with or without acne
     
     # Depression (arr[10])
-    [-7.5, -12.5, -30, -15, -25, -60],  # similar to anxiety
+    [-7.5, -12.5, -25, -15, -25, -50],  # similar to anxiety
     
     # Hyper (arr[11])
     -100,  # any non-"no" adds -100
@@ -269,8 +269,8 @@ original_weight_combo_pill = [
     3,                      # For arr[6] (ep adds +3)
     [-3, -2, -1, 1, 2, 3],   # For arr[7]
     [-15, -25, -60],      # For arr[8] (no, mild, moderate, severe)
-    [-7.5, -12.5, -30, -15, -25, -60],  # For arr[9] with combinations of arr[8]
-    [-7.5, -12.5, -30, -15, -25, -60],  # For arr[10] with combinations of arr[9]
+    [-7.5, -12.5, -25, -15, -25, -50],  # For arr[9] with combinations of arr[8]
+    [-7.5, -12.5, -25, -15, -25, -50],  # For arr[10] with combinations of arr[9]
     -100,                  # For arr[11]
     -100,                  # For arr[12]
     -100,                  # For arr[13]
@@ -312,10 +312,10 @@ original_weight_mini_pill = [
     3,  # no
     
     # Anxiety (no, mild, moderate, severe)
-    [-7.5, -12.5, -30, -15, -25, -60],  # [no, mild, moderate, severe]
+    [-7.5, -12.5, -25, -15, -25, -50],  # [no, mild, moderate, severe]
     
     # Depression (no, mild, moderate, severe)
-    [-7.5, -12.5, -30, -15, -25, -60],  # [no, mild, moderate, severe]
+    [-7.5, -12.5, -25, -15, -25, -60],  # [no, mild, moderate, severe]
     
     # Breast (yes/no)
     -100,  # no
@@ -350,10 +350,10 @@ original_weight_copper_IUD = [
     [-3, -2, -1, 1, 2, 3],
     
     # Gender Dysphoria (mild, moderate, severe)
-    [-15, -25, -60],
+    [-15, -25, -50],
     
     # Gender Dysphoria Vaginal Insertion (mild, moderate, severe)
-    [-15, -25, -60],
+    [-15, -25, -50],
     
     # Gender Dysphoria Pregnancy
     3
@@ -368,8 +368,8 @@ original_weight_hormonal_IUD = [
     [-3, -2, -1, 1, 2, 3],  # weights for arr[7]
     [-3, -2, -1, 1, 2, 3],  # weights for arr[8]
     [-15, -25, -60],  # weights for arr[9]: ["mild", "moderate", "severe"]
-    [-7.5, -12.5, -30, -15, -25, -60],  # weights for arr[10] based on arr[9]
-    [-7.5, -12.5, -30, -15, -25, -60],  # weights for arr[11] based on arr[10]
+    [-7.5, -12.5, -25, -15, -25, -50],  # weights for arr[10] based on arr[9]
+    [-7.5, -12.5, -25, -15, -25, -50],  # weights for arr[11] based on arr[10]
     -100,  # weight for arr[12] != "no"
     3,  # weight for arr[13] != "no"
     3,  # weight for arr[14] != "no"

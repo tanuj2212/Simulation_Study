@@ -1,8 +1,8 @@
 from functions_simulation_diff_weight_hor import *
 import copy
-
+# THIS ONE WORKS
 original_weight_condoms = [
-    [-3, -2, -1, 1, 2, 3],  # Cost effectiveness
+    [-60, -40, -20, 20, 40, 60],  # Cost effectiveness
     [-1.5, -1, -0.5, 0.5, 1, 1.5],  # Pregnancy prevention
     3,  # Maintenance (daily use)
     [-3, -2, -1, 1, 2, 3],  # Partner willingness
@@ -11,7 +11,7 @@ original_weight_condoms = [
     1.5  # Gender dysphoria related to pregnancy (no/yes)
 ]
 original_weight_internal_condoms = [
-    [-3, -2, -1, 1, 2, 3],  # Cost effectiveness
+    [-60, -40, -20, 20, 40, 60],  # Cost effectiveness
     [-1.5, -1, -0.5, 0.5, 1, 1.5],  # Pregnancy prevention
     3,  # Maintenance (daily use)   
     [-3, -2, -1, 1, 2, 3],  # Partner willingness
@@ -22,7 +22,7 @@ original_weight_internal_condoms = [
     1.5 # Gender dysphoria related to pregnancy
 ]
 original_weight_cervical_cap = [
-    [-3, -2, -1, 1, 2, 3],  # Cost Effectiveness (arr[1])
+    [-60, -40, -20, 20, 40, 60],  # Cost Effectiveness (arr[1])
     3,        
     3,            # Maintenance (arr[2])
     [-3, -2, -1, 1, 2, 3],  # Vaginal Insertion (arr[3])
@@ -31,7 +31,7 @@ original_weight_cervical_cap = [
     [-15, -25, -50]      # Gender Dysphoria Pregnancy (arr[6])
 ]
 original_weight_FAM = [
-    [-3, -2, -1, 1, 2, 3],  # Cost Effectiveness (arr[1])
+    [-60, -40, -20, 20, 40, 60],  # Cost Effectiveness (arr[1])
     3,
     [-3, -2, -1, 1, 2, 3],  # Partner Willingness (arr[3])
     3,                    # Maintenance (arr[2])
@@ -53,7 +53,7 @@ original_weight_arm_implant = [
 ]
 original_weight_spermicide = [
     # Pregnancy Prevention (0-5)
-    [-3, -2, -1, 1, 2, 3],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
+    [-60, -40, -20, 20, 40, 60],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
     
     # Maintainance (Yearly) [single value for yearly]
     3,
@@ -69,7 +69,7 @@ original_weight_spermicide = [
 ]
 original_weight_withdrawl = [
     # Pregnancy Prevention (0-5)
-    [-3, -2, -1, 1, 2, 3],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
+    [-60, -40, -20, 20, 40, 60],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
     
     # Maintainance (Yearly) [single value for yearly]
     3,
@@ -112,7 +112,7 @@ original_weight_sterilization = [
 ]
 original_weight_ring = [
     # Cost Effectiveness (index 0)
-    [-3, -2, -1, 1, 2, 3],  # Matches the original cost-effectiveness scores
+    [-60, -40, -20, 20, 40, 60],  # Matches the original cost-effectiveness scores
     # Pregnancy Prevention (index 1)
     [-1.5, -1, -0.5, 0.5, 1, 1.5],  # Matches original pregnancy prevention scores
     # Management of Periods (index 2)
@@ -162,7 +162,7 @@ original_weight_ring = [
     -100,  # HRT gives -100
 ]
 original_weight_patch = [
-    [-3, -2, -1, 1,2,3],  # Weights for arr[1]: ["v_unp", "unp", "sl_unp", "neutral", "sl_imp", "imp", "other"]
+    [-60, -40, -20, 20, 40, 60],  # Weights for arr[1]: ["v_unp", "unp", "sl_unp", "neutral", "sl_imp", "imp", "other"]
     [-1.5, -1, -0.5, 0.5, 1,1.5],  # Weights for arr[2]
     [-3, -2, -1, 1,2,3],  # Weights for arr[3]
     [3, 2, 1, -1,-2,-3],  # Weights for arr[4]
@@ -258,7 +258,7 @@ original_weight_shot = [
 ]
 
 original_weight_combo_pill = [
-    [-3, -2, -1, 1, 2, 3],   # For arr[1] (v_unp, unp, sl_unp, neutral, sl_imp, imp)
+    [-60, -40, -20, 20, 40, 60],   # For arr[1] (v_unp, unp, sl_unp, neutral, sl_imp, imp)
     [-1.5, -1, -0.5, 0.5, 1, 1.5],   # For arr[2]
     [-3, -2, -1, 1, 2, 3],   # For arr[3]
     [3, 2, 1, -1, -2, -3],    # For arr[4] (reverse signs compared to previous)
@@ -285,7 +285,7 @@ original_weight_combo_pill = [
 
 original_weight_mini_pill = [
     # Cost Effectiveness
-    [-3, -2, -1, 1, 2, 3],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
+    [-60, -40, -20, 20, 40, 60],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
     
     # Pregnancy Prevention
     [-1.5, -1, -0.5, 0.5, 1, 1.5],  # [v_unp, unp, sl_unp, neutral, sl_imp, imp]
@@ -555,9 +555,10 @@ def calculate_scores_ce_acne_pos(input_arr, positive_weights):
 } 
 
     # Update the cost effectiveness weights
+    '''
     for method in weights_dict:
         weights_dict[method][0] = weights
-
+    '''
     # Calculate scores
     condom_arr = ["condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[26]]
     internal_condom_arr = ["int_condom", input_arr[0], input_arr[1], input_arr[4], input_arr[5], input_arr[6], input_arr[8], input_arr[25], input_arr[26]]
@@ -1203,6 +1204,7 @@ fig.update_layout(
 import numpy as np
 import plotly.graph_objects as go
 
+from collections import defaultdict
 # Define categorical labels for x-axis
 x_category_labels = ['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp']
 #x_values = [-60, -40, -20, 0, 20, 40, 60]
@@ -1235,20 +1237,20 @@ positive_methods = [
 ]
 
 zero_correlation_methods = [
-    "Condoms", "Internal Condoms", "Cervical Cap", "FAM", 
-    "Copper IUD", "Sterilization", "Spermicide", "Withdrawal"
+    "Condom", "Internal Condom", "Cervical Cap", "FAM", 
+    "Copper IUD", "Sterilization", "Gel", "Withdrawal"
 ]
 # All contraceptive methods
 all_methods = {
     "negative_only": [
-        "Hormonal IUD", "Patch", "Combination Pill"
+        "Hormonal IUD", "Patch", "Combo Pill"
     ],
     "positive": [
         "Arm Implant", "Mini Pill", "Ring", "Shot"
     ],
     "zero": [
-        "Condoms", "Internal Condoms", "Cervical Cap", "FAM", 
-        "Copper IUD", "Sterilization", "Spermicide", "Withdrawal"
+        "Condom", "Internal Condom", "Cervical Cap", "FAM", 
+        "Copper IUD", "Sterilization", "Gel", "Withdrawal"
     ]
 }
 
@@ -1268,6 +1270,23 @@ distinct_colors = [
     '#FF0000', '#0000FF', '#FFD700', '#FF1493', '#00FF00', '#8B008B', '#FF8C00',
     '#00FFFF', '#800000', '#000080', '#808000', '#FF00FF', '#008080', '#FFA500', '#4B0082'
 ]
+contraceptive_colors = {
+    "Hormonal IUD": '#FF0000',  # Red
+    "Patch": '#0000FF',         # Blue
+    "Combo Pill": '#FFD700',    # Gold
+    "Arm Implant": '#FF1493',   # Deep Pink
+    "Mini Pill": '#00FF00',     # Lime
+    "Ring": '#8B008B',          # Dark Magenta
+    "Shot": '#FF8C00',          # Dark Orange
+    "Condom": '#00FFFF',        # Cyan
+    "Internal Condom": '#800000',# Maroon
+    "Cervical Cap": '#000080',  # Navy
+    "FAM": '#808000',           # Olive
+    "Copper IUD": '#FF00FF',    # Magenta
+    "Sterilization": '#008080', # Teal
+    "Gel": '#FFA500',           # Orange
+    "Withdrawal": '#4B0082'     # Indigo
+}
 
 # Create the 3D visualization
 fig = go.Figure()
@@ -1293,11 +1312,11 @@ for method_idx, method in enumerate(all_methods["negative_only"]):
             y_idx = negative_y_values.index(y_pos)
             if severity in neg_dict and method in neg_dict[severity]:
                 Z[y_idx, x_idx] = neg_dict[severity][method]
-    
+    color = contraceptive_colors[method]
     fig.add_trace(go.Surface(
         x=X_neg, y=Y_neg, z=Z,
         name=method, showscale=False,
-        colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
+        colorscale=[[0, color], [1, color]],
         opacity=0.7, showlegend=True, legendgroup=method
     ))
 
@@ -1317,11 +1336,11 @@ for method_idx, method in enumerate(all_methods["positive"], start=len(all_metho
         for i, y_value in enumerate(positive_values, start=1):
             if str(y_value) in pos_dict and method in pos_dict[str(y_value)]:
                 Z[i, x_idx] = pos_dict[str(y_value)][method]
-
+    color = contraceptive_colors[method]
     fig.add_trace(go.Surface(
         x=X_pos, y=Y_pos, z=Z,
         name=method, showscale=False,
-        colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
+        colorscale=[[0, color], [1, color]],
         opacity=0.7, showlegend=True, legendgroup=method
     ))
 
@@ -1345,11 +1364,12 @@ for method_idx, method in enumerate(zero_correlation_methods, start=len(negative
                 y_idx = all_y_values.index(y_value)
                 if str(y_value) in zero_dict and method in zero_dict[str(y_value)]:
                     Z[y_idx, x_idx] = zero_dict[str(y_value)][method]
+    color = contraceptive_colors[method]
 
     fig.add_trace(go.Surface(
         x=X_zero, y=Y_zero, z=Z,
         name=method, showscale=False,
-        colorscale=[[0, distinct_colors[method_idx]], [1, distinct_colors[method_idx]]],
+        colorscale=[[0, color], [1, color]],
         opacity=0.7, showlegend=True, legendgroup=method
     ))
 # Update layout
@@ -1370,7 +1390,7 @@ fig.update_layout(
     ),
     width=1200, height=800
 )
-
+'''
 # Add buttons to show/hide individual surfaces
 buttons = []
 all_method_names = (all_methods["negative_only"] + 
@@ -1410,7 +1430,6 @@ for category in ["negative_only", "positive", "zero"]:
         method='update',
         args=[{'visible': visible}]
     ))
-
 fig.update_layout(
     updatemenus=[dict(
         type="dropdown",
@@ -1420,6 +1439,254 @@ fig.update_layout(
         showactive=True,
         buttons=buttons
     )]
+)
+
+contraceptive_colors = {
+        "Condom": '#FF0000',  # Red
+        "Internal Condom": '#0000FF',  # Blue
+        "Cervical Cap": '#FFD700',  # Gold
+        "FAM": '#FF1493',  # Deep Pink
+        "Cervical Cap": '#00FF00',  # Lime
+        "Copper IUD": '#8B008B',  # Dark Magenta
+        "Patch": '#FF8C00',  # Dark Orange
+        "Combo Pill": '#00FFFF',  # Cyan
+        "Mini Pill": '#800000',  # Maroon
+        "Hormonal IUD": '#000080',  # Navy
+        "Gel": '#808000',  # Olive
+        "Sterilization": '#FF00FF',  # Magenta
+        "Withdrawal": '#008080',  # Teal
+        "Ring": '#FFA500',  # Orange
+        "Shot": '#4B0082'   # Indigo
+    }
+'''
+#fig.show()
+import numpy as np
+import plotly.graph_objects as go
+from collections import defaultdict
+
+# Define categorical labels for x-axis
+x_category_labels = ['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp']
+x_values = [60, 40, 20, 0, -20, -40, -60]
+x_labels = ["60", "40", "20", "0", "-20", "-40", "-60"]
+
+# Define y values and labels for negative and positive ranges
+severity_map = {
+    'severe': -60,
+    'moderate': -25,
+    'mild': -15,
+    'no': 0
+}
+
+positive_values = [i * 3 for i in range(1, 21)]  # Positive values from 3 to 60
+
+# Create separate y_values arrays for negative and positive methods
+negative_y_values = list(severity_map.values())
+positive_y_values = [0] + positive_values  # Include 0 for continuity
+
+negative_y_labels = ["-60", "-25", "-15", "0"]
+positive_y_labels = ["0"] + [str(i) for i in positive_values]
+negative_only_methods = [
+    "Hormonal IUD", "Patch", "Combo Pill"
+]
+
+positive_methods = [
+    "Arm Implant", "Mini Pill", "Ring", "Shot"
+]
+
+zero_correlation_methods = [
+    "Condom", "Internal Condom", "Cervical Cap", "FAM", 
+    "Copper IUD", "Sterilization", "Gel", "Withdrawal"
+]
+# All contraceptive methods
+all_methods = {
+    "negative_only": [
+        "Hormonal IUD", "Patch", "Combo Pill"
+    ],
+    "positive": [
+        "Arm Implant", "Mini Pill", "Ring", "Shot"
+    ],
+    "zero": [
+        "Condom", "Internal Condom", "Cervical Cap", "FAM", 
+        "Copper IUD", "Sterilization", "Gel", "Withdrawal"
+    ]
+}
+
+# Dictionary mapping preference levels to their respective dictionaries
+preference_dicts = {
+    'v_unp': (v_unp_dict, v_unp_dict_pos, v_unp_dict_zero),
+    'unp': (unp_dict, unp_dict_pos, unp_dict_zero),
+    'sl_unp': (sl_unp_dict, sl_unp_dict_pos, sl_unp_dict_zero),
+    'neutral': (neutral_dict, neutral_dict_pos, neutral_dict_zero),
+    'sl_imp': (sl_imp_dict, sl_imp_dict_pos, sl_imp_dict_zero),
+    'imp': (imp_dict, imp_dict_pos, imp_dict_zero),
+    'v_imp': (v_imp_dict, v_imp_dict_pos, v_imp_dict_zero)
+}
+
+# Color mapping for contraceptive methods
+contraceptive_colors = {
+    "Hormonal IUD": '#FF0000',  # Red
+    "Patch": '#0000FF',         # Blue
+    "Combo Pill": '#FFD700',    # Gold
+    "Arm Implant": '#FF1493',   # Deep Pink
+    "Mini Pill": '#00FF00',     # Lime
+    "Ring": '#8B008B',          # Dark Magenta
+    "Shot": '#FF8C00',          # Dark Orange
+    "Condom": '#00FFFF',        # Cyan
+    "Internal Condom": '#800000',# Maroon
+    "Cervical Cap": '#000080',  # Navy
+    "FAM": '#808000',           # Olive
+    "Copper IUD": '#FF00FF',    # Magenta
+    "Sterilization": '#008080', # Teal
+    "Gel": '#FFA500',           # Orange
+    "Withdrawal": '#4B0082'     # Indigo
+}
+
+# Create the 3D visualization
+fig = go.Figure()
+all_y_values = negative_y_values + positive_values[1:]
+# Create coordinate matrices for negative methods
+X_neg, Y_neg = np.meshgrid(x_values, negative_y_values)
+
+all_y_labels = negative_y_labels + [str(i) for i in positive_values[1:]]
+# Create coordinate matrices for positive methods
+X_pos, Y_pos = np.meshgrid(x_values, positive_y_values)
+
+# Create coordinate matrices for zero methods (using negative y-values for consistency)
+X_zero, Y_zero = np.meshgrid(x_values, all_y_values)
+
+# Dictionary to store Z matrices for each method
+method_z_matrices = {}
+
+# Calculate Z matrices for negative-only methods
+for method in all_methods["negative_only"]:
+    Z = np.zeros((len(negative_y_values), len(x_values)))
+    
+    for x_idx, x_label in enumerate(x_category_labels):
+        neg_dict, _, _ = preference_dicts[x_label]
+        
+        for severity, y_pos in severity_map.items():
+            y_idx = negative_y_values.index(y_pos)
+            if severity in neg_dict and method in neg_dict[severity]:
+                Z[y_idx, x_idx] = neg_dict[severity][method]
+    
+    # Store the matrix with its coordinates
+    method_z_matrices[method] = (Z, X_neg, Y_neg)
+
+# Calculate Z matrices for positive methods
+for method in all_methods["positive"]:
+    Z = np.zeros((len(positive_y_values), len(x_values)))
+    
+    for x_idx, x_label in enumerate(x_category_labels):
+        _, pos_dict, _ = preference_dicts[x_label]
+        
+        # Handle the 'no' case (y=0)
+        y_idx = 0
+        if 'no' in pos_dict and method in pos_dict['no']:
+            Z[y_idx, x_idx] = pos_dict['no'][method]
+        
+        # Handle positive values
+        for i, y_value in enumerate(positive_values, start=1):
+            if str(y_value) in pos_dict and method in pos_dict[str(y_value)]:
+                Z[i, x_idx] = pos_dict[str(y_value)][method]
+    
+    # Store the matrix with its coordinates
+    method_z_matrices[method] = (Z, X_pos, Y_pos)
+
+# Calculate Z matrices for zero-effect methods
+for method in all_methods["zero"]:
+    Z = np.zeros((len(all_y_values), len(x_values)))
+    
+    for x_idx, x_label in enumerate(x_category_labels):
+        _, _, zero_dict = preference_dicts[x_label]
+        
+        # Handle negative severity values
+        for severity, y_pos in severity_map.items():
+            if y_pos in all_y_values:
+                y_idx = all_y_values.index(y_pos)
+                if severity in zero_dict and method in zero_dict[severity]:
+                    Z[y_idx, x_idx] = zero_dict[severity][method]
+        
+        # Handle positive values
+        for i, y_value in enumerate(positive_values):
+            if y_value in all_y_values:
+                y_idx = all_y_values.index(y_value)
+                if str(y_value) in zero_dict and method in zero_dict[str(y_value)]:
+                    Z[y_idx, x_idx] = zero_dict[str(y_value)][method]
+    
+    # Store the matrix with its coordinates
+    method_z_matrices[method] = (Z, X_zero, Y_zero)
+
+# Group methods with identical Z matrices
+z_groups = defaultdict(list)
+
+for method, (Z, X, Y) in method_z_matrices.items():
+    # Use Z array as key (convert to string for hashability)
+    key = Z.tobytes()
+    z_groups[key].append((method, Z, X, Y))
+
+# Add surfaces to the figure, combining methods with identical Z matrices
+for group in z_groups.values():
+    if len(group) > 1:
+        # Multiple methods with identical Z values
+        methods = [item[0] for item in group]
+        combined_name = " + ".join(methods)
+        Z, X, Y = group[0][1], group[0][2], group[0][3]
+        color = contraceptive_colors[methods[0]]
+        
+        fig.add_trace(go.Surface(
+            x=X, y=Y, z=Z,
+            name=combined_name, 
+            showscale=False,
+            colorscale=[[0, color], [1, color]],
+            opacity=0.7, 
+            showlegend=True, 
+            legendgroup=combined_name,
+            hoverinfo='name+z'
+        ))
+    else:
+        # Single method
+        method, Z, X, Y = group[0]
+        color = contraceptive_colors[method]
+        
+        fig.add_trace(go.Surface(
+            x=X, y=Y, z=Z,
+            name=method, 
+            showscale=False,
+            colorscale=[[0, color], [1, color]],
+            opacity=0.7, 
+            showlegend=True, 
+            legendgroup=method,
+            hoverinfo='name+x+y+z'
+        ))
+
+# Update layout
+fig.update_layout(
+    title='Contraceptive Scores across weights for Cost Effectiveness and Acne', 
+    scene=dict(
+        xaxis=dict(
+            title='Cost Effectiveness weights', 
+            ticktext=x_labels[::-1], 
+            tickvals=x_values, 
+            range=[-70, 70]
+        ),
+        yaxis=dict(
+            title='Acne weights', 
+            ticktext=all_y_labels, 
+            tickvals=all_y_values, 
+            range=[-60, 60]
+        ),
+        zaxis=dict(title='Score')
+    ),
+    showlegend=True,
+    legend=dict(
+        x=1.05, 
+        y=0.5,
+        bgcolor='rgba(255, 255, 255, 0.8)',
+        bordercolor='rgba(0, 0, 0, 0.2)',
+        borderwidth=1
+    ),
+    width=1200, 
+    height=800
 )
 
 fig.show()

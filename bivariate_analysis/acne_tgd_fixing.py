@@ -3,7 +3,7 @@ from functions_simulation_diff_weight_hor import *
 import plotly.graph_objects as go
 import numpy as np
 
-
+# THIS WORKS
 original_weight_condoms = [
     [-3, -2, -1, 1, 2, 3],  # Cost effectiveness
     [-1.5, -1, -0.5, 0.5, 1, 1.5],  # Pregnancy prevention
@@ -1730,7 +1730,7 @@ fig.add_trace(go.Surface(
 
 import numpy as np
 import plotly.graph_objects as go
-
+from collections import defaultdict
 
 '''
 # Define the numerical values for the labels (in ascending order)
@@ -1742,6 +1742,7 @@ y_labels = [-60, -25, -15, 0, 3, 21, 42, 60]  # Correct order for display
 # Define the numerical values for the labels (in ascending order)
  # Correct order for display
 '''
+
 x_values = [60, 25, 15, 0, -3, -21, -42, -60]  # Ascending order
 #x_labels = [60, 42, 21, 3, 0, -15, -25, -50]  # Reverse order for display
 x_labels = [-60, -25, -15, 0, 3, 21, 42, 60]  # Correct order for display
@@ -1749,13 +1750,13 @@ y_values = [-60, -25, -15, 0, 3, 21, 42, 60]  # Ascending order
 y_labels = [-60, -25, -15, 0, 3, 21, 42, 60] 
 # Update the surfaces list to use numerical values for x and y
 surfaces = [
-    ('Condoms', z_condoms, x_values, y_values),
-    ('Internal Condoms', z_internal_condoms, x_values, y_values),
+    ('Condom', z_condoms, x_values, y_values),
+    ('Internal Condom', z_internal_condoms, x_values, y_values),
     ('Cervical Cap', z_cervical_cap, x_values, y_values),
     ('FAM', z_fam, x_values, y_values),
     ('Copper IUD', z_copper_iud, x_values, y_values),
     ('Sterilization', z_sterilization, x_values, y_values),
-    ('Spermicide', z_spermicide, x_values, y_values),
+    ('Gel', z_spermicide, x_values, y_values),
     ('Withdrawal', z_withdrawal, x_values, y_values),
     ('Arm Implant', z_arm_implant, x_values, y_partial_mini),
     ('Mini Pill', z_mini, x_values, y_partial_mini),
@@ -1765,31 +1766,54 @@ surfaces = [
     ('Patch', z_patch, x_values, y_values),
     ('Combo Pill', z_combo_pill, x_values, y_values),
 ]
+# Group contraceptives with the same z values
 
+# Create a dictionary to group contraceptives by their z values
+
+contraceptive_colors = {
+    "Hormonal IUD": '#FF0000',  # Red
+    "Patch": '#0000FF',         # Blue
+    "Combo Pill": '#FFD700',    # Gold
+    "Arm Implant": '#FF1493',   # Deep Pink
+    "Mini Pill": '#00FF00',     # Lime
+    "Ring": '#8B008B',          # Dark Magenta
+    "Shot": '#FF8C00',          # Dark Orange
+    "Condom": '#00FFFF',        # Cyan
+    "Internal Condom": '#800000',# Maroon
+    "Cervical Cap": '#000080',  # Navy
+    "FAM": '#808000',           # Olive
+    "Copper IUD": '#FF00FF',    # Magenta
+    "Sterilization": '#008080', # Teal
+    "Gel": '#FFA500',           # Orange
+    "Withdrawal": '#4B0082'     # Indigo
+}
 # Create figure
+'''
 fig = go.Figure()
-
 # Add all surfaces with consistent axis definitions
 for i, (name, z, x, y) in enumerate(surfaces):
+    color = contraceptive_colors[name]
     fig.add_trace(go.Surface(
         x=x,  # Use ascending numerical values for spacing
         y=y,  # Use ascending numerical values for spacing
         z=z,
         name=name,
-        colorscale=[[0, distinct_colors[i]], [1, distinct_colors[i]]],
+        colorscale=[[0, color], [1, color]],
         showscale=False,
         opacity=0.7,
         showlegend=True,
         legendgroup=name,
         hoverinfo='name+z'
     ))
+# Create figure
+
 
 # Update layout with improved legend and accurate axis labels
 fig.update_layout(
-    title='Contraceptive Methods Scores - 3D Surface Plot',
+    title='Contraceptive Scores across weights for Acne and Top Gender Dysphoria',
     scene=dict(
         xaxis=dict(
-            title='TGD',
+            title='Top Gender Dysphoria',
             ticktext=x_labels,  # Labels in reverse order
             tickvals=x_values,  # Numerical values in ascending order
             tickangle=45,
@@ -1808,7 +1832,7 @@ fig.update_layout(
             tickfont=dict(size=10),
             showticklabels=True
         ),
-        zaxis_title='Score',
+        zaxis_title='Contraceptive Score',
         camera=dict(
             eye=dict(x=1.7, y=1.7, z=1.2)
         ),
@@ -1833,7 +1857,115 @@ fig.update_layout(
         itemwidth=30,
         orientation="v",
         title=dict(
-            text="Contraceptive Methods",
+            text="Methods",
+            font=dict(
+                size=16,
+                color='black'
+            )
+        )
+    )
+)
+
+fig.show()
+'''
+contraceptive_groups = defaultdict(list)
+
+for name, z_array, x_array, y_array in surfaces:
+    # Create a tuple key that represents the data
+    # We need to convert z_array to a string for hashing
+    key = (tuple(x_array), tuple(y_array), str(z_array.tobytes()))
+    contraceptive_groups[key].append(name)
+
+# Create a new list of combined surfaces
+combined_surfaces = []
+for key, names in contraceptive_groups.items():
+    x_array, y_array, z_string = key
+    # Get the z_array from the first contraceptive in the group
+    first_name = names[0]
+    for name, z, x, y in surfaces:
+        if name == first_name:
+            z_array = z
+            break
+    
+    # Create a combined name
+    if len(names) > 1:
+        combined_name = " + ".join(names)
+    else:
+        combined_name = names[0]
+    
+    # Choose a color (if multiple, use the first one's color)
+    color = contraceptive_colors[names[0]]
+    
+    combined_surfaces.append((combined_name, z_array, x_array, y_array, color))
+
+# Create figure
+fig = go.Figure()
+
+# Add all combined surfaces
+for name, z, x, y, color in combined_surfaces:
+    fig.add_trace(go.Surface(
+        x=x,
+        y=y,
+        z=z,
+        name=name,
+        colorscale=[[0, color], [1, color]],
+        showscale=False,
+        opacity=0.7,
+        showlegend=True,
+        legendgroup=name,
+        hoverinfo='name+x+y+z'
+    ))
+
+# Update layout with improved legend and accurate axis labels
+fig.update_layout(
+    title='Contraceptive Scores across weights for Acne and Top Gender Dysphoria',
+    scene=dict(
+        xaxis=dict(
+            title='Top Gender Dysphoria',
+            ticktext=x_labels,
+            tickvals=x_values,
+            tickangle=45,
+            tickmode='array',
+            titlefont=dict(size=12),
+            tickfont=dict(size=10),
+            showticklabels=True
+        ),
+        yaxis=dict(
+            title='Acne',
+            ticktext=y_labels,
+            tickvals=y_values,
+            tickangle=45,
+            tickmode='array',
+            titlefont=dict(size=12),
+            tickfont=dict(size=10),
+            showticklabels=True
+        ),
+        zaxis_title='Contraceptive Score',
+        camera=dict(
+            eye=dict(x=1.7, y=1.7, z=1.2)
+        ),
+        aspectratio=dict(x=1, y=1, z=0.8),
+    ),
+    width=1200,
+    height=1000,
+    showlegend=True,
+    legend=dict(
+        yanchor="top",
+        y=0.99,
+        xanchor="right",
+        x=1.3,
+        bgcolor='rgba(255, 255, 255, 0.9)',
+        bordercolor='rgba(0, 0, 0, 0.5)',
+        borderwidth=2,
+        font=dict(
+            size=14,
+            color='black'
+        ),
+        itemsizing='constant',
+        itemwidth=30,
+        orientation="v",
+        title=dict(
+            text="Methods",
             font=dict(
                 size=16,
                 color='black'

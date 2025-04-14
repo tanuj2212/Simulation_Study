@@ -261,12 +261,12 @@ def score_ce_preg_biv(input_arr):
         "Copper IUD": copper_iud_score,
         "Hormonal IUD": hormonal_iud_score,
         "Patch": patch_score,
-        "Combination Pill": combo_pill_score,
+        "Combo Pill": combo_pill_score,
         "Mini Pill": mini_pill_score,
         "Ring": ring_score,
         "Shot": shot_score,
         "Sterilization": sterilization_score,
-        "Spermicide Gel": gel_score,
+        "Gel": gel_score,
         "Withdrawal": withdrawal_score
     }
 
@@ -412,11 +412,9 @@ import plotly.graph_objects as go
 import numpy as np
 
 # Create the x and y coordinate ranges
-x_range = np.array([-60, -40, -20, 0, 20, 40, 60])
-y_range = np.array([-60, -40, -20, 0, 20, 40, 60])
+
 
 # Create meshgrid for 3D surface
-X, Y = np.meshgrid(x_range, y_range)
 
 # Define methods and their colors
 methods = {
@@ -456,7 +454,8 @@ pref_to_num = {
 num_to_pref = {v: k for k, v in pref_to_num.items()}
 
 # Create the x and y coordinate ranges
-x_range = np.array([-60, -40, -20, 0, 20, 40, 60])
+#x_range = np.array([-60, -40, -20, 0, 20, 40, 60])
+x_range = np.array([60, 40, 20, 0, -20, -40, -60])
 y_range = np.array([-60, -40, -20, 0, 20, 40, 60])
 
 # Create meshgrid for 3D surface
@@ -481,11 +480,80 @@ methods = {
     "Withdrawal": "#4B0082"
 }
 
+contraceptive_colors = {
+    "Hormonal IUD": '#FF0000',  # Red
+    "Patch": '#0000FF',         # Blue
+    "Combo Pill": '#FFD700',    # Gold
+    "Arm Implant": '#FF1493',   # Deep Pink
+    "Mini Pill": '#00FF00',     # Lime
+    "Ring": '#8B008B',          # Dark Magenta
+    "Shot": '#FF8C00',          # Dark Orange
+    "Condom": '#00FFFF',        # Cyan
+    "Internal Condom": '#800000',# Maroon
+    "Cervical Cap": '#000080',  # Navy
+    "FAM": '#808000',           # Olive
+    "Copper IUD": '#FF00FF',    # Magenta
+    "Sterilization": '#008080', # Teal
+    "Gel": '#FFA500',           # Orange
+    "Withdrawal": '#4B0082'     # Indigo
+}
+
+# Show the figure
+import plotly.graph_objects as go
+import numpy as np
+
+# Create mapping dictionaries for preference levels to numerical values
+pref_to_num = {
+    'v_unp': -60,
+    'unp': -40,
+    'sl_unp': -20,
+    'neutral': 0,
+    'sl_imp': 20,
+    'imp': 40,
+    'v_imp': 60
+}
+
+num_to_pref = {v: k for k, v in pref_to_num.items()}
+
+# Create the x and y coordinate ranges
+x_range = np.array([60, 40, 20, 0, -20, -40, -60])
+y_range = np.array([-60, -40, -20, 0, 20, 40, 60])
+
+# Create meshgrid for 3D surface
+X, Y = np.meshgrid(x_range, y_range)
+
+# Define methods and their colors
+contraceptive_colors = {
+    "Hormonal IUD": '#FF0000',  # Red
+    "Patch": '#0000FF',         # Blue
+    "Combo Pill": '#FFD700',    # Gold
+    "Arm Implant": '#FF1493',   # Deep Pink
+    "Mini Pill": '#00FF00',     # Lime
+    "Ring": '#8B008B',          # Dark Magenta
+    "Shot": '#FF8C00',          # Dark Orange
+    "Condom": '#00FFFF',        # Cyan
+    "Internal Condom": '#800000',# Maroon
+    "Cervical Cap": '#000080',  # Navy
+    "FAM": '#808000',           # Olive
+    "Copper IUD": '#FF00FF',    # Magenta
+    "Sterilization": '#008080', # Teal
+    "Gel": '#FFA500',           # Orange
+    "Withdrawal": '#4B0082'     # Indigo
+}
+
 # Create the 3D visualization
 fig = go.Figure()
 
-# Add a surface for each contraceptive method
-for method, color in methods.items():
+# Track which methods overlap completely with the axes
+overlapping_methods = {}
+
+# Function to check if two Z matrices are equal (for detecting overlaps)
+def matrices_equal(m1, m2, tolerance=1e-6):
+    return np.allclose(m1, m2, rtol=tolerance)
+
+# First, compute Z matrices for all methods
+method_z_matrices = {}
+for method, color in contraceptive_colors.items():
     # Initialize the Z matrix for this method
     Z = np.zeros((len(y_range), len(x_range)))
     
@@ -499,83 +567,102 @@ for method, color in methods.items():
         x_idx = np.where(x_range == x_coord)[0][0]
         y_idx = np.where(y_range == y_coord)[0][0]
         
-        # Calculate score using the original input array
+        # Calculate score using the input array
         scores = score_ce_preg_biv(input_arr)
         Z[y_idx, x_idx] = scores[method]
     
-    # Add surface plot for this method
+    method_z_matrices[method] = Z
+
+# Find overlapping methods
+processed_methods = set()
+for method1, Z1 in method_z_matrices.items():
+    if method1 in processed_methods:
+        continue
+        
+    overlapping_group = [method1]
+    for method2, Z2 in method_z_matrices.items():
+        if method1 != method2 and method2 not in processed_methods:
+            if matrices_equal(Z1, Z2):
+                overlapping_group.append(method2)
+                processed_methods.add(method2)
+    
+    if len(overlapping_group) > 1:
+        combined_name = "+".join([m for m in overlapping_group])  # Abbreviate method names
+        overlapping_methods[method1] = {
+            "methods": overlapping_group,
+            "combined_name": combined_name
+        }
+    
+    processed_methods.add(method1)
+
+# Now add traces, combining overlapping methods
+added_matrices = set()
+for method, color in contraceptive_colors.items():
+    Z = method_z_matrices[method]
+    
+    # Create a hashable representation of the matrix
+    z_hash = hash(Z.tobytes())
+    
+    if z_hash in added_matrices:
+        continue  # Skip this method as we've already added this matrix
+    
+    added_matrices.add(z_hash)
+    
+    if method in overlapping_methods:
+        # This is the representative of an overlapping group
+        display_name = overlapping_methods[method]["combined_name"]
+    else:
+        # This is a standalone method
+        display_name = method
+    
+    # Add surface plot
     fig.add_trace(go.Surface(
-        x=X,
+        x=-X,
         y=Y,
         z=Z,
-        name=method,
+        name=display_name,
         showscale=False,
         colorscale=[[0, color], [1, color]],
         opacity=0.7,
         showlegend=True
     ))
 
-# Update layout (same as before)
+# Update layout
 fig.update_layout(
-    title='3D Visualization of Contraceptive Scores',
+    title='Contraceptive Scores across weights for Cost Effectiveness and Pregnancy Prevention',
     scene=dict(
         xaxis=dict(
             title='Cost Effectiveness',
-            #ticktext=['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp'],
-            ticktext=['-60', '-40', '-20', '0', '20', '40', '60'],
+            ticktext=['60', '40', '20', '0', '-20', '-40', '-60'],
             tickvals=[-60, -40, -20, 0, 20, 40, 60],
             range=[-70, 70]
         ),
         yaxis=dict(
             title='Pregnancy Prevention',
-            #ticktext=['v_unp', 'unp', 'sl_unp', 'neutral', 'sl_imp', 'imp', 'v_imp'],
             ticktext=['-60', '-40', '-20', '0', '20', '40', '60'],
             tickvals=[-60, -40, -20, 0, 20, 40, 60],
             range=[-70, 70]
         ),
         zaxis=dict(
-            title='Final Score'
+            title='Contraceptive Score'
         )
     ),
     showlegend=True,
     legend=dict(
-        x=1.1,
+        x=0.8,
         y=0.5,
         bgcolor='rgba(255, 255, 255, 0.8)',
         bordercolor='rgba(0, 0, 0, 0.2)',
-        borderwidth=1
+        borderwidth=1,
+        title=dict(
+            text="Methods",
+            font=dict(
+                size=16,
+                color='black'
+            )            
+        )
     ),
     width=1200,
     height=800
 )
-
-# Add dropdown menu (same as before)
-buttons = []
-for method in methods:
-    visible = [True if m == method else False for m in methods]
-    buttons.append(dict(
-        label=method,
-        method='update',
-        args=[{'visible': visible}]
-    ))
-
-buttons.append(dict(
-    label="Show All",
-    method='update',
-    args=[{'visible': [True] * len(methods)}]
-))
-
-fig.update_layout(
-    updatemenus=[dict(
-        type="dropdown",
-        direction="down",
-        x=0.1,
-        y=1.1,
-        showactive=True,
-        buttons=buttons
-    )]
-)
-
-# Show the figure
-#fig.show()
-fig.write_html("bivariate_analysis/ce_preg_3d.html")
+fig.show()

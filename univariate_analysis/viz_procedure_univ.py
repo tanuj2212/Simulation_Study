@@ -125,12 +125,12 @@ def calculate_scores(input_arr, multiplier):
         "Copper IUD": copper_iud_score,
         "Hormonal IUD": hormonal_iud_score,
         "Patch": patch_score,
-        "Combination Pill": combo_pill_score,
+        "Combo Pill": combo_pill_score,
         "Mini Pill": mini_pill_score,
         "Ring": ring_score,
         "Shot": shot_score,
         "Sterilization": sterilization_score,
-        "Spermicide Gel": gel_score,
+        "Gel": gel_score,
         "Withdrawal": withdrawal_score
     }
     return contraceptive_scores
@@ -152,7 +152,23 @@ distinct_colors = [
    '#FFA500',  # Orange
    '#4B0082'   # Indigo
 ]
-
+contraceptive_colors = {
+    "Hormonal IUD": '#FF0000',  # Red
+    "Patch": '#0000FF',         # Blue
+    "Combo Pill": '#FFD700',    # Gold
+    "Arm Implant": '#FF1493',   # Deep Pink
+    "Mini Pill": '#00FF00',     # Lime
+    "Ring": '#8B008B',          # Dark Magenta
+    "Shot": '#FF8C00',          # Dark Orange
+    "Condom": '#00FFFF',        # Cyan
+    "Internal Condom": '#800000',# Maroon
+    "Cervical Cap": '#000080',  # Navy
+    "FAM": '#808000',           # Olive
+    "Copper IUD": '#FF00FF',    # Magenta
+    "Sterilization": '#008080', # Teal
+    "Gel": '#FFA500',           # Orange
+    "Withdrawal": '#4B0082'     # Indigo
+}
 weight_multipliers = [-60, -40, -20, 0, 20, 40, 60]
 weight_labels = [-60, -40, -20, 0, 20, 40, 60]
 
@@ -177,12 +193,13 @@ for method, scores in scores_over_inputs.items():
 # Plot each unique score pattern with combined labels using distinct colors
 for i, (scores_tuple, methods) in enumerate(grouped_methods.items()):
    combined_label = ' + '.join(methods)
+   color = contraceptive_colors[methods[0]]
    plt.plot(weight_multipliers, scores_tuple, label=combined_label, marker='o', 
-            color=distinct_colors[i % len(distinct_colors)])  # Use modulo to cycle through colors
+            color=color)  # Use modulo to cycle through colors
 
-plt.xlabel('Weight for Medical Procedure')
+plt.xlabel('Weights')
 plt.ylabel('Contraceptive Score')
-plt.title('Contraceptive Scores vs Weight for Medical Procedure')
+plt.title('Contraceptive Scores across weights for Medical Procedure')
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.grid(True)
 plt.xticks(weight_multipliers, weight_labels, rotation=45)
@@ -191,5 +208,5 @@ plt.axhline(0, color='black', linewidth=1)
 plt.axvline(0, color='black', linewidth=1)
 plt.grid(color='gray', linestyle='--', linewidth=0.5)
 plt.ylim(-550, 100)
-plt.savefig("univariate_analysis/visualizations_univariate/medical_preferences/procedure_univ_viz", dpi=300, bbox_inches='tight')
-#plt.show()
+#plt.savefig("univariate_analysis/visualizations_univariate/medical_preferences/procedure_univ_viz", dpi=300, bbox_inches='tight')
+plt.show()

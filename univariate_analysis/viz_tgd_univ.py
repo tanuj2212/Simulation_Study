@@ -18,7 +18,7 @@ inputs = [
 
 
 def calculate_scores_negative(input_arr):
-    weights_negative = [-15, -25, -50]
+    weights_negative = [-15, -25, -60]
     weights_dict = {
         'patch': copy.deepcopy(original_weight_patch),
         'combo_pill': copy.deepcopy(original_weight_combo_pill),
@@ -49,10 +49,10 @@ def calculate_scores_negative(input_arr):
 
 
     contraceptive_scores = {
-        "patch": patch_score,
-        "combo_pill": combo_pill_score,
-        "ring": ring_score,
-        "shot": shot_score
+        "Patch": patch_score,
+        "Combo Pill": combo_pill_score,
+        "Ring": ring_score,
+        "Shot": shot_score
     }
     return contraceptive_scores
 
@@ -116,7 +116,7 @@ def calculate_scores_zero(input_arr):
         "Hormonal IUD": hormonal_iud_score,
         "Mini Pill": mini_pill_score,
         "Sterilization": sterilization_score,
-        "Spermicide Gel": gel_score,
+        "Gel": gel_score,
         "Withdrawal": withdrawal_score
     }
     return contraceptive_scores
@@ -183,7 +183,23 @@ distinct_colors = [
     '#FFA500',  # Orange
     '#4B0082'   # Indigo
 ]
-
+contraceptive_colors = {
+    "Hormonal IUD": '#FF0000',  # Red
+    "Patch": '#0000FF',         # Blue
+    "Combo Pill": '#FFD700',    # Gold
+    "Arm Implant": '#FF1493',   # Deep Pink
+    "Mini Pill": '#00FF00',     # Lime
+    "Ring": '#8B008B',          # Dark Magenta
+    "Shot": '#FF8C00',          # Dark Orange
+    "Condom": '#00FFFF',        # Cyan
+    "Internal Condom": '#800000',# Maroon
+    "Cervical Cap": '#000080',  # Navy
+    "FAM": '#808000',           # Olive
+    "Copper IUD": '#FF00FF',    # Magenta
+    "Sterilization": '#008080', # Teal
+    "Gel": '#FFA500',           # Orange
+    "Withdrawal": '#4B0082'     # Indigo
+}
 
 print(neg_scores)
 
@@ -192,8 +208,8 @@ def plot_contraceptive_scores(neg_scores, zero_scores):
     plt.figure(figsize=(12, 8))
     
     # Define weight labels and multipliers
-    weight_labels = ['-50', '-25', '-15', '0'] + [str(i) for i in range(3, 63, 3)]
-    weight_multipliers = [-50, -25, -15, 0] + list(range(3, 63, 3))
+    weight_labels = ['-60', '-25', '-15', '0'] + [str(i) for i in range(3, 63, 3)]
+    weight_multipliers = [-60, -25, -15, 0] + list(range(3, 63, 3))
     
     # Prepare data for each contraceptive type
     all_scores = {}
@@ -250,14 +266,15 @@ def plot_contraceptive_scores(neg_scores, zero_scores):
         valid_indices = [i for i, score in enumerate(scores_tuple) if score is not None]
         valid_scores = [score for score in scores_tuple if score is not None]
         valid_multipliers = [weight_multipliers[i] for i in valid_indices]
+        color = contraceptive_colors[methods[0]]
         
         plt.plot(valid_multipliers, valid_scores, 
                  label=combined_label, 
                  marker='o',
-                 color=distinct_colors[i % len(distinct_colors)])
+                 color=color)
 
     # Customize the plot
-    plt.xlabel('Weight Categories')
+    plt.xlabel('Weights')
     plt.ylabel('Contraceptive Score')
     plt.title('Contraceptive Scores across weights for Top Gender Dysphoria')
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')

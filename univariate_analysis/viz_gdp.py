@@ -20,7 +20,7 @@ inputs = [
 
 
 def calculate_scores_negative(input_arr):
-    weights_negative = [-15, -25, -50]
+    weights_negative = [-15, -25, -60]
     weights_dict = {
         'cervical_cap': copy.deepcopy(original_weight_cervical_cap),
         'fam': copy.deepcopy(original_weight_FAM),
@@ -48,9 +48,9 @@ def calculate_scores_negative(input_arr):
     withdrawal_score = change_score_withdrawal(withdrawal_arr, weights_dict['withdrawal'])
 
     contraceptive_scores = {
-        "cervical_cap": cervical_cap_score,
-        "fam": fam_score,
-        "withdrawal": withdrawal_score,
+        "Cervical Cap": cervical_cap_score,
+        "FAM": fam_score,
+        "Withdrawal": withdrawal_score,
     }
     return contraceptive_scores
 
@@ -127,7 +127,7 @@ def calculate_scores_positive(input_arr, positive_weight):
         "Copper IUD": copper_iud_score,
         "Hormonal IUD": hormonal_iud_score,
         "Patch": patch_score,
-        "Combination Pill": combo_pill_score,
+        "Combo Pill": combo_pill_score,
         "Mini Pill": mini_pill_score,
         "Ring": ring_score,
         "Shot": shot_score,
@@ -147,7 +147,7 @@ def calculate_scores_zero(input_arr):
     gel_score = change_score_gel(gel_arr, original_weights['spermicide'])
 
     contraceptive_scores = {
-        "gel": gel_score
+        "Gel": gel_score
     }
     return contraceptive_scores
 
@@ -292,14 +292,31 @@ plt.savefig(filename, dpi=300, bbox_inches='tight')
 '''
 
 print(neg_scores)
+contraceptive_colors = {
+    "Hormonal IUD": '#FF0000',  # Red
+    "Patch": '#0000FF',         # Blue
+    "Combo Pill": '#FFD700',    # Gold
+    "Arm Implant": '#FF1493',   # Deep Pink
+    "Mini Pill": '#00FF00',     # Lime
+    "Ring": '#8B008B',          # Dark Magenta
+    "Shot": '#FF8C00',          # Dark Orange
+    "Condom": '#00FFFF',        # Cyan
+    "Internal Condom": '#800000',# Maroon
+    "Cervical Cap": '#000080',  # Navy
+    "FAM": '#808000',           # Olive
+    "Copper IUD": '#FF00FF',    # Magenta
+    "Sterilization": '#008080', # Teal
+    "Gel": '#FFA500',           # Orange
+    "Withdrawal": '#4B0082'     # Indigo
+}
 
 def plot_contraceptive_scores(neg_scores, pos_scores, zero_scores):
     # Set up the plot
     plt.figure(figsize=(12, 8))
     
     # Define weight labels and multipliers
-    weight_labels = ['-50', '-25', '-15', '0'] + [str(i) for i in range(3, 63, 3)]
-    weight_multipliers = [-50, -25, -15, 0] + list(range(3, 63, 3))
+    weight_labels = ['-60', '-25', '-15', '0'] + [str(i) for i in range(3, 63, 3)]
+    weight_multipliers = [-60, -25, -15, 0] + list(range(3, 63, 3))
     
     # Prepare data for each contraceptive type
     all_scores = {}
@@ -355,14 +372,14 @@ def plot_contraceptive_scores(neg_scores, pos_scores, zero_scores):
         valid_indices = [i for i, score in enumerate(scores_tuple) if score is not None]
         valid_scores = [score for score in scores_tuple if score is not None]
         valid_multipliers = [weight_multipliers[i] for i in valid_indices]
-        
+        color = contraceptive_colors[methods[0]]
         plt.plot(valid_multipliers, valid_scores, 
                  label=combined_label, 
                  marker='o',
-                 color=distinct_colors[i % len(distinct_colors)])
+                 color=color)
 
     # Customize the plot
-    plt.xlabel('Weight Categories')
+    plt.xlabel('Weights')
     plt.ylabel('Contraceptive Score')
     plt.title('Contraceptive Scores across weights for Gender Dysphoria Pregnancy')
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
@@ -387,4 +404,4 @@ filename = f'gdp_univ_viz.png'  # or .pdf, .jpg, etc.
 filename = f'univariate_analysis/visualizations_univariate/medical_conditions/gdp_univ_viz.png'  # or .pdf, .jpg, etc.
 plt.savefig(filename, dpi=300, bbox_inches='tight')
 #plt.savefig(filename, dpi=300, bbox_inches='tight')
-#plt.show()
+plt.show()

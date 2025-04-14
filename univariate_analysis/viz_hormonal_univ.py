@@ -121,12 +121,12 @@ def calculate_scores(input_arr, multiplier):
         "Copper IUD": copper_iud_score,
         "Hormonal IUD": hormonal_iud_score,
         "Patch": patch_score,
-        "Combination Pill": combo_pill_score,
+        "Combo Pill": combo_pill_score,
         "Mini Pill": mini_pill_score,
         "Ring": ring_score,
         "Shot": shot_score,
         "Sterilization": sterilization_score,
-        "Spermicide Gel": gel_score,
+        "Gel": gel_score,
         "Withdrawal": withdrawal_score
     }
     return contraceptive_scores
@@ -192,6 +192,24 @@ for input_arr, input_label in zip(inputs, input_labels):
     # Show each plot
     #plt.show()
 '''
+
+contraceptive_colors = {
+    "Hormonal IUD": '#FF0000',  # Red
+    "Patch": '#0000FF',         # Blue
+    "Combo Pill": '#FFD700',    # Gold
+    "Arm Implant": '#FF1493',   # Deep Pink
+    "Mini Pill": '#00FF00',     # Lime
+    "Ring": '#8B008B',          # Dark Magenta
+    "Shot": '#FF8C00',          # Dark Orange
+    "Condom": '#00FFFF',        # Cyan
+    "Internal Condom": '#800000',# Maroon
+    "Cervical Cap": '#000080',  # Navy
+    "FAM": '#808000',           # Olive
+    "Copper IUD": '#FF00FF',    # Magenta
+    "Sterilization": '#008080', # Teal
+    "Gel": '#FFA500',           # Orange
+    "Withdrawal": '#4B0082'     # Indigo
+}
 # Define a function to group overlapping contraceptives
 def group_overlapping_scores(scores_dict):
     grouped_scores = {}
@@ -224,12 +242,13 @@ for input_arr, input_label in zip(inputs, input_labels):
     # Plot each group of overlapping scores with manually chosen distinct colors
     for (scores, methods), color in zip(grouped_scores.items(), distinct_colors):
         label = '+'.join(methods)
-        plt.plot(range(len(weight_multipliers)), scores, label=label, marker='o', color=color, linewidth=2)
+        color = contraceptive_colors[methods[0]]
+        plt.plot(range(len(weight_multipliers)), scores, label=label, marker='o', color=color)
 
     # Customize the plot
-    plt.xlabel('Weight Range')
+    plt.xlabel('Weights')
     plt.ylabel('Contraceptive Score')
-    plt.title(f'Contraceptive Scores vs Weight Range for hormonal (Input: {input_label})')
+    plt.title(f'Contraceptive Scores across weights for hormones (Input: {input_label})')
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.grid(True)
 

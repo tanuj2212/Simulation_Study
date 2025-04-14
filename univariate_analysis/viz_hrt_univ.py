@@ -39,7 +39,7 @@ def calculate_scores_negative(input_arr):
     shot_score = change_score_shot(shot_arr, weights_dict['shot'])
     contraceptive_scores = {
         "Patch": patch_score,
-        "Combination Pill": combo_pill_score,
+        "Combo Pill": combo_pill_score,
         "Ring": ring_score,
         "Shot": shot_score,
     }
@@ -106,7 +106,7 @@ def calculate_scores_zero(input_arr):
         "Hormonal IUD": hormonal_iud_score,
         "Mini Pill": mini_pill_score,
         "Sterilization": sterilization_score,
-        "Spermicide Gel": gel_score,
+        "Gel": gel_score,
         "Withdrawal": withdrawal_score
     }
     return contraceptive_scores
@@ -178,6 +178,23 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.pyplot as plt
 import numpy as np
+contraceptive_colors = {
+    "Hormonal IUD": '#FF0000',  # Red
+    "Patch": '#0000FF',         # Blue
+    "Combo Pill": '#FFD700',    # Gold
+    "Arm Implant": '#FF1493',   # Deep Pink
+    "Mini Pill": '#00FF00',     # Lime
+    "Ring": '#8B008B',          # Dark Magenta
+    "Shot": '#FF8C00',          # Dark Orange
+    "Condom": '#00FFFF',        # Cyan
+    "Internal Condom": '#800000',# Maroon
+    "Cervical Cap": '#000080',  # Navy
+    "FAM": '#808000',           # Olive
+    "Copper IUD": '#FF00FF',    # Magenta
+    "Sterilization": '#008080', # Teal
+    "Gel": '#FFA500',           # Orange
+    "Withdrawal": '#4B0082'     # Indigo
+}
 
 # Plotting the graph with positive labels from 0 to 30
 def plot_contraceptive_scores(neg_scores, zero_scores):
@@ -244,18 +261,16 @@ def plot_contraceptive_scores(neg_scores, zero_scores):
             # Split the methods into chunks of 4 and join with a newline
             chunks = [methods[i:i + max_methods_per_line] for i in range(0, len(methods), max_methods_per_line)]
             combined_label = '\n'.join([' + '.join(chunk) for chunk in chunks])
-            
+        color = contraceptive_colors[methods[0]] 
         plt.plot(weight_multipliers, scores,
                 label=combined_label,
                 marker='o',
-                linewidth=2,
-                markersize=6,
-                color=distinct_colors[i % len(distinct_colors)])
+                color=color)
 
     # Customize the plot
-    plt.xlabel('Weight Values', fontsize=12)
+    plt.xlabel('Weights', fontsize=12)
     plt.ylabel('Contraceptive Score', fontsize=12)
-    plt.title('Contraceptive Method Scores Across Different Weights', fontsize=14, pad=20)
+    plt.title('Contraceptive Scores across weights', fontsize=14, pad=20)
     
     # Improve legend
     plt.legend(bbox_to_anchor=(1.05, 1), 

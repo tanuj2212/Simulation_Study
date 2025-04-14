@@ -57,7 +57,7 @@ def calculate_scores_zero(input_arr):
         "FAM": fam_score,
         "Arm Implant": arm_implant_score,
         "Copper IUD": copper_iud_score,
-        "Spermicide Gel": gel_score,
+        "Gel": gel_score,
         "Withdrawal": withdrawal_score
     }
     return contraceptive_scores
@@ -109,7 +109,7 @@ def calculate_scores_positive(input_arr, positive_weights):
     contraceptive_scores = {
         "Hormonal IUD": hormonal_iud_score,
         "Patch": patch_score,
-        "Combination Pill": combo_pill_score,
+        "Combo Pill": combo_pill_score,
         "Mini Pill": mini_pill_score,
         "Ring": ring_score,
         "Shot": shot_score,
@@ -279,6 +279,24 @@ plt = plot_contraceptive_scores(neg_scores, zero_scores)
 #plt.savefig(filename, dpi=300, bbox_inches='tight')
 plt.show()
 '''
+contraceptive_colors = {
+    "Hormonal IUD": '#FF0000',  # Red
+    "Patch": '#0000FF',         # Blue
+    "Combo Pill": '#FFD700',    # Gold
+    "Arm Implant": '#FF1493',   # Deep Pink
+    "Mini Pill": '#00FF00',     # Lime
+    "Ring": '#8B008B',          # Dark Magenta
+    "Shot": '#FF8C00',          # Dark Orange
+    "Condom": '#00FFFF',        # Cyan
+    "Internal Condom": '#800000',# Maroon
+    "Cervical Cap": '#000080',  # Navy
+    "FAM": '#808000',           # Olive
+    "Copper IUD": '#FF00FF',    # Magenta
+    "Sterilization": '#008080', # Teal
+    "Gel": '#FFA500',           # Orange
+    "Withdrawal": '#4B0082'     # Indigo
+}
+
 def plot_contraceptive_scores(zero_scores, pos_scores):
     # Set up the plot
     plt.figure(figsize=(12, 8))
@@ -322,14 +340,14 @@ def plot_contraceptive_scores(zero_scores, pos_scores):
         valid_indices = [i for i, score in enumerate(scores_tuple) if score is not None]
         valid_scores = [score for score in scores_tuple if score is not None]
         valid_multipliers = [weight_multipliers[i] for i in valid_indices]
-        
+        color = contraceptive_colors[methods[0]]
         plt.plot(valid_multipliers, valid_scores, 
                  label=combined_label, 
                  marker='o',
-                 color=distinct_colors[i % len(distinct_colors)])
+                 color=2)
 
     # Customize the plot
-    plt.xlabel('Weight Categories')
+    plt.xlabel('Weights')
     plt.ylabel('Contraceptive Score')
     plt.title('Contraceptive Scores across weights for Endometriosis')
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
@@ -391,7 +409,7 @@ def plot_contraceptive_scores(zero_scores, pos_scores):
                  color=distinct_colors[i % len(distinct_colors)])
     
     # Customize the plot
-    plt.xlabel('Weight Categories')
+    plt.xlabel('Weights')
     plt.ylabel('Contraceptive Score')
     plt.title('Contraceptive Scores across weights for Endometriosis')
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
@@ -408,6 +426,78 @@ def plot_contraceptive_scores(zero_scores, pos_scores):
     return plt
 
 # Example usage:
+# Example usage:
+#plt = plot_contraceptive_scores(zero_scores, pos_scores)
+filename = f'univariate_analysis/visualizations_univariate/medical_conditions/endmt_univ_viz.png'  # or .pdf, .jpg, etc.
+#plt.savefig(filename, dpi=300, bbox_inches='tight')
+#plt.show()
+
+def plot_contraceptive_scores(zero_scores, pos_scores):
+    # Set up the plot
+    plt.figure(figsize=(12, 8))
+    
+    # Define weight labels and multipliers
+    weight_multipliers = list(range(3, 63, 3))
+    
+    # Prepare data for each contraceptive type
+    all_scores = {}
+    
+    # Process positive scores
+    for method in pos_scores['3'].keys():
+        method_scores = [pos_scores[str(weight)][method] for weight in range(3, 63, 3)]
+        all_scores[method] = method_scores
+    
+    # Process zero scores (constant across the range)
+    for method in zero_scores['1'].keys():
+        scores = [zero_scores['1'][method]] * len(weight_multipliers)
+        all_scores[method] = scores
+
+    # Group methods with identical score patterns
+    grouped_methods = {}
+    for method, scores in all_scores.items():
+        scores_tuple = tuple(scores)  # Convert scores list to tuple for hashing
+        if scores_tuple in grouped_methods:
+            grouped_methods[scores_tuple].append(method)
+        else:
+            grouped_methods[scores_tuple] = [method]
+            
+    # Plot each unique score pattern
+    for i, (scores_tuple, methods) in enumerate(grouped_methods.items()):
+        combined_label = ' + '.join(methods)
+        max_methods_per_line = 4  # Number of methods per line
+        if len(methods) > max_methods_per_line:
+            # Split the methods into chunks of 4 and join with a newline
+            chunks = [methods[i:i + max_methods_per_line] for i in range(0, len(methods), max_methods_per_line)]
+            combined_label = '\n'.join([' + '.join(chunk) for chunk in chunks])
+        
+        # Use the color from contraceptive_colors for the first method in the group
+        color = contraceptive_colors[methods[0]]
+        
+        plt.plot(weight_multipliers, scores_tuple, 
+                 label=combined_label, 
+                 marker='o',
+                 color=color)
+    
+    # Customize the plot
+    plt.xlabel('Weights')
+    plt.ylabel('Contraceptive Score')
+    plt.title('Contraceptive Scores across weights for Endometriosis')
+    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.grid(True, color='gray', linestyle='--', linewidth=0.5)
+    plt.ylim(-550, 100)
+    
+    # Set x-ticks
+    plt.xticks(weight_multipliers, rotation=45)
+    
+    # Add axes at y=0
+    plt.axhline(1, color='black', linewidth=1)
+    plt.axvline(weight_multipliers[0], color='black', linewidth=1)
+    
+    # Adjust layout
+    plt.tight_layout()
+    
+    return plt
+
 # Example usage:
 plt = plot_contraceptive_scores(zero_scores, pos_scores)
 filename = f'univariate_analysis/visualizations_univariate/medical_conditions/endmt_univ_viz.png'  # or .pdf, .jpg, etc.

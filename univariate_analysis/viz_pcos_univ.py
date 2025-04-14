@@ -58,7 +58,7 @@ def calculate_scores_zero(input_arr):
         "FAM": fam_score,
         "Arm Implant": arm_implant_score,
         "Copper IUD": copper_iud_score,
-        "Spermicide Gel": gel_score,
+        "Gel": gel_score,
         "Withdrawal": withdrawal_score
     }
     return contraceptive_scores
@@ -183,7 +183,23 @@ distinct_colors = [
     '#FFA500',  # Orange
     '#4B0082'   # Indigo
 ]
-
+contraceptive_colors = {
+    "Hormonal IUD": '#FF0000',  # Red
+    "Patch": '#0000FF',         # Blue
+    "Combo Pill": '#FFD700',    # Gold
+    "Arm Implant": '#FF1493',   # Deep Pink
+    "Mini Pill": '#00FF00',     # Lime
+    "Ring": '#8B008B',          # Dark Magenta
+    "Shot": '#FF8C00',          # Dark Orange
+    "Condom": '#00FFFF',        # Cyan
+    "Internal Condom": '#800000',# Maroon
+    "Cervical Cap": '#000080',  # Navy
+    "FAM": '#808000',           # Olive
+    "Copper IUD": '#FF00FF',    # Magenta
+    "Sterilization": '#008080', # Teal
+    "Gel": '#FFA500',           # Orange
+    "Withdrawal": '#4B0082'     # Indigo
+}
 
 print(neg_scores)
 
@@ -233,14 +249,15 @@ def plot_contraceptive_scores(zero_scores, pos_scores):
         valid_indices = [i for i, score in enumerate(scores_tuple) if score is not None]
         valid_scores = [score for score in scores_tuple if score is not None]
         valid_multipliers = [weight_multipliers[i] for i in valid_indices]
+        color = contraceptive_colors[methods[0]]
         
         plt.plot(valid_multipliers, valid_scores, 
                  label=combined_label, 
                  marker='o',
-                 color=distinct_colors[i % len(distinct_colors)])
+                 color=color)
 
     # Customize the plot
-    plt.xlabel('Weight Categories')
+    plt.xlabel('Weights')
     plt.ylabel('Contraceptive Score')
     plt.title('Contraceptive Scores across weights for PCOS')
     plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
